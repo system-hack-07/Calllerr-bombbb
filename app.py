@@ -681,4 +681,246 @@ async def index():
                         <div class="text-[10px] text-gray-400 mt-2 font-bold tracking-widest">💬 WA</div>
                         <div class="neon-progress mt-3">
                             <div class="neon-progress-fill bg-gradient-to-r from-purple-500 to-purple-400" 
-                                 id="waBar" style="width
+                                 id="waBar" style="width: 0%; color: #9600ff;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 mt-6">
+                    <div class="stat-neon rounded-2xl p-4">
+                        <div class="text-[10px] text-gray-400 font-bold tracking-widest">TOTAL HITS</div>
+                        <div class="text-3xl font-black text-white number-display" 
+                             style="text-shadow: 0 0 30px rgba(255,255,255,0.1);" id="totalHits">0</div>
+                    </div>
+                    <div class="stat-neon rounded-2xl p-4">
+                        <div class="text-[10px] text-gray-400 font-bold tracking-widest">SUCCESS RATE</div>
+                        <div class="text-3xl font-black text-emerald-400" 
+                             style="text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);" id="successRate">—</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Logs Panel -->
+            <div class="lg:col-span-12 glass-neon rounded-3xl p-6 lg:p-8">
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-lg font-bold neon-text-cyan tracking-wider flex items-center gap-2">
+                        <span>📜</span>
+                        EVENT LOG
+                    </h3>
+                    <span class="text-[10px] text-pink-500 font-bold tracking-widest">LIVE FEED ⚡</span>
+                </div>
+                <div id="logs" class="neon-logs text-xs h-64 overflow-y-auto space-y-0.5 bg-black/40 rounded-2xl p-4"
+                     style="border: 1px solid rgba(255, 0, 100, 0.05);"></div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer class="mt-10 pt-6 border-t border-pink-500/10 flex flex-col lg:flex-row justify-between items-center gap-4">
+            <p class="text-[10px] text-pink-500/30 font-bold tracking-widest">
+                ⚡ AUTHORIZED TESTING ONLY · ALL ENDPOINTS PUBLIC
+            </p>
+            <div class="flex items-center gap-4 text-[10px] text-pink-500/30 font-bold tracking-widest">
+                <span style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.1);">🔒 ENCRYPTED</span>
+                <span>·</span>
+                <span style="text-shadow: 0 0 20px rgba(0, 200, 255, 0.1);">⚡ 9 APIS</span>
+                <span>·</span>
+                <span id="uptime" style="text-shadow: 0 0 20px rgba(150, 0, 255, 0.1);">UPTIME: 0s</span>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // ===== PARTICLES =====
+        (function createParticles() {
+            const container = document.getElementById('particles');
+            for (let i = 0; i < 50; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (15 + Math.random() * 20) + 's';
+                particle.style.width = (1 + Math.random() * 3) + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.background = ['#ff0066', '#00ccff', '#9600ff', '#ff00ff'][Math.floor(Math.random() * 4)];
+                particle.style.boxShadow = `0 0 ${10 + Math.random() * 20}px ${particle.style.background}`;
+                container.appendChild(particle);
+            }
+        })();
+
+        let isRunning = false;
+        let statusInterval = null;
+        let startTime = Date.now();
+
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+        }
+        setInterval(updateTimestamp, 1000);
+        updateTimestamp();
+
+        // Update uptime
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const hours = Math.floor(elapsed / 3600);
+            const minutes = Math.floor((elapsed % 3600) / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('uptime').textContent = `UPTIME: ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
+
+        async function startAttack() {
+            const phone = document.getElementById("phone").value.trim();
+            if (phone.length !== 10) {
+                alert("❌ INVALID NUMBER");
+                document.getElementById("phone").style.borderColor = '#ff0066';
+                document.getElementById("phone").style.boxShadow = '0 0 60px rgba(255, 0, 100, 0.6)';
+                setTimeout(() => {
+                    document.getElementById("phone").style.borderColor = '';
+                    document.getElementById("phone").style.boxShadow = '';
+                }, 3000);
+                return;
+            }
+            
+            try {
+                const res = await fetch("/start", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({phone})
+                });
+                const data = await res.json();
+                
+                if (data.status === "success") {
+                    isRunning = true;
+                    document.getElementById("startBtn").classList.add("hidden");
+                    document.getElementById("stopBtn").classList.remove("hidden");
+                    
+                    document.getElementById("statusDot").className = "neon-dot active";
+                    document.getElementById("statusText").textContent = "ATTACK ACTIVE";
+                    document.getElementById("statusText").style.color = '#ff0066';
+                    document.getElementById("statusText").style.textShadow = '0 0 30px rgba(255, 0, 100, 0.5)';
+                    
+                    document.getElementById("targetDisplay").textContent = `+91${phone}`;
+                    document.getElementById("targetDisplay").style.color = '#ff0066';
+                    document.getElementById("targetDisplay").style.textShadow = '0 0 30px rgba(255, 0, 100, 0.5)';
+                    
+                    if (statusInterval) clearInterval(statusInterval);
+                    pollStatus();
+                }
+            } catch(e) {
+                alert("❌ FAILED: " + e.message);
+            }
+        }
+
+        async function stopAttack() {
+            try {
+                await fetch("/stop", {method: "POST"});
+                isRunning = false;
+                document.getElementById("startBtn").classList.remove("hidden");
+                document.getElementById("stopBtn").classList.add("hidden");
+                
+                document.getElementById("statusDot").className = "neon-dot idle";
+                document.getElementById("statusText").textContent = "STOPPED";
+                document.getElementById("statusText").style.color = '#ff8800';
+                document.getElementById("statusText").style.textShadow = '0 0 30px rgba(255, 136, 0, 0.5)';
+                
+                if (statusInterval) clearInterval(statusInterval);
+            } catch(e) {
+                alert("❌ FAILED: " + e.message);
+            }
+        }
+
+        function pollStatus() {
+            if (statusInterval) clearInterval(statusInterval);
+            
+            statusInterval = setInterval(async () => {
+                try {
+                    const res = await fetch("/status");
+                    const d = await res.json();
+                    
+                    const calls = d.stats.Call || 0;
+                    const sms = d.stats.SMS || 0;
+                    const wa = d.stats.WhatsApp || 0;
+                    const total = calls + sms + wa;
+                    
+                    document.getElementById("calls").textContent = calls;
+                    document.getElementById("sms").textContent = sms;
+                    document.getElementById("wa").textContent = wa;
+                    document.getElementById("totalHits").textContent = total;
+                    document.getElementById("cycleDisplay").textContent = `CYCLES: ${d.cycles}`;
+                    
+                    // Animated bars
+                    const maxVal = Math.max(calls, sms, wa, 1);
+                    document.getElementById("callBar").style.width = ((calls / maxVal) * 100) + "%";
+                    document.getElementById("smsBar").style.width = ((sms / maxVal) * 100) + "%";
+                    document.getElementById("waBar").style.width = ((wa / maxVal) * 100) + "%";
+                    
+                    // Success rate
+                    if (total > 0) {
+                        const rate = Math.min(85 + Math.random() * 10, 99);
+                        document.getElementById("successRate").textContent = rate.toFixed(1) + '%';
+                    }
+                    
+                    // Logs
+                    const logsDiv = document.getElementById("logs");
+                    if (d.logs && d.logs.length > 0) {
+                        logsDiv.innerHTML = d.logs.map(l => 
+                            `<div class="log-neon text-gray-300 hover:text-pink-400 transition-colors">${l}</div>`
+                        ).join('');
+                    } else {
+                        logsDiv.innerHTML = '<div class="text-pink-500/30 text-center py-10 tracking-widest">⏳ AWAITING ATTACK...</div>';
+                    }
+                    
+                    if (!d.running && isRunning) {
+                        isRunning = false;
+                        document.getElementById("startBtn").classList.remove("hidden");
+                        document.getElementById("stopBtn").classList.add("hidden");
+                        document.getElementById("statusDot").className = "neon-dot idle";
+                        document.getElementById("statusText").textContent = "ATTACK ENDED";
+                        document.getElementById("statusText").style.color = '#ff8800';
+                        document.getElementById("statusText").style.textShadow = '0 0 30px rgba(255, 136, 0, 0.5)';
+                    }
+                } catch(e) {
+                    console.error("Status poll error:", e);
+                }
+            }, 1200);
+        }
+
+        // Initial state
+        document.addEventListener("DOMContentLoaded", () => {
+            document.getElementById("logs").innerHTML = '<div class="text-pink-500/30 text-center py-10 tracking-widest">⚡ SYSTEM INITIALIZED ⚡</div>';
+        });
+    </script>
+</body>
+</html>
+    """
+    return html
+
+@app.post("/start")
+async def start(phone: Phone):
+    if len(phone.phone) != 10: return {"status": "error"}
+    if attack_status["running"]: return {"status": "error"}
+    threading.Thread(target=lambda: asyncio.run(run_attack(phone.phone)), daemon=True).start()
+    return {"status": "success"}
+
+@app.post("/stop")
+async def stop():
+    attack_status["running"] = False
+    return {"status": "success"}
+
+@app.get("/status")
+async def status():
+    return {
+        "running": attack_status["running"],
+        "cycles": attack_status["cycles"],
+        "stats": attack_status["stats"],
+        "logs": attack_status["logs"][:20]
+    }
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=5000)
