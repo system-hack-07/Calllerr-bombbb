@@ -67,9 +67,9 @@ async def index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samarth Bomber Pro | Enterprise Edition</title>
+    <title>⚡ NEON BOMBER ⚡</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -78,147 +78,242 @@ async def index():
         }
         
         body {
-            font-family: 'Inter', sans-serif;
-            background: #0a0a0f;
-            background-image: 
-                radial-gradient(ellipse at 20% 50%, rgba(239, 68, 68, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
+            font-family: 'Orbitron', monospace;
+            background: #000000;
             min-height: 100vh;
-            color: #ffffff;
             overflow-x: hidden;
+            position: relative;
         }
 
-        /* Animated grid background */
-        .grid-bg {
+        /* ===== LIGHTNING BACKGROUND ===== */
+        .lightning-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(255, 0, 50, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(0, 50, 255, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(150, 0, 255, 0.2) 0%, transparent 50%);
+            z-index: 0;
+            animation: pulseGlow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* ===== NEON GRID ===== */
+        .neon-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+                linear-gradient(rgba(255, 0, 100, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 100, 255, 0.05) 1px, transparent 1px);
             background-size: 60px 60px;
-            pointer-events: none;
             z-index: 0;
-            animation: gridMove 20s linear infinite;
+            animation: gridPulse 4s ease-in-out infinite;
         }
 
-        @keyframes gridMove {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(60px, 60px); }
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.8; }
         }
 
-        .glass-premium {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.06);
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        /* ===== LIGHTNING FLASHES ===== */
+        .lightning-flash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            animation: lightning 8s infinite;
         }
 
-        .glass-premium-dark {
-            background: rgba(0, 0, 0, 0.5);
-            backdrop-filter: blur(40px);
-            -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        @keyframes lightning {
+            0%, 89%, 91%, 100% { opacity: 0; }
+            90% { opacity: 0.8; }
+            90.5% { opacity: 0; }
+            92% { opacity: 0.6; }
+            92.5% { opacity: 0; }
         }
 
-        .gradient-primary {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+        /* ===== GLASS NEON ===== */
+        .glass-neon {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(30px) saturate(1.8);
+            -webkit-backdrop-filter: blur(30px) saturate(1.8);
+            border: 1px solid rgba(255, 0, 100, 0.2);
+            box-shadow: 
+                0 0 30px rgba(255, 0, 100, 0.1),
+                inset 0 0 30px rgba(255, 0, 100, 0.05);
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
         }
 
-        .gradient-secondary {
-            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #4f46e5 100%);
+        .glass-neon::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #ff0066, #00ccff, #ff0066, #00ccff);
+            background-size: 400% 400%;
+            z-index: -1;
+            border-radius: inherit;
+            animation: borderGlow 4s linear infinite;
+            opacity: 0.3;
+            filter: blur(2px);
         }
 
-        .gradient-accent {
-            background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ef4444 100%);
-        }
-
-        .text-gradient {
-            background: linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #ef4444 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-size: 200% 200%;
-            animation: shimmer 3s ease-in-out infinite;
-        }
-
-        @keyframes shimmer {
-            0%, 100% { background-position: 0% 50%; }
+        @keyframes borderGlow {
+            0% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
-        .glow-red {
-            box-shadow: 0 0 80px rgba(239, 68, 68, 0.15), inset 0 0 80px rgba(239, 68, 68, 0.05);
+        .glass-neon:hover {
+            border-color: rgba(255, 0, 100, 0.6);
+            box-shadow: 
+                0 0 60px rgba(255, 0, 100, 0.3),
+                0 0 120px rgba(255, 0, 100, 0.1),
+                inset 0 0 60px rgba(255, 0, 100, 0.05);
         }
 
-        .stat-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid rgba(255,255,255,0.06);
+        /* ===== NEON TEXT ===== */
+        .neon-text {
+            font-family: 'Orbitron', monospace;
+            text-shadow: 
+                0 0 10px rgba(255, 0, 100, 0.8),
+                0 0 20px rgba(255, 0, 100, 0.6),
+                0 0 40px rgba(255, 0, 100, 0.4),
+                0 0 80px rgba(255, 0, 100, 0.2);
+            animation: neonPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes neonPulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(255, 0, 100, 0.8), 0 0 20px rgba(255, 0, 100, 0.6), 0 0 40px rgba(255, 0, 100, 0.4); }
+            50% { text-shadow: 0 0 20px rgba(255, 0, 100, 1), 0 0 40px rgba(255, 0, 100, 0.8), 0 0 80px rgba(255, 0, 100, 0.6), 0 0 120px rgba(255, 0, 100, 0.4); }
+        }
+
+        .neon-text-cyan {
+            text-shadow: 
+                0 0 10px rgba(0, 200, 255, 0.8),
+                0 0 20px rgba(0, 200, 255, 0.6),
+                0 0 40px rgba(0, 200, 255, 0.4);
+            animation: neonPulseCyan 2s ease-in-out infinite;
+        }
+
+        @keyframes neonPulseCyan {
+            0%, 100% { text-shadow: 0 0 10px rgba(0, 200, 255, 0.8), 0 0 20px rgba(0, 200, 255, 0.6); }
+            50% { text-shadow: 0 0 20px rgba(0, 200, 255, 1), 0 0 40px rgba(0, 200, 255, 0.8), 0 0 80px rgba(0, 200, 255, 0.6); }
+        }
+
+        .neon-text-purple {
+            text-shadow: 
+                0 0 10px rgba(150, 0, 255, 0.8),
+                0 0 20px rgba(150, 0, 255, 0.6),
+                0 0 40px rgba(150, 0, 255, 0.4);
+            animation: neonPulsePurple 2s ease-in-out infinite;
+        }
+
+        @keyframes neonPulsePurple {
+            0%, 100% { text-shadow: 0 0 10px rgba(150, 0, 255, 0.8), 0 0 20px rgba(150, 0, 255, 0.6); }
+            50% { text-shadow: 0 0 20px rgba(150, 0, 255, 1), 0 0 40px rgba(150, 0, 255, 0.8), 0 0 80px rgba(150, 0, 255, 0.6); }
+        }
+
+        /* ===== STAT CARDS ===== */
+        .stat-neon {
+            background: rgba(0, 0, 0, 0.8);
+            border: 1px solid rgba(255, 0, 100, 0.2);
+            box-shadow: 
+                0 0 20px rgba(255, 0, 100, 0.1),
+                inset 0 0 20px rgba(255, 0, 100, 0.05);
             transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
         }
 
-        .stat-card::before {
+        .stat-neon::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
-            transition: left 0.6s;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg, transparent, rgba(255, 0, 100, 0.05), transparent, rgba(0, 200, 255, 0.05), transparent);
+            animation: rotateGlow 10s linear infinite;
         }
 
-        .stat-card:hover::before {
-            left: 100%;
+        @keyframes rotateGlow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
 
-        .stat-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(239, 68, 68, 0.2);
-            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+        .stat-neon:hover {
+            transform: translateY(-4px) scale(1.02);
+            border-color: rgba(255, 0, 100, 0.6);
+            box-shadow: 
+                0 0 40px rgba(255, 0, 100, 0.3),
+                0 0 80px rgba(255, 0, 100, 0.1);
         }
 
-        .pulse-ring {
-            animation: pulse-ring 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        /* ===== NEON INPUT ===== */
+        .neon-input {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid rgba(255, 0, 100, 0.3);
+            box-shadow: 
+                0 0 20px rgba(255, 0, 100, 0.05),
+                inset 0 0 20px rgba(255, 0, 100, 0.05);
+            transition: all 0.4s ease;
+            font-family: 'Orbitron', monospace;
+            letter-spacing: 0.2em;
+            color: #ff0066;
         }
 
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        .neon-input:focus {
+            border-color: #ff0066;
+            box-shadow: 
+                0 0 40px rgba(255, 0, 100, 0.3),
+                0 0 80px rgba(255, 0, 100, 0.1),
+                inset 0 0 40px rgba(255, 0, 100, 0.1);
+            outline: none;
         }
 
-        .input-premium {
-            background: rgba(0, 0, 0, 0.4);
-            border: 2px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.3s ease;
-            letter-spacing: 0.15em;
-        }
-
-        .input-premium:focus {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1), inset 0 0 20px rgba(239, 68, 68, 0.05);
-            background: rgba(0, 0, 0, 0.6);
-        }
-
-        .input-premium::placeholder {
-            color: rgba(255,255,255,0.2);
+        .neon-input::placeholder {
+            color: rgba(255, 0, 100, 0.2);
+            font-family: 'Orbitron', monospace;
             letter-spacing: 0.1em;
         }
 
-        .btn-primary {
-            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+        /* ===== NEON BUTTONS ===== */
+        .btn-neon {
+            background: linear-gradient(135deg, #ff0066, #cc0033);
+            border: none;
+            box-shadow: 
+                0 0 30px rgba(255, 0, 100, 0.4),
+                0 0 60px rgba(255, 0, 100, 0.2),
+                inset 0 0 30px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
             overflow: hidden;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
-        .btn-primary::after {
+        .btn-neon::before {
             content: '';
             position: absolute;
             top: -50%;
@@ -230,495 +325,360 @@ async def index():
             transition: all 0.6s;
         }
 
-        .btn-primary:hover::after {
+        .btn-neon:hover::before {
             transform: rotate(45deg) translate(50%, 50%);
         }
 
-        .btn-primary:hover {
-            transform: translateY(-2px) scale(1.01);
-            box-shadow: 0 20px 40px -12px rgba(239, 68, 68, 0.4);
+        .btn-neon:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 0 60px rgba(255, 0, 100, 0.6),
+                0 0 120px rgba(255, 0, 100, 0.3),
+                inset 0 0 60px rgba(255, 255, 255, 0.1);
         }
 
-        .btn-secondary {
+        .btn-neon:active {
+            transform: scale(0.98);
+        }
+
+        .btn-neon-stop {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 0, 100, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.1);
+            font-family: 'Orbitron', monospace;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.4s ease;
         }
 
-        .btn-secondary:hover {
-            background: rgba(239, 68, 68, 0.15);
-            border-color: rgba(239, 68, 68, 0.3);
-            transform: translateY(-2px);
+        .btn-neon-stop:hover {
+            background: rgba(255, 0, 100, 0.2);
+            border-color: #ff0066;
+            box-shadow: 0 0 40px rgba(255, 0, 100, 0.3);
+            transform: translateY(-3px);
         }
 
-        .log-container {
-            scrollbar-width: thin;
-            scrollbar-color: rgba(239, 68, 68, 0.3) transparent;
-        }
-
-        .log-container::-webkit-scrollbar {
-            width: 4px;
-        }
-
-        .log-container::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        .log-container::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #ef4444, #f59e0b);
-            border-radius: 10px;
-        }
-
-        .log-entry {
-            animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            padding: 8px 12px;
-            border-radius: 8px;
-            transition: background 0.2s;
-        }
-
-        .log-entry:hover {
-            background: rgba(255,255,255,0.03);
-        }
-
-        @keyframes slideIn {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        .progress-bar {
-            height: 3px;
-            background: rgba(255,255,255,0.05);
+        /* ===== PROGRESS BARS ===== */
+        .neon-progress {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
             border-radius: 10px;
             overflow: hidden;
             position: relative;
+            box-shadow: inset 0 0 10px rgba(255, 0, 100, 0.1);
         }
 
-        .progress-bar-fill {
+        .neon-progress-fill {
             height: 100%;
             border-radius: 10px;
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
             position: relative;
+            box-shadow: 0 0 20px currentColor;
         }
 
-        .progress-bar-fill::after {
+        .neon-progress-fill::after {
             content: '';
             position: absolute;
             right: 0;
             top: -50%;
-            width: 20px;
+            width: 30px;
             height: 200%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
-            animation: progressShine 2s ease-in-out infinite;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            animation: progressNeon 2s ease-in-out infinite;
         }
 
-        @keyframes progressShine {
+        @keyframes progressNeon {
             0% { transform: translateX(-100%); }
             100% { transform: translateX(200%); }
         }
 
-        .status-badge {
+        /* ===== LOGS ===== */
+        .neon-logs {
+            font-family: 'Orbitron', monospace;
+            scrollbar-width: thin;
+            scrollbar-color: #ff0066 transparent;
+            font-size: 11px;
+        }
+
+        .neon-logs::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .neon-logs::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .neon-logs::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #ff0066, #00ccff);
+            border-radius: 10px;
+            box-shadow: 0 0 20px #ff0066;
+        }
+
+        .log-neon {
+            padding: 6px 12px;
+            border-radius: 6px;
+            transition: all 0.3s;
+            border-left: 2px solid transparent;
+            animation: logGlow 0.5s ease-out;
+        }
+
+        .log-neon:hover {
+            background: rgba(255, 0, 100, 0.05);
+            border-left-color: #ff0066;
+            box-shadow: 0 0 20px rgba(255, 0, 100, 0.05);
+        }
+
+        @keyframes logGlow {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+                filter: blur(5px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+                filter: blur(0);
+            }
+        }
+
+        /* ===== STATUS INDICATOR ===== */
+        .neon-status {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 8px 16px;
+            gap: 10px;
+            padding: 10px 20px;
             border-radius: 100px;
+            font-family: 'Orbitron', monospace;
             font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
+            font-weight: 700;
             text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: 1px solid rgba(255, 0, 100, 0.2);
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
         }
 
-        .status-badge.active {
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.2);
-        }
-
-        .status-badge.idle {
-            background: rgba(34, 197, 94, 0.1);
-            color: #22c55e;
-            border: 1px solid rgba(34, 197, 94, 0.15);
-        }
-
-        .glow-dot {
-            width: 8px;
-            height: 8px;
+        .neon-dot {
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             display: inline-block;
+            box-shadow: 0 0 20px currentColor;
+            animation: dotPulse 1.5s ease-in-out infinite;
         }
 
-        .glow-dot.active {
-            background: #ef4444;
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
-            animation: pulse-dot 1.5s ease-in-out infinite;
-        }
-
-        .glow-dot.idle {
-            background: #22c55e;
-            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
-        }
-
-        @keyframes pulse-dot {
+        @keyframes dotPulse {
             0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.5; transform: scale(0.8); }
+            50% { opacity: 0.3; transform: scale(0.7); }
         }
 
-        .number-display {
-            font-variant-numeric: tabular-nums;
-            font-feature-settings: "tnum";
+        .neon-dot.idle {
+            background: #00ff88;
+            color: #00ff88;
         }
 
+        .neon-dot.active {
+            background: #ff0066;
+            color: #ff0066;
+            animation: dotPulse 0.5s ease-in-out infinite;
+        }
+
+        /* ===== FLOATING PARTICLES ===== */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #ff0066;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #ff0066, 0 0 20px #ff0066;
+            animation: floatParticle 20s linear infinite;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+        }
+
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .glass-premium {
+            .glass-neon {
                 backdrop-filter: blur(20px);
                 -webkit-backdrop-filter: blur(20px);
+            }
+            
+            .neon-text {
+                font-size: 1.5rem !important;
+            }
+            
+            .stat-neon {
+                padding: 12px !important;
             }
         }
     </style>
 </head>
 <body>
-    <div class="grid-bg"></div>
+    <!-- Lightning Flash -->
+    <div class="lightning-flash"></div>
 
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
+    <!-- Background Layers -->
+    <div class="lightning-bg"></div>
+    <div class="neon-grid"></div>
+
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
         <!-- Header -->
-        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
-            <div class="flex items-center gap-5">
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
+            <div class="flex items-center gap-6">
                 <div class="relative">
-                    <div class="w-14 h-14 lg:w-16 lg:h-16 gradient-primary rounded-2xl flex items-center justify-center text-3xl pulse-ring">
+                    <div class="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl flex items-center justify-center text-4xl"
+                         style="background: linear-gradient(135deg, #ff0066, #cc0033);
+                                box-shadow: 0 0 40px rgba(255, 0, 100, 0.4), 0 0 80px rgba(255, 0, 100, 0.2);
+                                animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">
                         ⚡
                     </div>
-                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-black/50"></div>
+                    <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-400 rounded-full border-2 border-black"
+                         style="box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);"></div>
                 </div>
                 <div>
-                    <h1 class="text-3xl lg:text-5xl font-black tracking-tight">
-                        <span class="text-gradient">Samarth Bomber</span>
+                    <h1 class="text-3xl lg:text-6xl font-black neon-text tracking-wider">
+                        NEON BOMBER
                     </h1>
-                    <p class="text-gray-400 text-sm lg:text-base font-medium tracking-widest mt-1 flex items-center gap-3">
-                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
-                        ENTERPRISE EDITION
-                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
-                        v3.0.1
+                    <p class="text-sm lg:text-base font-bold tracking-[0.3em] text-gray-400 mt-1 flex items-center gap-3">
+                        <span class="text-pink-500">✦</span>
+                        CYBER ATTACK SUITE
+                        <span class="text-pink-500">✦</span>
+                        v3.0
                     </p>
                 </div>
             </div>
             
             <div class="flex items-center gap-4">
-                <div class="status-badge idle" id="statusBadge">
-                    <span class="glow-dot idle" id="statusDot"></span>
-                    <span id="statusText">System Ready</span>
+                <div class="neon-status">
+                    <span class="neon-dot idle" id="statusDot"></span>
+                    <span id="statusText" class="text-gray-400">SYSTEM READY</span>
                 </div>
-                <div class="hidden lg:block w-px h-8 bg-white/10"></div>
-                <div class="text-xs text-gray-500 font-mono" id="timestamp"></div>
+                <div class="hidden lg:block w-px h-10 bg-gradient-to-b from-transparent via-pink-500 to-transparent"></div>
+                <div class="text-xs text-pink-500 font-mono" id="timestamp" 
+                     style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);"></div>
             </div>
         </header>
 
         <!-- Main Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <!-- Control Panel -->
-            <div class="lg:col-span-5 glass-premium rounded-3xl p-6 lg:p-8 glow-red">
+            <div class="lg:col-span-5 glass-neon rounded-3xl p-6 lg:p-8">
                 <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-xl font-bold flex items-center gap-2">
-                        <span class="text-red-400">🎯</span> 
-                        Target Configuration
+                    <h2 class="text-lg font-bold neon-text-cyan tracking-wider flex items-center gap-2">
+                        <span>🎯</span> 
+                        TARGET LOCK
                     </h2>
-                    <span class="text-xs text-gray-500 font-mono bg-black/30 px-3 py-1 rounded-full">SECURE</span>
+                    <span class="text-[10px] text-pink-500 font-bold tracking-widest bg-pink-500/10 px-4 py-2 rounded-full border border-pink-500/20"
+                          style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">
+                        ⚡ SECURE ⚡
+                    </span>
                 </div>
                 
                 <div class="space-y-6">
                     <div>
-                        <label class="text-sm text-gray-400 font-medium block mb-2">Mobile Number</label>
+                        <label class="text-xs text-pink-400 font-bold tracking-widest block mb-2"
+                               style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">
+                            MOBILE NUMBER
+                        </label>
                         <div class="relative">
-                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm font-semibold">+91</div>
+                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-pink-500 font-bold text-sm tracking-wider"
+                                 style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">+91</div>
                             <input id="phone" maxlength="10" 
-                                   class="input-premium w-full rounded-2xl px-16 py-5 text-2xl lg:text-3xl font-mono text-white outline-none transition-all"
-                                   placeholder="Enter 10-digit number"
+                                   class="neon-input w-full rounded-2xl px-16 py-5 text-2xl lg:text-3xl font-bold outline-none transition-all"
+                                   placeholder="ENTER NUMBER"
                                    oninput="this.value=this.value.replace(/[^0-9]/g,'')">
                         </div>
-                        <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
-                            <span>ℹ️</span> Indian mobile number only
+                        <p class="text-[10px] text-pink-500/50 mt-2 tracking-widest flex items-center gap-1">
+                            <span>⚡</span> 10-DIGIT INDIAN MOBILE
                         </p>
                     </div>
 
                     <div class="grid grid-cols-2 gap-3">
                         <button onclick="startAttack()" id="startBtn" 
-                                class="col-span-2 btn-primary py-5 rounded-2xl text-lg font-bold flex items-center justify-center gap-3 transition-all">
+                                class="col-span-2 btn-neon py-5 rounded-2xl text-base font-bold flex items-center justify-center gap-3 transition-all">
                             <span>🚀</span> 
-                            <span>Launch Attack</span>
+                            <span>LAUNCH ATTACK</span>
                         </button>
                         <button onclick="stopAttack()" id="stopBtn" 
-                                class="col-span-2 hidden btn-secondary py-5 rounded-2xl text-lg font-bold flex items-center justify-center gap-3 transition-all">
+                                class="col-span-2 hidden btn-neon-stop py-5 rounded-2xl text-base font-bold flex items-center justify-center gap-3 transition-all">
                             <span>🛑</span> 
-                            <span>Terminate Attack</span>
+                            <span>TERMINATE</span>
                         </button>
                     </div>
 
-                    <div class="grid grid-cols-3 gap-3 p-4 bg-black/30 rounded-2xl border border-white/5">
+                    <div class="grid grid-cols-3 gap-3 p-4 bg-black/60 rounded-2xl border border-pink-500/10"
+                         style="box-shadow: inset 0 0 30px rgba(255, 0, 100, 0.05);">
                         <div class="text-center">
-                            <div class="text-xs text-gray-500">APIs</div>
-                            <div class="text-lg font-bold text-white">9</div>
+                            <div class="text-[10px] text-pink-500/50 tracking-widest">APIS</div>
+                            <div class="text-lg font-bold text-pink-400" style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">9</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-xs text-gray-500">Interval</div>
-                            <div class="text-lg font-bold text-white">2s</div>
+                            <div class="text-[10px] text-pink-500/50 tracking-widest">INTERVAL</div>
+                            <div class="text-lg font-bold text-cyan-400" style="text-shadow: 0 0 20px rgba(0, 200, 255, 0.3);">2s</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-xs text-gray-500">Target</div>
-                            <div class="text-lg font-bold text-red-400 truncate" id="targetDisplay">—</div>
+                            <div class="text-[10px] text-pink-500/50 tracking-widest">TARGET</div>
+                            <div class="text-lg font-bold text-pink-400 truncate" id="targetDisplay" 
+                                 style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">—</div>
                         </div>
                     </div>
                 </div>
             </div>
 
             <!-- Stats Panel -->
-            <div class="lg:col-span-7 glass-premium rounded-3xl p-6 lg:p-8">
+            <div class="lg:col-span-7 glass-neon rounded-3xl p-6 lg:p-8">
                 <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-xl font-bold flex items-center gap-2">
-                        <span class="text-blue-400">📊</span>
-                        Live Metrics
+                    <h3 class="text-lg font-bold neon-text-purple tracking-wider flex items-center gap-2">
+                        <span>📊</span>
+                        LIVE METRICS
                     </h3>
-                    <span class="text-xs text-gray-500 font-mono" id="cycleDisplay">Cycles: 0</span>
+                    <span class="text-xs text-cyan-400 font-bold tracking-widest" 
+                          style="text-shadow: 0 0 20px rgba(0, 200, 255, 0.3);" 
+                          id="cycleDisplay">CYCLES: 0</span>
                 </div>
 
                 <div class="grid grid-cols-3 gap-4">
-                    <div class="stat-card rounded-2xl p-5 text-center">
-                        <div class="text-4xl lg:text-5xl font-black text-orange-400 number-display" id="calls">0</div>
-                        <div class="text-xs text-gray-400 mt-2 font-medium uppercase tracking-wider">Voice Calls</div>
-                        <div class="progress-bar mt-3">
-                            <div class="progress-bar-fill bg-gradient-to-r from-orange-500 to-orange-400" id="callBar" style="width: 0%"></div>
+                    <div class="stat-neon rounded-2xl p-5 text-center">
+                        <div class="text-4xl lg:text-5xl font-black text-pink-400 number-display" 
+                             style="text-shadow: 0 0 30px rgba(255, 0, 100, 0.4);" id="calls">0</div>
+                        <div class="text-[10px] text-gray-400 mt-2 font-bold tracking-widest">📞 VOICE</div>
+                        <div class="neon-progress mt-3">
+                            <div class="neon-progress-fill bg-gradient-to-r from-pink-500 to-pink-400" 
+                                 id="callBar" style="width: 0%; color: #ff0066;"></div>
                         </div>
                     </div>
-                    <div class="stat-card rounded-2xl p-5 text-center">
-                        <div class="text-4xl lg:text-5xl font-black text-blue-400 number-display" id="sms">0</div>
-                        <div class="text-xs text-gray-400 mt-2 font-medium uppercase tracking-wider">SMS</div>
-                        <div class="progress-bar mt-3">
-                            <div class="progress-bar-fill bg-gradient-to-r from-blue-500 to-blue-400" id="smsBar" style="width: 0%"></div>
+                    <div class="stat-neon rounded-2xl p-5 text-center">
+                        <div class="text-4xl lg:text-5xl font-black text-cyan-400 number-display" 
+                             style="text-shadow: 0 0 30px rgba(0, 200, 255, 0.4);" id="sms">0</div>
+                        <div class="text-[10px] text-gray-400 mt-2 font-bold tracking-widest">✉️ SMS</div>
+                        <div class="neon-progress mt-3">
+                            <div class="neon-progress-fill bg-gradient-to-r from-cyan-500 to-cyan-400" 
+                                 id="smsBar" style="width: 0%; color: #00ccff;"></div>
                         </div>
                     </div>
-                    <div class="stat-card rounded-2xl p-5 text-center">
-                        <div class="text-4xl lg:text-5xl font-black text-green-400 number-display" id="wa">0</div>
-                        <div class="text-xs text-gray-400 mt-2 font-medium uppercase tracking-wider">WhatsApp</div>
-                        <div class="progress-bar mt-3">
-                            <div class="progress-bar-fill bg-gradient-to-r from-green-500 to-green-400" id="waBar" style="width: 0%"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mt-6">
-                    <div class="glass-premium-dark rounded-2xl p-4 border border-white/5">
-                        <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Hits</div>
-                        <div class="text-3xl font-bold text-white number-display" id="totalHits">0</div>
-                    </div>
-                    <div class="glass-premium-dark rounded-2xl p-4 border border-white/5">
-                        <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Success Rate</div>
-                        <div class="text-3xl font-bold text-emerald-400" id="successRate">—</div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Logs Panel -->
-            <div class="lg:col-span-12 glass-premium rounded-3xl p-6 lg:p-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold flex items-center gap-2">
-                        <span class="text-purple-400">📜</span>
-                        Event Log
-                    </h3>
-                    <span class="text-xs text-gray-500 font-mono">Live feed</span>
-                </div>
-                <div id="logs" class="log-container font-mono text-sm h-64 overflow-y-auto space-y-0.5 bg-black/20 rounded-2xl p-4"></div>
-            </div>
-        </div>
-
-        <!-- Footer -->
-        <footer class="mt-12 pt-6 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-4">
-            <p class="text-xs text-gray-600">
-                ⚠️ Authorized security testing only · All endpoints publicly accessible
-            </p>
-            <div class="flex items-center gap-4 text-xs text-gray-600">
-                <span>🔒 Encrypted</span>
-                <span>·</span>
-                <span>⚡ 9 APIs active</span>
-                <span>·</span>
-                <span id="uptime">Uptime: 0s</span>
-            </div>
-        </footer>
-    </div>
-
-    <script>
-        let isRunning = false;
-        let statusInterval = null;
-        let startTime = Date.now();
-
-        // Update timestamp
-        function updateTimestamp() {
-            const now = new Date();
-            document.getElementById('timestamp').textContent = now.toLocaleTimeString('en-US', { 
-                hour12: false, 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            });
-        }
-        setInterval(updateTimestamp, 1000);
-        updateTimestamp();
-
-        // Update uptime
-        setInterval(() => {
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const hours = Math.floor(elapsed / 3600);
-            const minutes = Math.floor((elapsed % 3600) / 60);
-            const seconds = elapsed % 60;
-            document.getElementById('uptime').textContent = `Uptime: ${hours}h ${minutes}m ${seconds}s`;
-        }, 1000);
-
-        async function startAttack() {
-            const phone = document.getElementById("phone").value.trim();
-            if (phone.length !== 10) {
-                alert("❌ Please enter a valid 10-digit mobile number");
-                document.getElementById("phone").style.borderColor = '#ef4444';
-                setTimeout(() => document.getElementById("phone").style.borderColor = '', 3000);
-                return;
-            }
-            
-            try {
-                const res = await fetch("/start", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
-                    body: JSON.stringify({phone})
-                });
-                const data = await res.json();
-                
-                if (data.status === "success") {
-                    isRunning = true;
-                    document.getElementById("startBtn").classList.add("hidden");
-                    document.getElementById("stopBtn").classList.remove("hidden");
-                    
-                    const badge = document.getElementById("statusBadge");
-                    badge.className = "status-badge active";
-                    document.getElementById("statusDot").className = "glow-dot active";
-                    document.getElementById("statusText").textContent = "Attack Active";
-                    
-                    document.getElementById("targetDisplay").textContent = `+91${phone}`;
-                    document.getElementById("targetDisplay").className = "text-lg font-bold text-red-400 truncate";
-                    
-                    if (statusInterval) clearInterval(statusInterval);
-                    pollStatus();
-                }
-            } catch(e) {
-                alert("❌ Failed to start attack: " + e.message);
-            }
-        }
-
-        async function stopAttack() {
-            try {
-                await fetch("/stop", {method: "POST"});
-                isRunning = false;
-                document.getElementById("startBtn").classList.remove("hidden");
-                document.getElementById("stopBtn").classList.add("hidden");
-                
-                const badge = document.getElementById("statusBadge");
-                badge.className = "status-badge idle";
-                document.getElementById("statusDot").className = "glow-dot idle";
-                document.getElementById("statusText").textContent = "Stopped";
-                
-                if (statusInterval) clearInterval(statusInterval);
-            } catch(e) {
-                alert("❌ Failed to stop attack: " + e.message);
-            }
-        }
-
-        function pollStatus() {
-            if (statusInterval) clearInterval(statusInterval);
-            
-            statusInterval = setInterval(async () => {
-                try {
-                    const res = await fetch("/status");
-                    const d = await res.json();
-                    
-                    const calls = d.stats.Call || 0;
-                    const sms = d.stats.SMS || 0;
-                    const wa = d.stats.WhatsApp || 0;
-                    const total = calls + sms + wa;
-                    
-                    document.getElementById("calls").textContent = calls;
-                    document.getElementById("sms").textContent = sms;
-                    document.getElementById("wa").textContent = wa;
-                    document.getElementById("totalHits").textContent = total;
-                    document.getElementById("cycleDisplay").textContent = `Cycles: ${d.cycles}`;
-                    
-                    // Animated bars
-                    const maxVal = Math.max(calls, sms, wa, 1);
-                    document.getElementById("callBar").style.width = ((calls / maxVal) * 100) + "%";
-                    document.getElementById("smsBar").style.width = ((sms / maxVal) * 100) + "%";
-                    document.getElementById("waBar").style.width = ((wa / maxVal) * 100) + "%";
-                    
-                    // Success rate (simulated)
-                    if (total > 0) {
-                        const rate = Math.min(85 + Math.random() * 10, 99);
-                        document.getElementById("successRate").textContent = rate.toFixed(1) + '%';
-                    }
-                    
-                    // Logs
-                    const logsDiv = document.getElementById("logs");
-                    if (d.logs && d.logs.length > 0) {
-                        logsDiv.innerHTML = d.logs.map(l => 
-                            `<div class="log-entry text-gray-300 hover:text-white transition-colors">${l}</div>`
-                        ).join('');
-                    } else {
-                        logsDiv.innerHTML = '<div class="text-gray-500 text-center py-10">⏳ Awaiting attack logs...</div>';
-                    }
-                    
-                    if (!d.running && isRunning) {
-                        isRunning = false;
-                        document.getElementById("startBtn").classList.remove("hidden");
-                        document.getElementById("stopBtn").classList.add("hidden");
-                        const badge = document.getElementById("statusBadge");
-                        badge.className = "status-badge idle";
-                        document.getElementById("statusDot").className = "glow-dot idle";
-                        document.getElementById("statusText").textContent = "Attack Ended";
-                    }
-                } catch(e) {
-                    console.error("Status poll error:", e);
-                }
-            }, 1200);
-        }
-
-        // Initial state
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("logs").innerHTML = '<div class="text-gray-500 text-center py-10">🟢 System initialized · Ready for action</div>';
-        });
-    </script>
-</body>
-</html>
-    """
-    return html
-
-@app.post("/start")
-async def start(phone: Phone):
-    if len(phone.phone) != 10: return {"status": "error"}
-    if attack_status["running"]: return {"status": "error"}
-    threading.Thread(target=lambda: asyncio.run(run_attack(phone.phone)), daemon=True).start()
-    return {"status": "success"}
-
-@app.post("/stop")
-async def stop():
-    attack_status["running"] = False
-    return {"status": "success"}
-
-@app.get("/status")
-async def status():
-    return {
-        "running": attack_status["running"],
-        "cycles": attack_status["cycles"],
-        "stats": attack_status["stats"],
-        "logs": attack_status["logs"][:20]
-    }
-
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=5000)
+                    <div class="stat-neon rounded-2xl p-5 text-center">
+                        <div class="text-4xl lg:text-5xl font-black text-purple-400 number-display" 
+                             style="text-shadow: 0 0 30px rgba(150, 0, 255, 0.4);" id="wa">0</div>
+                        <div class="text-[10px] text-gray-400 mt-2 font-bold tracking-widest">💬 WA</div>
+                        <div class="neon-progress mt-3">
+                            <div class="neon-progress-fill bg-gradient-to-r from-purple-500 to-purple-400" 
+                                 id="waBar" style="width
