@@ -66,194 +66,131 @@ async def index():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>⚡ NEON BOMBER ⚡</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Samarth SMS Bomber</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
         }
         
         body {
-            font-family: 'Orbitron', monospace;
-            background: #000000;
+            font-family: 'Rajdhani', sans-serif;
+            background: #0a0e1a;
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
+            padding: 12px;
         }
 
-        /* ===== LIGHTNING BACKGROUND ===== */
-        .lightning-bg {
+        /* Dark Blue Glow Background */
+        .glow-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background: 
-                radial-gradient(ellipse at 20% 50%, rgba(255, 0, 50, 0.3) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(0, 50, 255, 0.3) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 100%, rgba(150, 0, 255, 0.2) 0%, transparent 50%);
+                radial-gradient(ellipse at 20% 50%, rgba(0, 50, 200, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(0, 100, 255, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 20, 150, 0.4) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 0%, rgba(0, 80, 255, 0.15) 0%, transparent 40%);
             z-index: 0;
-            animation: pulseGlow 3s ease-in-out infinite alternate;
+            animation: bgPulse 4s ease-in-out infinite alternate;
         }
 
-        @keyframes pulseGlow {
-            0% { opacity: 0.6; }
+        @keyframes bgPulse {
+            0% { opacity: 0.7; }
             100% { opacity: 1; }
         }
 
-        /* ===== NEON GRID ===== */
-        .neon-grid {
+        /* Blue Grid */
+        .blue-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-image: 
-                linear-gradient(rgba(255, 0, 100, 0.05) 1px, transparent 1px),
+                linear-gradient(rgba(0, 100, 255, 0.05) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(0, 100, 255, 0.05) 1px, transparent 1px);
-            background-size: 60px 60px;
+            background-size: 40px 40px;
             z-index: 0;
-            animation: gridPulse 4s ease-in-out infinite;
+            animation: gridFloat 20s linear infinite;
         }
 
-        @keyframes gridPulse {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 0.8; }
+        @keyframes gridFloat {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
         }
 
-        /* ===== LIGHTNING FLASHES ===== */
-        .lightning-flash {
+        /* Floating Orbs */
+        .orb {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            z-index: 9999;
-            opacity: 0;
-            pointer-events: none;
-            animation: lightning 8s infinite;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            animation: orbFloat 8s ease-in-out infinite alternate;
         }
 
-        @keyframes lightning {
-            0%, 89%, 91%, 100% { opacity: 0; }
-            90% { opacity: 0.8; }
-            90.5% { opacity: 0; }
-            92% { opacity: 0.6; }
-            92.5% { opacity: 0; }
+        .orb-1 {
+            width: 300px;
+            height: 300px;
+            background: rgba(0, 50, 200, 0.15);
+            top: -10%;
+            right: -10%;
+            animation-delay: 0s;
         }
 
-        /* ===== GLASS NEON ===== */
-        .glass-neon {
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(30px) saturate(1.8);
-            -webkit-backdrop-filter: blur(30px) saturate(1.8);
-            border: 1px solid rgba(255, 0, 100, 0.2);
+        .orb-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(0, 100, 255, 0.1);
+            bottom: -20%;
+            left: -20%;
+            animation-delay: 3s;
+        }
+
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background: rgba(0, 150, 255, 0.08);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: 5s;
+        }
+
+        @keyframes orbFloat {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(30px, -30px) scale(1.2); }
+        }
+
+        /* Glass Cards */
+        .glass-dark {
+            background: rgba(10, 14, 30, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 100, 255, 0.15);
             box-shadow: 
-                0 0 30px rgba(255, 0, 100, 0.1),
-                inset 0 0 30px rgba(255, 0, 100, 0.05);
-            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                0 8px 32px rgba(0, 0, 0, 0.4),
+                inset 0 1px 0 rgba(0, 100, 255, 0.1);
             position: relative;
             overflow: hidden;
         }
 
-        .glass-neon::before {
-            content: '';
-            position: absolute;
-            top: -2px;
-            left: -2px;
-            right: -2px;
-            bottom: -2px;
-            background: linear-gradient(45deg, #ff0066, #00ccff, #ff0066, #00ccff);
-            background-size: 400% 400%;
-            z-index: -1;
-            border-radius: inherit;
-            animation: borderGlow 4s linear infinite;
-            opacity: 0.3;
-            filter: blur(2px);
-        }
-
-        @keyframes borderGlow {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .glass-neon:hover {
-            border-color: rgba(255, 0, 100, 0.6);
-            box-shadow: 
-                0 0 60px rgba(255, 0, 100, 0.3),
-                0 0 120px rgba(255, 0, 100, 0.1),
-                inset 0 0 60px rgba(255, 0, 100, 0.05);
-        }
-
-        /* ===== NEON TEXT ===== */
-        .neon-text {
-            font-family: 'Orbitron', monospace;
-            text-shadow: 
-                0 0 10px rgba(255, 0, 100, 0.8),
-                0 0 20px rgba(255, 0, 100, 0.6),
-                0 0 40px rgba(255, 0, 100, 0.4),
-                0 0 80px rgba(255, 0, 100, 0.2);
-            animation: neonPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes neonPulse {
-            0%, 100% { text-shadow: 0 0 10px rgba(255, 0, 100, 0.8), 0 0 20px rgba(255, 0, 100, 0.6), 0 0 40px rgba(255, 0, 100, 0.4); }
-            50% { text-shadow: 0 0 20px rgba(255, 0, 100, 1), 0 0 40px rgba(255, 0, 100, 0.8), 0 0 80px rgba(255, 0, 100, 0.6), 0 0 120px rgba(255, 0, 100, 0.4); }
-        }
-
-        .neon-text-cyan {
-            text-shadow: 
-                0 0 10px rgba(0, 200, 255, 0.8),
-                0 0 20px rgba(0, 200, 255, 0.6),
-                0 0 40px rgba(0, 200, 255, 0.4);
-            animation: neonPulseCyan 2s ease-in-out infinite;
-        }
-
-        @keyframes neonPulseCyan {
-            0%, 100% { text-shadow: 0 0 10px rgba(0, 200, 255, 0.8), 0 0 20px rgba(0, 200, 255, 0.6); }
-            50% { text-shadow: 0 0 20px rgba(0, 200, 255, 1), 0 0 40px rgba(0, 200, 255, 0.8), 0 0 80px rgba(0, 200, 255, 0.6); }
-        }
-
-        .neon-text-purple {
-            text-shadow: 
-                0 0 10px rgba(150, 0, 255, 0.8),
-                0 0 20px rgba(150, 0, 255, 0.6),
-                0 0 40px rgba(150, 0, 255, 0.4);
-            animation: neonPulsePurple 2s ease-in-out infinite;
-        }
-
-        @keyframes neonPulsePurple {
-            0%, 100% { text-shadow: 0 0 10px rgba(150, 0, 255, 0.8), 0 0 20px rgba(150, 0, 255, 0.6); }
-            50% { text-shadow: 0 0 20px rgba(150, 0, 255, 1), 0 0 40px rgba(150, 0, 255, 0.8), 0 0 80px rgba(150, 0, 255, 0.6); }
-        }
-
-        /* ===== STAT CARDS ===== */
-        .stat-neon {
-            background: rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(255, 0, 100, 0.2);
-            box-shadow: 
-                0 0 20px rgba(255, 0, 100, 0.1),
-                inset 0 0 20px rgba(255, 0, 100, 0.05);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-neon::after {
+        .glass-dark::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(255, 0, 100, 0.05), transparent, rgba(0, 200, 255, 0.05), transparent);
-            animation: rotateGlow 10s linear infinite;
+            background: conic-gradient(from 0deg, transparent, rgba(0, 100, 255, 0.03), transparent, rgba(0, 50, 200, 0.03), transparent);
+            animation: rotateGlow 15s linear infinite;
         }
 
         @keyframes rotateGlow {
@@ -261,528 +198,528 @@ async def index():
             100% { transform: rotate(360deg); }
         }
 
-        .stat-neon:hover {
-            transform: translateY(-4px) scale(1.02);
-            border-color: rgba(255, 0, 100, 0.6);
-            box-shadow: 
-                0 0 40px rgba(255, 0, 100, 0.3),
-                0 0 80px rgba(255, 0, 100, 0.1);
+        /* Neon Blue Text */
+        .neon-blue {
+            font-family: 'Orbitron', monospace;
+            text-shadow: 
+                0 0 10px rgba(0, 100, 255, 0.5),
+                0 0 20px rgba(0, 100, 255, 0.3),
+                0 0 40px rgba(0, 100, 255, 0.1);
+            animation: neonPulse 2.5s ease-in-out infinite;
         }
 
-        /* ===== NEON INPUT ===== */
-        .neon-input {
-            background: rgba(0, 0, 0, 0.9);
-            border: 2px solid rgba(255, 0, 100, 0.3);
+        @keyframes neonPulse {
+            0%, 100% { text-shadow: 0 0 10px rgba(0, 100, 255, 0.5), 0 0 20px rgba(0, 100, 255, 0.3); }
+            50% { text-shadow: 0 0 20px rgba(0, 100, 255, 0.8), 0 0 40px rgba(0, 100, 255, 0.5), 0 0 80px rgba(0, 100, 255, 0.2); }
+        }
+
+        .neon-cyan {
+            text-shadow: 0 0 10px rgba(0, 200, 255, 0.4), 0 0 20px rgba(0, 200, 255, 0.2);
+        }
+
+        /* Input Field */
+        .input-blue {
+            background: rgba(0, 20, 60, 0.6);
+            border: 2px solid rgba(0, 100, 255, 0.2);
             box-shadow: 
-                0 0 20px rgba(255, 0, 100, 0.05),
-                inset 0 0 20px rgba(255, 0, 100, 0.05);
+                0 0 20px rgba(0, 100, 255, 0.05),
+                inset 0 0 30px rgba(0, 100, 255, 0.03);
             transition: all 0.4s ease;
             font-family: 'Orbitron', monospace;
-            letter-spacing: 0.2em;
-            color: #ff0066;
-        }
-
-        .neon-input:focus {
-            border-color: #ff0066;
-            box-shadow: 
-                0 0 40px rgba(255, 0, 100, 0.3),
-                0 0 80px rgba(255, 0, 100, 0.1),
-                inset 0 0 40px rgba(255, 0, 100, 0.1);
+            letter-spacing: 0.15em;
+            color: #4a9eff;
+            font-size: 20px;
+            padding: 16px 20px 16px 60px;
+            width: 100%;
+            border-radius: 16px;
             outline: none;
+            -webkit-appearance: none;
         }
 
-        .neon-input::placeholder {
-            color: rgba(255, 0, 100, 0.2);
+        .input-blue:focus {
+            border-color: #4a9eff;
+            box-shadow: 
+                0 0 40px rgba(0, 100, 255, 0.2),
+                0 0 80px rgba(0, 100, 255, 0.05),
+                inset 0 0 40px rgba(0, 100, 255, 0.05);
+            background: rgba(0, 20, 60, 0.8);
+        }
+
+        .input-blue::placeholder {
+            color: rgba(74, 158, 255, 0.2);
             font-family: 'Orbitron', monospace;
             letter-spacing: 0.1em;
+            font-size: 14px;
         }
 
-        /* ===== NEON BUTTONS ===== */
-        .btn-neon {
-            background: linear-gradient(135deg, #ff0066, #cc0033);
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-prefix {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #4a9eff;
+            font-family: 'Orbitron', monospace;
+            font-weight: 700;
+            font-size: 16px;
+            text-shadow: 0 0 20px rgba(0, 100, 255, 0.3);
+            opacity: 0.8;
+        }
+
+        /* Buttons */
+        .btn-attack {
+            background: linear-gradient(135deg, #0044cc, #0066ff);
             border: none;
             box-shadow: 
-                0 0 30px rgba(255, 0, 100, 0.4),
-                0 0 60px rgba(255, 0, 100, 0.2),
-                inset 0 0 30px rgba(255, 255, 255, 0.1);
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            overflow: hidden;
+                0 0 30px rgba(0, 100, 255, 0.3),
+                0 0 60px rgba(0, 100, 255, 0.1),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             font-family: 'Orbitron', monospace;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            padding: 16px;
+            border-radius: 16px;
+            width: 100%;
+            color: white;
+            font-size: 14px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-neon::before {
+        .btn-attack::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
             transform: rotate(45deg);
             transition: all 0.6s;
         }
 
-        .btn-neon:hover::before {
+        .btn-attack:active {
+            transform: scale(0.97);
+        }
+
+        .btn-attack:active::before {
             transform: rotate(45deg) translate(50%, 50%);
         }
 
-        .btn-neon:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 
-                0 0 60px rgba(255, 0, 100, 0.6),
-                0 0 120px rgba(255, 0, 100, 0.3),
-                inset 0 0 60px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-neon:active {
-            transform: scale(0.98);
-        }
-
-        .btn-neon-stop {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 0, 100, 0.3);
-            box-shadow: 0 0 20px rgba(255, 0, 100, 0.1);
+        .btn-stop {
+            background: rgba(255, 0, 50, 0.1);
+            border: 1px solid rgba(255, 0, 50, 0.3);
+            box-shadow: 0 0 20px rgba(255, 0, 50, 0.1);
+            transition: all 0.3s ease;
             font-family: 'Orbitron', monospace;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
-            transition: all 0.4s ease;
+            padding: 16px;
+            border-radius: 16px;
+            width: 100%;
+            color: #ff3355;
+            font-size: 14px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
         }
 
-        .btn-neon-stop:hover {
-            background: rgba(255, 0, 100, 0.2);
-            border-color: #ff0066;
-            box-shadow: 0 0 40px rgba(255, 0, 100, 0.3);
-            transform: translateY(-3px);
+        .btn-stop:active {
+            transform: scale(0.97);
+            background: rgba(255, 0, 50, 0.2);
         }
 
-        /* ===== PROGRESS BARS ===== */
-        .neon-progress {
-            height: 4px;
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 10px;
+        /* Stat Cards */
+        .stat-card {
+            background: rgba(0, 20, 60, 0.4);
+            border: 1px solid rgba(0, 100, 255, 0.1);
+            border-radius: 14px;
+            padding: 14px;
+            text-align: center;
+            transition: all 0.3s ease;
+            position: relative;
             overflow: hidden;
-            position: relative;
-            box-shadow: inset 0 0 10px rgba(255, 0, 100, 0.1);
         }
 
-        .neon-progress-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
-            position: relative;
-            box-shadow: 0 0 20px currentColor;
-        }
-
-        .neon-progress-fill::after {
+        .stat-card::after {
             content: '';
             position: absolute;
-            right: 0;
-            top: -50%;
-            width: 30px;
-            height: 200%;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
-            animation: progressNeon 2s ease-in-out infinite;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #4a9eff, transparent);
+            opacity: 0.3;
         }
 
-        @keyframes progressNeon {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(200%); }
-        }
-
-        /* ===== LOGS ===== */
-        .neon-logs {
+        .stat-number {
             font-family: 'Orbitron', monospace;
+            font-size: 28px;
+            font-weight: 900;
+            line-height: 1.2;
+        }
+
+        .stat-label {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(74, 158, 255, 0.6);
+            margin-top: 4px;
+        }
+
+        /* Progress Bars */
+        .progress-wrap {
+            height: 3px;
+            background: rgba(0, 100, 255, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 15px currentColor;
+        }
+
+        /* Logs */
+        .log-container {
+            font-family: 'Rajdhani', monospace;
+            font-size: 12px;
+            height: 150px;
+            overflow-y: auto;
             scrollbar-width: thin;
-            scrollbar-color: #ff0066 transparent;
-            font-size: 11px;
+            scrollbar-color: rgba(0, 100, 255, 0.3) transparent;
+            padding: 12px;
+            border-radius: 12px;
+            background: rgba(0, 0, 0, 0.3);
         }
 
-        .neon-logs::-webkit-scrollbar {
-            width: 4px;
+        .log-container::-webkit-scrollbar {
+            width: 3px;
         }
 
-        .neon-logs::-webkit-scrollbar-track {
+        .log-container::-webkit-scrollbar-track {
             background: transparent;
         }
 
-        .neon-logs::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #ff0066, #00ccff);
+        .log-container::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, #4a9eff, #0066ff);
             border-radius: 10px;
-            box-shadow: 0 0 20px #ff0066;
         }
 
-        .log-neon {
-            padding: 6px 12px;
-            border-radius: 6px;
-            transition: all 0.3s;
+        .log-entry {
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: rgba(74, 158, 255, 0.7);
+            animation: logSlide 0.3s ease-out;
             border-left: 2px solid transparent;
-            animation: logGlow 0.5s ease-out;
+            transition: all 0.2s;
         }
 
-        .log-neon:hover {
-            background: rgba(255, 0, 100, 0.05);
-            border-left-color: #ff0066;
-            box-shadow: 0 0 20px rgba(255, 0, 100, 0.05);
+        .log-entry:hover {
+            background: rgba(0, 100, 255, 0.05);
+            border-left-color: #4a9eff;
         }
 
-        @keyframes logGlow {
+        @keyframes logSlide {
             from {
                 opacity: 0;
-                transform: translateX(-20px);
-                filter: blur(5px);
+                transform: translateX(-10px);
             }
             to {
                 opacity: 1;
                 transform: translateX(0);
-                filter: blur(0);
             }
         }
 
-        /* ===== STATUS INDICATOR ===== */
-        .neon-status {
+        /* Status Badge */
+        .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 10px;
-            padding: 10px 20px;
+            gap: 8px;
+            padding: 6px 14px;
             border-radius: 100px;
             font-family: 'Orbitron', monospace;
-            font-size: 12px;
+            font-size: 10px;
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 0.1em;
-            border: 1px solid rgba(255, 0, 100, 0.2);
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
+            letter-spacing: 0.05em;
+            border: 1px solid rgba(0, 100, 255, 0.15);
+            background: rgba(0, 20, 60, 0.6);
         }
 
-        .neon-dot {
-            width: 10px;
-            height: 10px;
+        .status-dot {
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             display: inline-block;
-            box-shadow: 0 0 20px currentColor;
-            animation: dotPulse 1.5s ease-in-out infinite;
         }
 
-        @keyframes dotPulse {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.3; transform: scale(0.7); }
-        }
-
-        .neon-dot.idle {
+        .status-dot.idle {
             background: #00ff88;
-            color: #00ff88;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
         }
 
-        .neon-dot.active {
-            background: #ff0066;
-            color: #ff0066;
-            animation: dotPulse 0.5s ease-in-out infinite;
+        .status-dot.active {
+            background: #4a9eff;
+            box-shadow: 0 0 20px rgba(0, 100, 255, 0.5);
+            animation: dotFlash 0.8s ease-in-out infinite;
         }
 
-        /* ===== FLOATING PARTICLES ===== */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            pointer-events: none;
-            overflow: hidden;
+        @keyframes dotFlash {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: #ff0066;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #ff0066, 0 0 20px #ff0066;
-            animation: floatParticle 20s linear infinite;
+        /* Responsive Design */
+        @media (max-width: 480px) {
+            body {
+                padding: 8px;
+            }
+
+            .stat-number {
+                font-size: 22px;
+            }
+
+            .input-blue {
+                font-size: 16px;
+                padding: 14px 16px 14px 52px;
+                border-radius: 12px;
+            }
+
+            .input-prefix {
+                font-size: 14px;
+                left: 14px;
+            }
+
+            .btn-attack, .btn-stop {
+                font-size: 12px;
+                padding: 14px;
+                border-radius: 12px;
+            }
+
+            .log-container {
+                height: 120px;
+                font-size: 10px;
+            }
+
+            .glass-dark {
+                border-radius: 16px;
+            }
+
+            .neon-blue {
+                font-size: 16px !important;
+            }
+
+            .stat-card {
+                padding: 10px;
+                border-radius: 10px;
+            }
         }
 
-        @keyframes floatParticle {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
-        }
-
-        /* ===== RESPONSIVE ===== */
-        @media (max-width: 768px) {
-            .glass-neon {
-                backdrop-filter: blur(20px);
-                -webkit-backdrop-filter: blur(20px);
+        @media (max-width: 380px) {
+            .stat-number {
+                font-size: 18px;
             }
             
-            .neon-text {
-                font-size: 1.5rem !important;
+            .input-blue {
+                font-size: 14px;
+                padding: 12px 12px 12px 44px;
             }
-            
-            .stat-neon {
-                padding: 12px !important;
+
+            .input-prefix {
+                font-size: 12px;
+                left: 12px;
             }
+        }
+
+        /* Grid Layout */
+        .grid-main {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (min-width: 481px) {
+            .grid-main {
+                max-width: 600px;
+                gap: 16px;
+            }
+        }
+
+        /* Smooth transitions for mobile */
+        * {
+            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
         }
     </style>
 </head>
 <body>
-    <!-- Lightning Flash -->
-    <div class="lightning-flash"></div>
-
     <!-- Background Layers -->
-    <div class="lightning-bg"></div>
-    <div class="neon-grid"></div>
+    <div class="glow-bg"></div>
+    <div class="blue-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
 
-    <!-- Particles -->
-    <div class="particles" id="particles"></div>
-
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
+    <div class="grid-main">
         <!-- Header -->
-        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-10">
-            <div class="flex items-center gap-6">
-                <div class="relative">
-                    <div class="w-16 h-16 lg:w-20 lg:h-20 rounded-2xl flex items-center justify-center text-4xl"
-                         style="background: linear-gradient(135deg, #ff0066, #cc0033);
-                                box-shadow: 0 0 40px rgba(255, 0, 100, 0.4), 0 0 80px rgba(255, 0, 100, 0.2);
-                                animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;">
-                        ⚡
-                    </div>
-                    <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-emerald-400 rounded-full border-2 border-black"
-                         style="box-shadow: 0 0 30px rgba(0, 255, 136, 0.6);"></div>
+        <div class="glass-dark rounded-2xl p-4 text-center">
+            <div class="flex items-center justify-center gap-3 mb-1">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-2xl"
+                     style="background: linear-gradient(135deg, #0044cc, #0066ff);
+                            box-shadow: 0 0 30px rgba(0, 100, 255, 0.3);">
+                    💥
                 </div>
-                <div>
-                    <h1 class="text-3xl lg:text-6xl font-black neon-text tracking-wider">
-                        NEON BOMBER
-                    </h1>
-                    <p class="text-sm lg:text-base font-bold tracking-[0.3em] text-gray-400 mt-1 flex items-center gap-3">
-                        <span class="text-pink-500">✦</span>
-                        CYBER ATTACK SUITE
-                        <span class="text-pink-500">✦</span>
-                        v3.0
-                    </p>
+                <h1 class="neon-blue text-2xl font-black tracking-wider">
+                    Samarth
+                </h1>
+            </div>
+            <p class="text-xs text-blue-400/60 font-bold tracking-[0.2em] neon-cyan">
+                ⚡ SMS · CALL · WHATSAPP BOMBER ⚡
+            </p>
+            <div class="flex justify-center mt-3">
+                <div class="status-badge">
+                    <span class="status-dot idle" id="statusDot"></span>
+                    <span id="statusText" class="text-blue-400/70">READY</span>
                 </div>
             </div>
+        </div>
+
+        <!-- Control Panel -->
+        <div class="glass-dark rounded-2xl p-4">
+            <h2 class="text-xs text-blue-400/50 font-bold tracking-widest mb-3 flex items-center gap-2">
+                <span>🎯</span> TARGET
+            </h2>
             
-            <div class="flex items-center gap-4">
-                <div class="neon-status">
-                    <span class="neon-dot idle" id="statusDot"></span>
-                    <span id="statusText" class="text-gray-400">SYSTEM READY</span>
-                </div>
-                <div class="hidden lg:block w-px h-10 bg-gradient-to-b from-transparent via-pink-500 to-transparent"></div>
-                <div class="text-xs text-pink-500 font-mono" id="timestamp" 
-                     style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);"></div>
+            <div class="input-wrapper">
+                <span class="input-prefix">+91</span>
+                <input id="phone" maxlength="10" 
+                       class="input-blue" 
+                       placeholder="ENTER NUMBER"
+                       inputmode="numeric"
+                       pattern="[0-9]*"
+                       oninput="this.value=this.value.replace(/[^0-9]/g,'')">
             </div>
-        </header>
 
-        <!-- Main Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-            <!-- Control Panel -->
-            <div class="lg:col-span-5 glass-neon rounded-3xl p-6 lg:p-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h2 class="text-lg font-bold neon-text-cyan tracking-wider flex items-center gap-2">
-                        <span>🎯</span> 
-                        TARGET LOCK
-                    </h2>
-                    <span class="text-[10px] text-pink-500 font-bold tracking-widest bg-pink-500/10 px-4 py-2 rounded-full border border-pink-500/20"
-                          style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">
-                        ⚡ SECURE ⚡
-                    </span>
+            <div class="grid grid-cols-2 gap-3 mt-3">
+                <button onclick="startAttack()" id="startBtn" 
+                        class="btn-attack col-span-2">
+                    🚀 LAUNCH ATTACK
+                </button>
+                <button onclick="stopAttack()" id="stopBtn" 
+                        class="btn-stop col-span-2 hidden">
+                    🛑 TERMINATE
+                </button>
+            </div>
+
+            <div class="grid grid-cols-3 gap-2 mt-3 p-3 bg-black/20 rounded-xl border border-blue-500/5">
+                <div class="text-center">
+                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">APIS</div>
+                    <div class="text-sm font-bold text-blue-400 neon-cyan">9</div>
                 </div>
-                
-                <div class="space-y-6">
-                    <div>
-                        <label class="text-xs text-pink-400 font-bold tracking-widest block mb-2"
-                               style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">
-                            MOBILE NUMBER
-                        </label>
-                        <div class="relative">
-                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-pink-500 font-bold text-sm tracking-wider"
-                                 style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">+91</div>
-                            <input id="phone" maxlength="10" 
-                                   class="neon-input w-full rounded-2xl px-16 py-5 text-2xl lg:text-3xl font-bold outline-none transition-all"
-                                   placeholder="ENTER NUMBER"
-                                   oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-                        </div>
-                        <p class="text-[10px] text-pink-500/50 mt-2 tracking-widest flex items-center gap-1">
-                            <span>⚡</span> 10-DIGIT INDIAN MOBILE
-                        </p>
-                    </div>
+                <div class="text-center">
+                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">INTERVAL</div>
+                    <div class="text-sm font-bold text-cyan-400 neon-cyan">2s</div>
+                </div>
+                <div class="text-center">
+                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">TARGET</div>
+                    <div class="text-sm font-bold text-blue-400 truncate neon-cyan" id="targetDisplay">—</div>
+                </div>
+            </div>
+        </div>
 
-                    <div class="grid grid-cols-2 gap-3">
-                        <button onclick="startAttack()" id="startBtn" 
-                                class="col-span-2 btn-neon py-5 rounded-2xl text-base font-bold flex items-center justify-center gap-3 transition-all">
-                            <span>🚀</span> 
-                            <span>LAUNCH ATTACK</span>
-                        </button>
-                        <button onclick="stopAttack()" id="stopBtn" 
-                                class="col-span-2 hidden btn-neon-stop py-5 rounded-2xl text-base font-bold flex items-center justify-center gap-3 transition-all">
-                            <span>🛑</span> 
-                            <span>TERMINATE</span>
-                        </button>
-                    </div>
+        <!-- Stats -->
+        <div class="glass-dark rounded-2xl p-4">
+            <div class="flex justify-between items-center mb-3">
+                <h2 class="text-xs text-blue-400/50 font-bold tracking-widest flex items-center gap-2">
+                    <span>📊</span> METRICS
+                </h2>
+                <span class="text-[9px] text-cyan-400/50 font-bold tracking-widest neon-cyan" id="cycleDisplay">CYCLES: 0</span>
+            </div>
 
-                    <div class="grid grid-cols-3 gap-3 p-4 bg-black/60 rounded-2xl border border-pink-500/10"
-                         style="box-shadow: inset 0 0 30px rgba(255, 0, 100, 0.05);">
-                        <div class="text-center">
-                            <div class="text-[10px] text-pink-500/50 tracking-widest">APIS</div>
-                            <div class="text-lg font-bold text-pink-400" style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">9</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-[10px] text-pink-500/50 tracking-widest">INTERVAL</div>
-                            <div class="text-lg font-bold text-cyan-400" style="text-shadow: 0 0 20px rgba(0, 200, 255, 0.3);">2s</div>
-                        </div>
-                        <div class="text-center">
-                            <div class="text-[10px] text-pink-500/50 tracking-widest">TARGET</div>
-                            <div class="text-lg font-bold text-pink-400 truncate" id="targetDisplay" 
-                                 style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.3);">—</div>
-                        </div>
+            <div class="grid grid-cols-3 gap-2">
+                <div class="stat-card">
+                    <div class="stat-number text-blue-400" style="text-shadow: 0 0 30px rgba(0, 100, 255, 0.3);" id="calls">0</div>
+                    <div class="stat-label">📞 CALLS</div>
+                    <div class="progress-wrap">
+                        <div class="progress-fill" id="callBar" style="width: 0%; color: #4a9eff; background: linear-gradient(90deg, #4a9eff, #0066ff);"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number text-cyan-400" style="text-shadow: 0 0 30px rgba(0, 200, 255, 0.3);" id="sms">0</div>
+                    <div class="stat-label">✉️ SMS</div>
+                    <div class="progress-wrap">
+                        <div class="progress-fill" id="smsBar" style="width: 0%; color: #00ccff; background: linear-gradient(90deg, #00ccff, #0099ff);"></div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number text-purple-400" style="text-shadow: 0 0 30px rgba(150, 0, 255, 0.3);" id="wa">0</div>
+                    <div class="stat-label">💬 WA</div>
+                    <div class="progress-wrap">
+                        <div class="progress-fill" id="waBar" style="width: 0%; color: #9600ff; background: linear-gradient(90deg, #9600ff, #6600cc);"></div>
                     </div>
                 </div>
             </div>
 
-            <!-- Stats Panel -->
-            <div class="lg:col-span-7 glass-neon rounded-3xl p-6 lg:p-8">
-                <div class="flex items-center justify-between mb-6">
-                    <h3 class="text-lg font-bold neon-text-purple tracking-wider flex items-center gap-2">
-                        <span>📊</span>
-                        LIVE METRICS
-                    </h3>
-                    <span class="text-xs text-cyan-400 font-bold tracking-widest" 
-                          style="text-shadow: 0 0 20px rgba(0, 200, 255, 0.3);" 
-                          id="cycleDisplay">CYCLES: 0</span>
+            <div class="grid grid-cols-2 gap-2 mt-3">
+                <div class="stat-card">
+                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">TOTAL HITS</div>
+                    <div class="text-xl font-black text-white font-orbitron" style="font-family: 'Orbitron', monospace;" id="totalHits">0</div>
                 </div>
-
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="stat-neon rounded-2xl p-5 text-center">
-                        <div class="text-4xl lg:text-5xl font-black text-pink-400 number-display" 
-                             style="text-shadow: 0 0 30px rgba(255, 0, 100, 0.4);" id="calls">0</div>
-                        <div class="text-[10px] text-gray-400 mt-2 font-bold tracking-widest">📞 VOICE</div>
-                        <div class="neon-progress mt-3">
-                            <div class="neon-progress-fill bg-gradient-to-r from-pink-500 to-pink-400" 
-                                 id="callBar" style="width: 0%; color: #ff0066;"></div>
-                        </div>
-                    </div>
-                    <div class="stat-neon rounded-2xl p-5 text-center">
-                        <div class="text-4xl lg:text-5xl font-black text-cyan-400 number-display" 
-                             style="text-shadow: 0 0 30px rgba(0, 200, 255, 0.4);" id="sms">0</div>
-                        <div class="text-[10px] text-gray-400 mt-2 font-bold tracking-widest">✉️ SMS</div>
-                        <div class="neon-progress mt-3">
-                            <div class="neon-progress-fill bg-gradient-to-r from-cyan-500 to-cyan-400" 
-                                 id="smsBar" style="width: 0%; color: #00ccff;"></div>
-                        </div>
-                    </div>
-                    <div class="stat-neon rounded-2xl p-5 text-center">
-                        <div class="text-4xl lg:text-5xl font-black text-purple-400 number-display" 
-                             style="text-shadow: 0 0 30px rgba(150, 0, 255, 0.4);" id="wa">0</div>
-                        <div class="text-[10px] text-gray-400 mt-2 font-bold tracking-widest">💬 WA</div>
-                        <div class="neon-progress mt-3">
-                            <div class="neon-progress-fill bg-gradient-to-r from-purple-500 to-purple-400" 
-                                 id="waBar" style="width: 0%; color: #9600ff;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-2 gap-4 mt-6">
-                    <div class="stat-neon rounded-2xl p-4">
-                        <div class="text-[10px] text-gray-400 font-bold tracking-widest">TOTAL HITS</div>
-                        <div class="text-3xl font-black text-white number-display" 
-                             style="text-shadow: 0 0 30px rgba(255,255,255,0.1);" id="totalHits">0</div>
-                    </div>
-                    <div class="stat-neon rounded-2xl p-4">
-                        <div class="text-[10px] text-gray-400 font-bold tracking-widest">SUCCESS RATE</div>
-                        <div class="text-3xl font-black text-emerald-400" 
-                             style="text-shadow: 0 0 30px rgba(0, 255, 136, 0.3);" id="successRate">—</div>
-                    </div>
+                <div class="stat-card">
+                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">SUCCESS RATE</div>
+                    <div class="text-xl font-black text-emerald-400" style="font-family: 'Orbitron', monospace; text-shadow: 0 0 30px rgba(0, 255, 136, 0.2);" id="successRate">—</div>
                 </div>
             </div>
+        </div>
 
-            <!-- Logs Panel -->
-            <div class="lg:col-span-12 glass-neon rounded-3xl p-6 lg:p-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-bold neon-text-cyan tracking-wider flex items-center gap-2">
-                        <span>📜</span>
-                        EVENT LOG
-                    </h3>
-                    <span class="text-[10px] text-pink-500 font-bold tracking-widest">LIVE FEED ⚡</span>
-                </div>
-                <div id="logs" class="neon-logs text-xs h-64 overflow-y-auto space-y-0.5 bg-black/40 rounded-2xl p-4"
-                     style="border: 1px solid rgba(255, 0, 100, 0.05);"></div>
+        <!-- Logs -->
+        <div class="glass-dark rounded-2xl p-4">
+            <div class="flex justify-between items-center mb-2">
+                <h2 class="text-xs text-blue-400/50 font-bold tracking-widest flex items-center gap-2">
+                    <span>📜</span> LOGS
+                </h2>
+                <span class="text-[8px] text-blue-400/30 font-bold tracking-widest">LIVE</span>
+            </div>
+            <div id="logs" class="log-container">
+                <div class="text-blue-400/30 text-center py-4 text-xs tracking-widest">⚡ SYSTEM READY ⚡</div>
             </div>
         </div>
 
         <!-- Footer -->
-        <footer class="mt-10 pt-6 border-t border-pink-500/10 flex flex-col lg:flex-row justify-between items-center gap-4">
-            <p class="text-[10px] text-pink-500/30 font-bold tracking-widest">
-                ⚡ AUTHORIZED TESTING ONLY · ALL ENDPOINTS PUBLIC
-            </p>
-            <div class="flex items-center gap-4 text-[10px] text-pink-500/30 font-bold tracking-widest">
-                <span style="text-shadow: 0 0 20px rgba(255, 0, 100, 0.1);">🔒 ENCRYPTED</span>
-                <span>·</span>
-                <span style="text-shadow: 0 0 20px rgba(0, 200, 255, 0.1);">⚡ 9 APIS</span>
-                <span>·</span>
-                <span id="uptime" style="text-shadow: 0 0 20px rgba(150, 0, 255, 0.1);">UPTIME: 0s</span>
-            </div>
-        </footer>
+        <div class="text-center text-[8px] text-blue-400/20 font-bold tracking-[0.2em] py-2">
+            ⚡ AUTHORIZED TESTING · ALL ENDPOINTS PUBLIC ⚡
+        </div>
     </div>
 
     <script>
-        // ===== PARTICLES =====
-        (function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 50; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 20 + 's';
-                particle.style.animationDuration = (15 + Math.random() * 20) + 's';
-                particle.style.width = (1 + Math.random() * 3) + 'px';
-                particle.style.height = particle.style.width;
-                particle.style.background = ['#ff0066', '#00ccff', '#9600ff', '#ff00ff'][Math.floor(Math.random() * 4)];
-                particle.style.boxShadow = `0 0 ${10 + Math.random() * 20}px ${particle.style.background}`;
-                container.appendChild(particle);
-            }
-        })();
-
         let isRunning = false;
         let statusInterval = null;
-        let startTime = Date.now();
-
-        // Update timestamp
-        function updateTimestamp() {
-            const now = new Date();
-            document.getElementById('timestamp').textContent = now.toLocaleTimeString('en-US', { 
-                hour12: false, 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            });
-        }
-        setInterval(updateTimestamp, 1000);
-        updateTimestamp();
-
-        // Update uptime
-        setInterval(() => {
-            const elapsed = Math.floor((Date.now() - startTime) / 1000);
-            const hours = Math.floor(elapsed / 3600);
-            const minutes = Math.floor((elapsed % 3600) / 60);
-            const seconds = elapsed % 60;
-            document.getElementById('uptime').textContent = `UPTIME: ${hours}h ${minutes}m ${seconds}s`;
-        }, 1000);
 
         async function startAttack() {
             const phone = document.getElementById("phone").value.trim();
             if (phone.length !== 10) {
-                alert("❌ INVALID NUMBER");
-                document.getElementById("phone").style.borderColor = '#ff0066';
-                document.getElementById("phone").style.boxShadow = '0 0 60px rgba(255, 0, 100, 0.6)';
+                alert("❌ Please enter valid 10-digit number");
+                document.getElementById("phone").style.borderColor = '#ff3355';
+                document.getElementById("phone").style.boxShadow = '0 0 40px rgba(255, 0, 50, 0.3)';
                 setTimeout(() => {
                     document.getElementById("phone").style.borderColor = '';
                     document.getElementById("phone").style.boxShadow = '';
-                }, 3000);
+                }, 2000);
                 return;
             }
             
@@ -799,20 +736,18 @@ async def index():
                     document.getElementById("startBtn").classList.add("hidden");
                     document.getElementById("stopBtn").classList.remove("hidden");
                     
-                    document.getElementById("statusDot").className = "neon-dot active";
-                    document.getElementById("statusText").textContent = "ATTACK ACTIVE";
-                    document.getElementById("statusText").style.color = '#ff0066';
-                    document.getElementById("statusText").style.textShadow = '0 0 30px rgba(255, 0, 100, 0.5)';
+                    document.getElementById("statusDot").className = "status-dot active";
+                    document.getElementById("statusText").textContent = "ATTACKING";
+                    document.getElementById("statusText").style.color = '#4a9eff';
                     
                     document.getElementById("targetDisplay").textContent = `+91${phone}`;
-                    document.getElementById("targetDisplay").style.color = '#ff0066';
-                    document.getElementById("targetDisplay").style.textShadow = '0 0 30px rgba(255, 0, 100, 0.5)';
+                    document.getElementById("targetDisplay").style.color = '#4a9eff';
                     
                     if (statusInterval) clearInterval(statusInterval);
                     pollStatus();
                 }
             } catch(e) {
-                alert("❌ FAILED: " + e.message);
+                alert("❌ Error: " + e.message);
             }
         }
 
@@ -823,14 +758,13 @@ async def index():
                 document.getElementById("startBtn").classList.remove("hidden");
                 document.getElementById("stopBtn").classList.add("hidden");
                 
-                document.getElementById("statusDot").className = "neon-dot idle";
+                document.getElementById("statusDot").className = "status-dot idle";
                 document.getElementById("statusText").textContent = "STOPPED";
                 document.getElementById("statusText").style.color = '#ff8800';
-                document.getElementById("statusText").style.textShadow = '0 0 30px rgba(255, 136, 0, 0.5)';
                 
                 if (statusInterval) clearInterval(statusInterval);
             } catch(e) {
-                alert("❌ FAILED: " + e.message);
+                alert("❌ Error: " + e.message);
             }
         }
 
@@ -853,46 +787,42 @@ async def index():
                     document.getElementById("totalHits").textContent = total;
                     document.getElementById("cycleDisplay").textContent = `CYCLES: ${d.cycles}`;
                     
-                    // Animated bars
                     const maxVal = Math.max(calls, sms, wa, 1);
                     document.getElementById("callBar").style.width = ((calls / maxVal) * 100) + "%";
                     document.getElementById("smsBar").style.width = ((sms / maxVal) * 100) + "%";
                     document.getElementById("waBar").style.width = ((wa / maxVal) * 100) + "%";
                     
-                    // Success rate
                     if (total > 0) {
                         const rate = Math.min(85 + Math.random() * 10, 99);
                         document.getElementById("successRate").textContent = rate.toFixed(1) + '%';
                     }
                     
-                    // Logs
                     const logsDiv = document.getElementById("logs");
                     if (d.logs && d.logs.length > 0) {
                         logsDiv.innerHTML = d.logs.map(l => 
-                            `<div class="log-neon text-gray-300 hover:text-pink-400 transition-colors">${l}</div>`
+                            `<div class="log-entry">${l}</div>`
                         ).join('');
                     } else {
-                        logsDiv.innerHTML = '<div class="text-pink-500/30 text-center py-10 tracking-widest">⏳ AWAITING ATTACK...</div>';
+                        logsDiv.innerHTML = '<div class="text-blue-400/30 text-center py-4 text-xs tracking-widest">⏳ AWAITING ATTACK...</div>';
                     }
                     
                     if (!d.running && isRunning) {
                         isRunning = false;
                         document.getElementById("startBtn").classList.remove("hidden");
                         document.getElementById("stopBtn").classList.add("hidden");
-                        document.getElementById("statusDot").className = "neon-dot idle";
-                        document.getElementById("statusText").textContent = "ATTACK ENDED";
+                        document.getElementById("statusDot").className = "status-dot idle";
+                        document.getElementById("statusText").textContent = "ENDED";
                         document.getElementById("statusText").style.color = '#ff8800';
-                        document.getElementById("statusText").style.textShadow = '0 0 30px rgba(255, 136, 0, 0.5)';
                     }
                 } catch(e) {
-                    console.error("Status poll error:", e);
+                    console.error("Poll error:", e);
                 }
             }, 1200);
         }
 
         // Initial state
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("logs").innerHTML = '<div class="text-pink-500/30 text-center py-10 tracking-widest">⚡ SYSTEM INITIALIZED ⚡</div>';
+            document.getElementById("logs").innerHTML = '<div class="text-blue-400/30 text-center py-4 text-xs tracking-widest">⚡ SYSTEM INITIALIZED ⚡</div>';
         });
     </script>
 </body>
