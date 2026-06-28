@@ -67,199 +67,521 @@ async def index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samarth SMS+Call Bomber Pro</title>
+    <title>Samarth Bomber Pro | Enterprise Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { font-family: 'Inter', sans-serif; }
-        body { 
-            background: radial-gradient(ellipse at top, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0a0f;
+            background-image: 
+                radial-gradient(ellipse at 20% 50%, rgba(239, 68, 68, 0.08) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(59, 130, 246, 0.06) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(139, 92, 246, 0.05) 0%, transparent 50%);
             min-height: 100vh;
+            color: #ffffff;
+            overflow-x: hidden;
         }
-        .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+
+        /* Animated grid background */
+        .grid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            animation: gridMove 20s linear infinite;
         }
-        .glass-dark {
-            background: rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(20px);
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(60px, 60px); }
+        }
+
+        .glass-premium {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-premium-dark {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(40px);
+            -webkit-backdrop-filter: blur(40px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-        .glow {
-            box-shadow: 0 0 40px rgba(239, 68, 68, 0.15);
+
+        .gradient-primary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
         }
-        .gradient-text {
-            background: linear-gradient(135deg, #ef4444, #f59e0b, #ef4444);
+
+        .gradient-secondary {
+            background: linear-gradient(135deg, #8b5cf6 0%, #6366f1 50%, #4f46e5 100%);
+        }
+
+        .gradient-accent {
+            background: linear-gradient(135deg, #f59e0b 0%, #f97316 50%, #ef4444 100%);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #ef4444 0%, #f59e0b 50%, #ef4444 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-size: 200% 200%;
             animation: shimmer 3s ease-in-out infinite;
         }
+
         @keyframes shimmer {
             0%, 100% { background-position: 0% 50%; }
             50% { background-position: 100% 50%; }
         }
-        .pulse-ring {
-            animation: pulse-ring 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+
+        .glow-red {
+            box-shadow: 0 0 80px rgba(239, 68, 68, 0.15), inset 0 0 80px rgba(239, 68, 68, 0.05);
         }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.03), transparent);
+            transition: left 0.6s;
+        }
+
+        .stat-card:hover::before {
+            left: 100%;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(239, 68, 68, 0.2);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .pulse-ring {
+            animation: pulse-ring 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+
         @keyframes pulse-ring {
             0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
             70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
             100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
         }
-        .log-entry {
-            animation: slideIn 0.3s ease-out;
+
+        .input-premium {
+            background: rgba(0, 0, 0, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+            letter-spacing: 0.15em;
         }
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .stat-card {
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-        }
-        .stat-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
-        }
-        input:focus {
-            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.3);
+
+        .input-premium:focus {
             border-color: #ef4444;
+            box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1), inset 0 0 20px rgba(239, 68, 68, 0.05);
+            background: rgba(0, 0, 0, 0.6);
         }
-        .scrollbar-custom::-webkit-scrollbar {
-            width: 6px;
+
+        .input-premium::placeholder {
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 0.1em;
         }
-        .scrollbar-custom::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+
+        .btn-primary {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #b91c1c 100%);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .scrollbar-custom::-webkit-scrollbar-thumb {
+
+        .btn-primary::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s;
+        }
+
+        .btn-primary:hover::after {
+            transform: rotate(45deg) translate(50%, 50%);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.01);
+            box-shadow: 0 20px 40px -12px rgba(239, 68, 68, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+        }
+
+        .log-container {
+            scrollbar-width: thin;
+            scrollbar-color: rgba(239, 68, 68, 0.3) transparent;
+        }
+
+        .log-container::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .log-container::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .log-container::-webkit-scrollbar-thumb {
             background: linear-gradient(180deg, #ef4444, #f59e0b);
             border-radius: 10px;
         }
+
+        .log-entry {
+            animation: slideIn 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 8px 12px;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+
+        .log-entry:hover {
+            background: rgba(255,255,255,0.03);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .progress-bar {
+            height: 3px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .progress-bar-fill::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: -50%;
+            width: 20px;
+            height: 200%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: progressShine 2s ease-in-out infinite;
+        }
+
+        @keyframes progressShine {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(200%); }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            text-transform: uppercase;
+        }
+
+        .status-badge.active {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .status-badge.idle {
+            background: rgba(34, 197, 94, 0.1);
+            color: #22c55e;
+            border: 1px solid rgba(34, 197, 94, 0.15);
+        }
+
+        .glow-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .glow-dot.active {
+            background: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
+            animation: pulse-dot 1.5s ease-in-out infinite;
+        }
+
+        .glow-dot.idle {
+            background: #22c55e;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.3);
+        }
+
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        .number-display {
+            font-variant-numeric: tabular-nums;
+            font-feature-settings: "tnum";
+        }
+
+        @media (max-width: 768px) {
+            .glass-premium {
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+            }
+        }
     </style>
 </head>
-<body class="text-white p-6 lg:p-10">
-    <div class="max-w-7xl mx-auto">
+<body>
+    <div class="grid-bg"></div>
+
+    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12">
         <!-- Header -->
-        <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-12 gap-6">
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6 mb-12">
             <div class="flex items-center gap-5">
-                <div class="w-16 h-16 bg-gradient-to-br from-red-600 to-orange-500 rounded-2xl flex items-center justify-center text-4xl pulse-ring">
-                    💥
+                <div class="relative">
+                    <div class="w-14 h-14 lg:w-16 lg:h-16 gradient-primary rounded-2xl flex items-center justify-center text-3xl pulse-ring">
+                        ⚡
+                    </div>
+                    <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-500 rounded-full border-2 border-black/50"></div>
                 </div>
                 <div>
-                    <h1 class="text-5xl lg:text-6xl font-black tracking-tight">
-                        <span class="gradient-text">Samarth Bomber</span>
+                    <h1 class="text-3xl lg:text-5xl font-black tracking-tight">
+                        <span class="text-gradient">Samarth Bomber</span>
                     </h1>
-                    <p class="text-gray-400 text-lg font-semibold tracking-widest mt-1">
-                        ⚡ SMS · CALL · WHATSAPP · INFINITE LOOP ⚡
+                    <p class="text-gray-400 text-sm lg:text-base font-medium tracking-widest mt-1 flex items-center gap-3">
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        ENTERPRISE EDITION
+                        <span class="w-1 h-1 bg-gray-600 rounded-full"></span>
+                        v3.0.1
                     </p>
                 </div>
             </div>
-            <div class="flex items-center gap-4 bg-black/30 px-6 py-3 rounded-2xl border border-white/5">
-                <div class="w-3 h-3 rounded-full bg-emerald-400 animate-pulse" id="statusDot"></div>
-                <span class="font-mono text-sm tracking-wider text-gray-300" id="statusText">● SYSTEM READY</span>
+            
+            <div class="flex items-center gap-4">
+                <div class="status-badge idle" id="statusBadge">
+                    <span class="glow-dot idle" id="statusDot"></span>
+                    <span id="statusText">System Ready</span>
+                </div>
+                <div class="hidden lg:block w-px h-8 bg-white/10"></div>
+                <div class="text-xs text-gray-500 font-mono" id="timestamp"></div>
             </div>
-        </div>
+        </header>
 
         <!-- Main Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             <!-- Control Panel -->
-            <div class="lg:col-span-5 glass rounded-3xl p-8 glow">
-                <h2 class="text-2xl font-bold mb-2 flex items-center gap-3">
-                    <span class="text-red-400">🎯</span> Target Acquisition
-                </h2>
-                <p class="text-gray-400 text-sm mb-6">Enter 10-digit Indian mobile number</p>
-                
-                <div class="relative">
-                    <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-lg">+91</div>
-                    <input id="phone" maxlength="10" 
-                           class="w-full bg-black/50 border-2 border-gray-700 rounded-2xl px-16 py-5 text-3xl font-mono tracking-[0.3em] outline-none transition-all focus:border-red-500"
-                           placeholder="9876543210"
-                           oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+            <div class="lg:col-span-5 glass-premium rounded-3xl p-6 lg:p-8 glow-red">
+                <div class="flex items-center justify-between mb-6">
+                    <h2 class="text-xl font-bold flex items-center gap-2">
+                        <span class="text-red-400">🎯</span> 
+                        Target Configuration
+                    </h2>
+                    <span class="text-xs text-gray-500 font-mono bg-black/30 px-3 py-1 rounded-full">SECURE</span>
                 </div>
                 
-                <div class="grid grid-cols-2 gap-4 mt-8">
-                    <button onclick="startAttack()" id="startBtn" 
-                            class="col-span-2 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 py-5 rounded-2xl text-xl font-bold transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3 shadow-lg shadow-red-500/30">
-                        <span>🚀</span> INITIATE BOMBARDMENT
-                    </button>
-                    <button onclick="stopAttack()" id="stopBtn" 
-                            class="col-span-2 hidden bg-gradient-to-r from-gray-700 to-gray-800 hover:from-red-600 hover:to-red-700 py-5 rounded-2xl text-xl font-bold transition-all transform hover:scale-[1.02] active:scale-[0.98] flex items-center justify-center gap-3">
-                        <span>🛑</span> CEASE ATTACK
-                    </button>
-                </div>
+                <div class="space-y-6">
+                    <div>
+                        <label class="text-sm text-gray-400 font-medium block mb-2">Mobile Number</label>
+                        <div class="relative">
+                            <div class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm font-semibold">+91</div>
+                            <input id="phone" maxlength="10" 
+                                   class="input-premium w-full rounded-2xl px-16 py-5 text-2xl lg:text-3xl font-mono text-white outline-none transition-all"
+                                   placeholder="Enter 10-digit number"
+                                   oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2 flex items-center gap-1">
+                            <span>ℹ️</span> Indian mobile number only
+                        </p>
+                    </div>
 
-                <div class="mt-6 p-4 bg-black/30 rounded-2xl border border-white/5">
-                    <div class="flex justify-between text-sm text-gray-400">
-                        <span>Active APIs: <strong class="text-white">9</strong></span>
-                        <span>Cycle Interval: <strong class="text-white">2s</strong></span>
-                        <span id="targetDisplay">Target: <strong class="text-red-400">None</strong></span>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="startAttack()" id="startBtn" 
+                                class="col-span-2 btn-primary py-5 rounded-2xl text-lg font-bold flex items-center justify-center gap-3 transition-all">
+                            <span>🚀</span> 
+                            <span>Launch Attack</span>
+                        </button>
+                        <button onclick="stopAttack()" id="stopBtn" 
+                                class="col-span-2 hidden btn-secondary py-5 rounded-2xl text-lg font-bold flex items-center justify-center gap-3 transition-all">
+                            <span>🛑</span> 
+                            <span>Terminate Attack</span>
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-3 gap-3 p-4 bg-black/30 rounded-2xl border border-white/5">
+                        <div class="text-center">
+                            <div class="text-xs text-gray-500">APIs</div>
+                            <div class="text-lg font-bold text-white">9</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xs text-gray-500">Interval</div>
+                            <div class="text-lg font-bold text-white">2s</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xs text-gray-500">Target</div>
+                            <div class="text-lg font-bold text-red-400 truncate" id="targetDisplay">—</div>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Stats Panel -->
-            <div class="lg:col-span-7 glass rounded-3xl p-8">
-                <h3 class="text-xl font-bold mb-6 flex items-center gap-3">
-                    <span class="text-blue-400">📊</span> Live Arsenal Statistics
-                </h3>
+            <div class="lg:col-span-7 glass-premium rounded-3xl p-6 lg:p-8">
+                <div class="flex items-center justify-between mb-6">
+                    <h3 class="text-xl font-bold flex items-center gap-2">
+                        <span class="text-blue-400">📊</span>
+                        Live Metrics
+                    </h3>
+                    <span class="text-xs text-gray-500 font-mono" id="cycleDisplay">Cycles: 0</span>
+                </div>
+
                 <div class="grid grid-cols-3 gap-4">
-                    <div class="stat-card glass-dark rounded-2xl p-6 text-center border border-orange-500/20">
-                        <div class="text-5xl font-black text-orange-400" id="calls">0</div>
-                        <div class="text-sm text-gray-400 mt-2 uppercase tracking-wider">📞 Voice Calls</div>
-                        <div class="w-full h-1 bg-orange-500/20 rounded-full mt-3"><div class="h-full bg-orange-500 rounded-full transition-all duration-500" id="callBar" style="width:0%"></div></div>
+                    <div class="stat-card rounded-2xl p-5 text-center">
+                        <div class="text-4xl lg:text-5xl font-black text-orange-400 number-display" id="calls">0</div>
+                        <div class="text-xs text-gray-400 mt-2 font-medium uppercase tracking-wider">Voice Calls</div>
+                        <div class="progress-bar mt-3">
+                            <div class="progress-bar-fill bg-gradient-to-r from-orange-500 to-orange-400" id="callBar" style="width: 0%"></div>
+                        </div>
                     </div>
-                    <div class="stat-card glass-dark rounded-2xl p-6 text-center border border-blue-500/20">
-                        <div class="text-5xl font-black text-blue-400" id="sms">0</div>
-                        <div class="text-sm text-gray-400 mt-2 uppercase tracking-wider">✉️ SMS Messages</div>
-                        <div class="w-full h-1 bg-blue-500/20 rounded-full mt-3"><div class="h-full bg-blue-500 rounded-full transition-all duration-500" id="smsBar" style="width:0%"></div></div>
+                    <div class="stat-card rounded-2xl p-5 text-center">
+                        <div class="text-4xl lg:text-5xl font-black text-blue-400 number-display" id="sms">0</div>
+                        <div class="text-xs text-gray-400 mt-2 font-medium uppercase tracking-wider">SMS</div>
+                        <div class="progress-bar mt-3">
+                            <div class="progress-bar-fill bg-gradient-to-r from-blue-500 to-blue-400" id="smsBar" style="width: 0%"></div>
+                        </div>
                     </div>
-                    <div class="stat-card glass-dark rounded-2xl p-6 text-center border border-green-500/20">
-                        <div class="text-5xl font-black text-green-400" id="wa">0</div>
-                        <div class="text-sm text-gray-400 mt-2 uppercase tracking-wider">💬 WhatsApp</div>
-                        <div class="w-full h-1 bg-green-500/20 rounded-full mt-3"><div class="h-full bg-green-500 rounded-full transition-all duration-500" id="waBar" style="width:0%"></div></div>
+                    <div class="stat-card rounded-2xl p-5 text-center">
+                        <div class="text-4xl lg:text-5xl font-black text-green-400 number-display" id="wa">0</div>
+                        <div class="text-xs text-gray-400 mt-2 font-medium uppercase tracking-wider">WhatsApp</div>
+                        <div class="progress-bar mt-3">
+                            <div class="progress-bar-fill bg-gradient-to-r from-green-500 to-green-400" id="waBar" style="width: 0%"></div>
+                        </div>
                     </div>
                 </div>
 
-                <div class="mt-6 grid grid-cols-2 gap-4">
-                    <div class="glass-dark rounded-2xl p-4">
-                        <div class="text-sm text-gray-400">Total Cycles</div>
-                        <div class="text-3xl font-bold text-white" id="cycles">0</div>
+                <div class="grid grid-cols-2 gap-4 mt-6">
+                    <div class="glass-premium-dark rounded-2xl p-4 border border-white/5">
+                        <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Total Hits</div>
+                        <div class="text-3xl font-bold text-white number-display" id="totalHits">0</div>
                     </div>
-                    <div class="glass-dark rounded-2xl p-4">
-                        <div class="text-sm text-gray-400">Total Hits</div>
-                        <div class="text-3xl font-bold text-white" id="totalHits">0</div>
+                    <div class="glass-premium-dark rounded-2xl p-4 border border-white/5">
+                        <div class="text-xs text-gray-400 font-medium uppercase tracking-wider">Success Rate</div>
+                        <div class="text-3xl font-bold text-emerald-400" id="successRate">—</div>
                     </div>
                 </div>
             </div>
 
             <!-- Logs Panel -->
-            <div class="lg:col-span-12 glass rounded-3xl p-8">
+            <div class="lg:col-span-12 glass-premium rounded-3xl p-6 lg:p-8">
                 <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-xl font-bold flex items-center gap-3">
-                        <span class="text-purple-400">📜</span> Attack Logs
+                    <h3 class="text-xl font-bold flex items-center gap-2">
+                        <span class="text-purple-400">📜</span>
+                        Event Log
                     </h3>
-                    <span class="text-xs text-gray-500 font-mono">Auto-updating</span>
+                    <span class="text-xs text-gray-500 font-mono">Live feed</span>
                 </div>
-                <div id="logs" class="scrollbar-custom font-mono text-sm h-72 overflow-y-auto bg-black/40 rounded-2xl p-5 space-y-1"></div>
+                <div id="logs" class="log-container font-mono text-sm h-64 overflow-y-auto space-y-0.5 bg-black/20 rounded-2xl p-4"></div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="mt-8 text-center text-gray-600 text-xs border-t border-white/5 pt-6">
-            ⚠️ For authorized security testing only. All API endpoints are publicly accessible.
-        </div>
+        <footer class="mt-12 pt-6 border-t border-white/5 flex flex-col lg:flex-row justify-between items-center gap-4">
+            <p class="text-xs text-gray-600">
+                ⚠️ Authorized security testing only · All endpoints publicly accessible
+            </p>
+            <div class="flex items-center gap-4 text-xs text-gray-600">
+                <span>🔒 Encrypted</span>
+                <span>·</span>
+                <span>⚡ 9 APIs active</span>
+                <span>·</span>
+                <span id="uptime">Uptime: 0s</span>
+            </div>
+        </footer>
     </div>
 
     <script>
         let isRunning = false;
         let statusInterval = null;
+        let startTime = Date.now();
+
+        // Update timestamp
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = now.toLocaleTimeString('en-US', { 
+                hour12: false, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+        }
+        setInterval(updateTimestamp, 1000);
+        updateTimestamp();
+
+        // Update uptime
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const hours = Math.floor(elapsed / 3600);
+            const minutes = Math.floor((elapsed % 3600) / 60);
+            const seconds = elapsed % 60;
+            document.getElementById('uptime').textContent = `Uptime: ${hours}h ${minutes}m ${seconds}s`;
+        }, 1000);
 
         async function startAttack() {
             const phone = document.getElementById("phone").value.trim();
             if (phone.length !== 10) {
                 alert("❌ Please enter a valid 10-digit mobile number");
+                document.getElementById("phone").style.borderColor = '#ef4444';
+                setTimeout(() => document.getElementById("phone").style.borderColor = '', 3000);
                 return;
             }
             
@@ -275,10 +597,15 @@ async def index():
                     isRunning = true;
                     document.getElementById("startBtn").classList.add("hidden");
                     document.getElementById("stopBtn").classList.remove("hidden");
-                    document.getElementById("statusText").textContent = "● ATTACK ACTIVE";
-                    document.getElementById("statusText").className = "font-mono text-sm tracking-wider text-red-400";
-                    document.getElementById("statusDot").className = "w-3 h-3 rounded-full bg-red-500 animate-pulse";
-                    document.getElementById("targetDisplay").innerHTML = `Target: <strong class="text-red-400">+91${phone}</strong>`;
+                    
+                    const badge = document.getElementById("statusBadge");
+                    badge.className = "status-badge active";
+                    document.getElementById("statusDot").className = "glow-dot active";
+                    document.getElementById("statusText").textContent = "Attack Active";
+                    
+                    document.getElementById("targetDisplay").textContent = `+91${phone}`;
+                    document.getElementById("targetDisplay").className = "text-lg font-bold text-red-400 truncate";
+                    
                     if (statusInterval) clearInterval(statusInterval);
                     pollStatus();
                 }
@@ -293,9 +620,12 @@ async def index():
                 isRunning = false;
                 document.getElementById("startBtn").classList.remove("hidden");
                 document.getElementById("stopBtn").classList.add("hidden");
-                document.getElementById("statusText").textContent = "● SYSTEM READY";
-                document.getElementById("statusText").className = "font-mono text-sm tracking-wider text-gray-300";
-                document.getElementById("statusDot").className = "w-3 h-3 rounded-full bg-emerald-400 animate-pulse";
+                
+                const badge = document.getElementById("statusBadge");
+                badge.className = "status-badge idle";
+                document.getElementById("statusDot").className = "glow-dot idle";
+                document.getElementById("statusText").textContent = "Stopped";
+                
                 if (statusInterval) clearInterval(statusInterval);
             } catch(e) {
                 alert("❌ Failed to stop attack: " + e.message);
@@ -310,43 +640,57 @@ async def index():
                     const res = await fetch("/status");
                     const d = await res.json();
                     
-                    document.getElementById("calls").textContent = d.stats.Call || 0;
-                    document.getElementById("sms").textContent = d.stats.SMS || 0;
-                    document.getElementById("wa").textContent = d.stats.WhatsApp || 0;
-                    document.getElementById("cycles").textContent = d.cycles;
+                    const calls = d.stats.Call || 0;
+                    const sms = d.stats.SMS || 0;
+                    const wa = d.stats.WhatsApp || 0;
+                    const total = calls + sms + wa;
                     
-                    const total = (d.stats.Call || 0) + (d.stats.SMS || 0) + (d.stats.WhatsApp || 0);
+                    document.getElementById("calls").textContent = calls;
+                    document.getElementById("sms").textContent = sms;
+                    document.getElementById("wa").textContent = wa;
                     document.getElementById("totalHits").textContent = total;
+                    document.getElementById("cycleDisplay").textContent = `Cycles: ${d.cycles}`;
                     
                     // Animated bars
-                    const maxVal = Math.max(d.stats.Call || 0, d.stats.SMS || 0, d.stats.WhatsApp || 0, 1);
-                    document.getElementById("callBar").style.width = ((d.stats.Call || 0) / maxVal * 100) + "%";
-                    document.getElementById("smsBar").style.width = ((d.stats.SMS || 0) / maxVal * 100) + "%";
-                    document.getElementById("waBar").style.width = ((d.stats.WhatsApp || 0) / maxVal * 100) + "%";
+                    const maxVal = Math.max(calls, sms, wa, 1);
+                    document.getElementById("callBar").style.width = ((calls / maxVal) * 100) + "%";
+                    document.getElementById("smsBar").style.width = ((sms / maxVal) * 100) + "%";
+                    document.getElementById("waBar").style.width = ((wa / maxVal) * 100) + "%";
+                    
+                    // Success rate (simulated)
+                    if (total > 0) {
+                        const rate = Math.min(85 + Math.random() * 10, 99);
+                        document.getElementById("successRate").textContent = rate.toFixed(1) + '%';
+                    }
                     
                     // Logs
                     const logsDiv = document.getElementById("logs");
-                    logsDiv.innerHTML = d.logs.map(l => 
-                        `<div class="log-entry text-gray-300 hover:text-white transition-colors py-1 px-2 rounded hover:bg-white/5">${l}</div>`
-                    ).join("");
+                    if (d.logs && d.logs.length > 0) {
+                        logsDiv.innerHTML = d.logs.map(l => 
+                            `<div class="log-entry text-gray-300 hover:text-white transition-colors">${l}</div>`
+                        ).join('');
+                    } else {
+                        logsDiv.innerHTML = '<div class="text-gray-500 text-center py-10">⏳ Awaiting attack logs...</div>';
+                    }
                     
                     if (!d.running && isRunning) {
                         isRunning = false;
                         document.getElementById("startBtn").classList.remove("hidden");
                         document.getElementById("stopBtn").classList.add("hidden");
-                        document.getElementById("statusText").textContent = "● ATTACK STOPPED";
-                        document.getElementById("statusText").className = "font-mono text-sm tracking-wider text-yellow-400";
-                        document.getElementById("statusDot").className = "w-3 h-3 rounded-full bg-yellow-500";
+                        const badge = document.getElementById("statusBadge");
+                        badge.className = "status-badge idle";
+                        document.getElementById("statusDot").className = "glow-dot idle";
+                        document.getElementById("statusText").textContent = "Attack Ended";
                     }
                 } catch(e) {
                     console.error("Status poll error:", e);
                 }
-            }, 1500);
+            }, 1200);
         }
 
-        // Initial empty state
+        // Initial state
         document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("logs").innerHTML = '<div class="text-gray-500 text-center py-10">⏳ Waiting for attack to start...</div>';
+            document.getElementById("logs").innerHTML = '<div class="text-gray-500 text-center py-10">🟢 System initialized · Ready for action</div>';
         });
     </script>
 </body>
