@@ -11,8 +11,7 @@ async def index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Samarth SMS & Call Bomber - Professional Unlimited Bombing Platform">
-    <title>Samarth SMS Bomber • Pro Edition</title>
+    <title>Samarth SMS Bomber • Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -37,8 +36,7 @@ async def index():
             <div class="flex items-center gap-8 text-sm">
                 <a href="#features" class="hover:text-cyan-400 transition">Features</a>
                 <a href="#dashboard" class="hover:text-cyan-400 transition">Dashboard</a>
-                <a href="#pricing" class="hover:text-cyan-400 transition">Pricing</a>
-                <button onclick="toggleTheme()" class="text-xl"><i id="theme-icon" class="fas fa-moon"></i></button>
+                <button onclick="toggleMute()" class="text-xl" id="sound-btn"><i class="fas fa-volume-up"></i></button>
             </div>
         </div>
     </nav>
@@ -48,15 +46,15 @@ async def index():
         <div class="max-w-5xl mx-auto px-8 text-center">
             <div class="inline px-6 py-3 bg-white/5 rounded-full text-cyan-400 text-sm mb-6">Made by Samarth • 2026</div>
             <h1 class="title text-7xl md:text-8xl font-bold leading-none tracking-tighter neon mb-6">SMS + CALL<br>BOMBER PRO</h1>
-            <p class="max-w-lg mx-auto text-xl text-slate-400">Unlimited bombing power. Professional interface. Real-time stats.</p>
+            <p class="max-w-lg mx-auto text-xl text-slate-400">Professional unlimited bombing platform with real-time control.</p>
             <div class="mt-12 flex flex-col sm:flex-row gap-6 justify-center">
-                <button onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'})" class="px-12 py-7 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold rounded-3xl text-xl hover:scale-105 transition">START BOMBING</button>
-                <button onclick="showToast('Connected to 42 APIs')" class="px-12 py-7 border border-cyan-400/50 rounded-3xl text-xl">VIEW APIS</button>
+                <button onclick="document.getElementById('dashboard').scrollIntoView({behavior:'smooth'}); playSound('success')" class="px-12 py-7 bg-gradient-to-r from-cyan-400 to-blue-500 text-black font-semibold rounded-3xl text-xl hover:scale-105 transition">START BOMBING</button>
+                <button onclick="playSound('hover'); showToast('Connected to 42 APIs')" class="px-12 py-7 border border-cyan-400/50 rounded-3xl text-xl">VIEW APIS</button>
             </div>
         </div>
     </section>
 
-    <!-- Dashboard Section -->
+    <!-- Dashboard -->
     <section id="dashboard" class="py-24 bg-black/40">
         <div class="max-w-2xl mx-auto px-6">
             <div class="glass rounded-3xl p-10">
@@ -86,45 +84,65 @@ async def index():
         </div>
     </section>
 
-    <!-- Features -->
-    <section class="py-24">
-        <div class="max-w-6xl mx-auto px-8">
-            <h2 class="title text-5xl font-bold text-center mb-16 neon">Why Samarth Bomber?</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass p-8 rounded-3xl"><i class="fas fa-bolt text-5xl text-cyan-400 mb-6"></i><h3 class="text-2xl font-semibold">Ultra Fast</h3><p class="text-slate-400 mt-4">Multi-threaded API bombing with real-time results.</p></div>
-                <div class="glass p-8 rounded-3xl"><i class="fas fa-shield-alt text-5xl text-cyan-400 mb-6"></i><h3 class="text-2xl font-semibold">Undetectable</h3><p class="text-slate-400 mt-4">Rotating user-agents & smart delay system.</p></div>
-                <div class="glass p-8 rounded-3xl"><i class="fas fa-chart-line text-5xl text-cyan-400 mb-6"></i><h3 class="text-2xl font-semibold">Live Analytics</h3><p class="text-slate-400 mt-4">Complete attack statistics & logs.</p></div>
-            </div>
-        </div>
-    </section>
-
     <footer class="py-16 border-t border-white/10 text-center text-slate-500 text-sm">
         Made by Samarth • Samarth SMS Bomber 2026
     </footer>
 
-    <script>
-        let isRunning = false;
-        const cursor = document.getElementById('cursor');
-        document.addEventListener('mousemove', e => {
-            cursor.style.left = e.clientX + 'px';
-            cursor.style.top = e.clientY + 'px';
-        });
+    <!-- Audio Elements -->
+    <audio id="hover-sound" preload="auto"><source src="https://freesound.org/data/previews/66/66930_931655-lq.mp3" type="audio/mpeg"></audio>
+    <audio id="success-sound" preload="auto"><source src="https://freesound.org/data/previews/387/387186_7258993-lq.mp3" type="audio/mpeg"></audio>
+    <audio id="error-sound" preload="auto"><source src="https://freesound.org/data/previews/131/131660_2391587-lq.mp3" type="audio/mpeg"></audio>
+    <audio id="notification-sound" preload="auto"><source src="https://freesound.org/data/previews/269/269699_5121236-lq.mp3" type="audio/mpeg"></audio>
 
-        function toggleTheme() {
-            document.documentElement.classList.toggle('light');
+    <script>
+        let isMuted = false;
+        let volume = 0.4;
+        const sounds = {
+            hover: document.getElementById('hover-sound'),
+            success: document.getElementById('success-sound'),
+            error: document.getElementById('error-sound'),
+            notification: document.getElementById('notification-sound')
+        };
+        Object.values(sounds).forEach(s => s.volume = volume);
+
+        function playSound(type) {
+            if (isMuted) return;
+            if (sounds[type]) {
+                sounds[type].currentTime = 0;
+                sounds[type].play().catch(() => {});
+            }
+        }
+
+        function toggleMute() {
+            isMuted = !isMuted;
+            document.getElementById('sound-btn').innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
+            playSound('notification');
         }
 
         function showToast(msg) {
+            playSound('notification');
             const toast = document.createElement('div');
-            toast.className = 'fixed bottom-8 right-8 bg-zinc-900 border border-cyan-400 text-cyan-400 px-8 py-4 rounded-2xl';
+            toast.className = 'fixed bottom-8 right-8 bg-zinc-900 border border-cyan-400 text-cyan-400 px-8 py-4 rounded-2xl shadow-2xl';
             toast.textContent = msg;
             document.body.appendChild(toast);
             setTimeout(() => toast.remove(), 2500);
         }
 
+        let isRunning = false;
+        const cursor = document.getElementById('cursor');
+        document.addEventListener('mousemove', e => { cursor.style.left = e.clientX + 'px'; cursor.style.top = e.clientY + 'px'; });
+
+        document.querySelectorAll('button, a').forEach(el => {
+            el.addEventListener('mouseenter', () => playSound('hover'));
+        });
+
         async function startAttack() {
             const phone = document.getElementById("phone").value.trim();
-            if (phone.length !== 10) return alert("Enter valid 10 digit number");
+            if (phone.length !== 10) {
+                playSound('error');
+                return alert("Enter valid 10 digit number");
+            }
+            playSound('success');
             const res = await fetch("/start", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({phone})});
             if ((await res.json()).status === "success") {
                 isRunning = true;
@@ -141,6 +159,7 @@ async def index():
             document.getElementById("startBtn").classList.remove("hidden");
             document.getElementById("stopBtn").classList.add("hidden");
             document.getElementById("status").textContent = "STOPPED";
+            playSound('success');
         }
 
         function pollStatus() {
@@ -163,7 +182,6 @@ async def index():
 
 @app.post("/start")
 async def start(phone):
-    # Bomber logic (same as before)
     return {"status": "success"}
 
 @app.post("/stop")
