@@ -66,763 +66,487 @@ async def index():
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Samarth SMS Bomber</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;800;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Samarth SMS Bomber | Royal Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
         }
-        
         body {
-            font-family: 'Rajdhani', sans-serif;
-            background: #0a0e1a;
-            min-height: 100vh;
-            overflow-x: hidden;
-            position: relative;
-            padding: 12px;
-        }
-
-        /* Dark Blue Glow Background */
-        .glow-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: 
-                radial-gradient(ellipse at 20% 50%, rgba(0, 50, 200, 0.3) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 50%, rgba(0, 100, 255, 0.2) 0%, transparent 60%),
-                radial-gradient(ellipse at 50% 100%, rgba(0, 20, 150, 0.4) 0%, transparent 50%),
-                radial-gradient(ellipse at 50% 0%, rgba(0, 80, 255, 0.15) 0%, transparent 40%);
-            z-index: 0;
-            animation: bgPulse 4s ease-in-out infinite alternate;
-        }
-
-        @keyframes bgPulse {
-            0% { opacity: 0.7; }
-            100% { opacity: 1; }
-        }
-
-        /* Blue Grid */
-        .blue-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            font-family: 'Inter', sans-serif;
+            background: #0b1120;
             background-image: 
-                linear-gradient(rgba(0, 100, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 100, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
-            animation: gridFloat 20s linear infinite;
+                radial-gradient(ellipse at 20% 50%, rgba(30, 58, 138, 0.3) 0%, transparent 60%),
+                radial-gradient(ellipse at 80% 50%, rgba(37, 99, 235, 0.2) 0%, transparent 60%),
+                radial-gradient(ellipse at 50% 100%, rgba(99, 102, 241, 0.1) 0%, transparent 50%);
+            min-height: 100vh;
+            color: #e2e8f0;
+            overflow-x: hidden;
         }
-
-        @keyframes gridFloat {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(40px, 40px); }
+        /* Royal Blue Glow */
+        .glow-royal {
+            box-shadow: 0 0 40px rgba(37, 99, 235, 0.15), 0 0 80px rgba(37, 99, 235, 0.05);
         }
-
-        /* Floating Orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            z-index: 0;
-            animation: orbFloat 8s ease-in-out infinite alternate;
-        }
-
-        .orb-1 {
-            width: 300px;
-            height: 300px;
-            background: rgba(0, 50, 200, 0.15);
-            top: -10%;
-            right: -10%;
-            animation-delay: 0s;
-        }
-
-        .orb-2 {
-            width: 400px;
-            height: 400px;
-            background: rgba(0, 100, 255, 0.1);
-            bottom: -20%;
-            left: -20%;
-            animation-delay: 3s;
-        }
-
-        .orb-3 {
-            width: 200px;
-            height: 200px;
-            background: rgba(0, 150, 255, 0.08);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            animation-delay: 5s;
-        }
-
-        @keyframes orbFloat {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30px, -30px) scale(1.2); }
-        }
-
-        /* Glass Cards */
-        .glass-dark {
-            background: rgba(10, 14, 30, 0.85);
+        .glass-royal {
+            background: rgba(15, 23, 42, 0.7);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 100, 255, 0.15);
-            box-shadow: 
-                0 8px 32px rgba(0, 0, 0, 0.4),
-                inset 0 1px 0 rgba(0, 100, 255, 0.1);
-            position: relative;
-            overflow: hidden;
+            border: 1px solid rgba(56, 189, 248, 0.08);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(37, 99, 235, 0.03);
         }
-
-        .glass-dark::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(0, 100, 255, 0.03), transparent, rgba(0, 50, 200, 0.03), transparent);
-            animation: rotateGlow 15s linear infinite;
+        .glass-royal-dark {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(56, 189, 248, 0.06);
         }
-
-        @keyframes rotateGlow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .text-gold {
+            color: #fbbf24;
         }
-
-        /* Neon Blue Text */
-        .neon-blue {
-            font-family: 'Orbitron', monospace;
-            text-shadow: 
-                0 0 10px rgba(0, 100, 255, 0.5),
-                0 0 20px rgba(0, 100, 255, 0.3),
-                0 0 40px rgba(0, 100, 255, 0.1);
-            animation: neonPulse 2.5s ease-in-out infinite;
+        .text-glow-gold {
+            text-shadow: 0 0 20px rgba(251, 191, 36, 0.3);
         }
-
-        @keyframes neonPulse {
-            0%, 100% { text-shadow: 0 0 10px rgba(0, 100, 255, 0.5), 0 0 20px rgba(0, 100, 255, 0.3); }
-            50% { text-shadow: 0 0 20px rgba(0, 100, 255, 0.8), 0 0 40px rgba(0, 100, 255, 0.5), 0 0 80px rgba(0, 100, 255, 0.2); }
+        .text-glow-blue {
+            text-shadow: 0 0 30px rgba(37, 99, 235, 0.4);
         }
-
-        .neon-cyan {
-            text-shadow: 0 0 10px rgba(0, 200, 255, 0.4), 0 0 20px rgba(0, 200, 255, 0.2);
+        .border-gold {
+            border-color: rgba(251, 191, 36, 0.3);
         }
-
-        /* Input Field */
-        .input-blue {
-            background: rgba(0, 20, 60, 0.6);
-            border: 2px solid rgba(0, 100, 255, 0.2);
-            box-shadow: 
-                0 0 20px rgba(0, 100, 255, 0.05),
-                inset 0 0 30px rgba(0, 100, 255, 0.03);
-            transition: all 0.4s ease;
-            font-family: 'Orbitron', monospace;
-            letter-spacing: 0.15em;
-            color: #4a9eff;
-            font-size: 20px;
-            padding: 16px 20px 16px 60px;
-            width: 100%;
-            border-radius: 16px;
+        /* Input */
+        .input-royal {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1.5px solid rgba(56, 189, 248, 0.15);
+            transition: all 0.3s ease;
+            color: #e2e8f0;
+            font-size: 1.25rem;
+            letter-spacing: 0.05em;
+        }
+        .input-royal:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15), inset 0 0 20px rgba(59, 130, 246, 0.05);
             outline: none;
-            -webkit-appearance: none;
         }
-
-        .input-blue:focus {
-            border-color: #4a9eff;
-            box-shadow: 
-                0 0 40px rgba(0, 100, 255, 0.2),
-                0 0 80px rgba(0, 100, 255, 0.05),
-                inset 0 0 40px rgba(0, 100, 255, 0.05);
-            background: rgba(0, 20, 60, 0.8);
+        .input-royal::placeholder {
+            color: rgba(148, 163, 184, 0.3);
+            font-weight: 300;
         }
-
-        .input-blue::placeholder {
-            color: rgba(74, 158, 255, 0.2);
-            font-family: 'Orbitron', monospace;
-            letter-spacing: 0.1em;
-            font-size: 14px;
-        }
-
-        .input-wrapper {
-            position: relative;
-        }
-
-        .input-prefix {
-            position: absolute;
-            left: 16px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #4a9eff;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            font-size: 16px;
-            text-shadow: 0 0 20px rgba(0, 100, 255, 0.3);
-            opacity: 0.8;
-        }
-
         /* Buttons */
-        .btn-attack {
-            background: linear-gradient(135deg, #0044cc, #0066ff);
+        .btn-royal-primary {
+            background: linear-gradient(135deg, #1e3a8a, #1d4ed8);
             border: none;
-            box-shadow: 
-                0 0 30px rgba(0, 100, 255, 0.3),
-                0 0 60px rgba(0, 100, 255, 0.1),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 16px;
-            border-radius: 16px;
-            width: 100%;
-            color: white;
-            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+        .btn-royal-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.5);
+        }
+        .btn-royal-primary:active {
+            transform: scale(0.98);
+        }
+        .btn-royal-stop {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(56, 189, 248, 0.15);
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        .btn-royal-stop:hover {
+            background: rgba(239, 68, 68, 0.15);
+            border-color: rgba(239, 68, 68, 0.3);
+            transform: translateY(-2px);
+        }
+        /* Stat Cards */
+        .stat-royal {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(56, 189, 248, 0.06);
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
         }
-
-        .btn-attack::before {
+        .stat-royal::after {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.05), transparent);
-            transform: rotate(45deg);
-            transition: all 0.6s;
+            background: radial-gradient(circle at center, rgba(37, 99, 235, 0.03), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.6s;
         }
-
-        .btn-attack:active {
-            transform: scale(0.97);
+        .stat-royal:hover::after {
+            opacity: 1;
         }
-
-        .btn-attack:active::before {
-            transform: rotate(45deg) translate(50%, 50%);
+        .stat-royal:hover {
+            border-color: rgba(37, 99, 235, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.4);
         }
-
-        .btn-stop {
-            background: rgba(255, 0, 50, 0.1);
-            border: 1px solid rgba(255, 0, 50, 0.3);
-            box-shadow: 0 0 20px rgba(255, 0, 50, 0.1);
-            transition: all 0.3s ease;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            padding: 16px;
-            border-radius: 16px;
-            width: 100%;
-            color: #ff3355;
-            font-size: 14px;
-            cursor: pointer;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .btn-stop:active {
-            transform: scale(0.97);
-            background: rgba(255, 0, 50, 0.2);
-        }
-
-        /* Stat Cards */
-        .stat-card {
-            background: rgba(0, 20, 60, 0.4);
-            border: 1px solid rgba(0, 100, 255, 0.1);
-            border-radius: 14px;
-            padding: 14px;
-            text-align: center;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .stat-card::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, #4a9eff, transparent);
-            opacity: 0.3;
-        }
-
-        .stat-number {
-            font-family: 'Orbitron', monospace;
-            font-size: 28px;
-            font-weight: 900;
-            line-height: 1.2;
-        }
-
-        .stat-label {
-            font-size: 10px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: rgba(74, 158, 255, 0.6);
-            margin-top: 4px;
-        }
-
-        /* Progress Bars */
-        .progress-wrap {
+        /* Progress bars */
+        .progress-royal {
             height: 3px;
-            background: rgba(0, 100, 255, 0.1);
+            background: rgba(148, 163, 184, 0.1);
             border-radius: 10px;
             overflow: hidden;
-            margin-top: 8px;
         }
-
-        .progress-fill {
+        .progress-royal-fill {
             height: 100%;
             border-radius: 10px;
-            transition: width 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 0 15px currentColor;
+            transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+            background: linear-gradient(90deg, #3b82f6, #60a5fa);
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
         }
-
         /* Logs */
-        .log-container {
-            font-family: 'Rajdhani', monospace;
-            font-size: 12px;
-            height: 150px;
-            overflow-y: auto;
+        .logs-royal {
             scrollbar-width: thin;
-            scrollbar-color: rgba(0, 100, 255, 0.3) transparent;
-            padding: 12px;
-            border-radius: 12px;
-            background: rgba(0, 0, 0, 0.3);
+            scrollbar-color: rgba(56, 189, 248, 0.2) transparent;
+            font-size: 0.8rem;
         }
-
-        .log-container::-webkit-scrollbar {
-            width: 3px;
+        .logs-royal::-webkit-scrollbar {
+            width: 4px;
         }
-
-        .log-container::-webkit-scrollbar-track {
+        .logs-royal::-webkit-scrollbar-track {
             background: transparent;
         }
-
-        .log-container::-webkit-scrollbar-thumb {
-            background: linear-gradient(180deg, #4a9eff, #0066ff);
+        .logs-royal::-webkit-scrollbar-thumb {
+            background: rgba(56, 189, 248, 0.2);
             border-radius: 10px;
         }
-
         .log-entry {
-            padding: 4px 8px;
-            border-radius: 4px;
-            color: rgba(74, 158, 255, 0.7);
-            animation: logSlide 0.3s ease-out;
-            border-left: 2px solid transparent;
+            padding: 6px 12px;
+            border-radius: 6px;
             transition: all 0.2s;
+            border-left: 2px solid transparent;
         }
-
         .log-entry:hover {
-            background: rgba(0, 100, 255, 0.05);
-            border-left-color: #4a9eff;
+            background: rgba(37, 99, 235, 0.05);
+            border-left-color: #3b82f6;
         }
-
-        @keyframes logSlide {
-            from {
-                opacity: 0;
-                transform: translateX(-10px);
-            }
-            to {
-                opacity: 1;
-                transform: translateX(0);
-            }
-        }
-
-        /* Status Badge */
-        .status-badge {
+        /* Status badge */
+        .badge-royal {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 14px;
+            padding: 6px 16px;
             border-radius: 100px;
-            font-family: 'Orbitron', monospace;
-            font-size: 10px;
-            font-weight: 700;
-            text-transform: uppercase;
+            font-size: 0.7rem;
+            font-weight: 600;
             letter-spacing: 0.05em;
-            border: 1px solid rgba(0, 100, 255, 0.15);
-            background: rgba(0, 20, 60, 0.6);
+            text-transform: uppercase;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(56, 189, 248, 0.1);
         }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
+        .dot-royal {
+            width: 7px;
+            height: 7px;
             border-radius: 50%;
             display: inline-block;
         }
-
-        .status-dot.idle {
-            background: #00ff88;
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
+        .dot-royal.idle {
+            background: #22c55e;
+            box-shadow: 0 0 12px rgba(34, 197, 94, 0.3);
         }
-
-        .status-dot.active {
-            background: #4a9eff;
-            box-shadow: 0 0 20px rgba(0, 100, 255, 0.5);
-            animation: dotFlash 0.8s ease-in-out infinite;
+        .dot-royal.active {
+            background: #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5);
+            animation: pulse-dot 1s ease-in-out infinite;
         }
-
-        @keyframes dotFlash {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.4; transform: scale(0.8); }
         }
-
-        /* Responsive Design */
-        @media (max-width: 480px) {
-            body {
-                padding: 8px;
+        /* Responsive tweaks */
+        @media (max-width: 640px) {
+            .input-royal {
+                font-size: 1rem;
+                padding: 0.75rem 1rem 0.75rem 3.5rem;
             }
-
-            .stat-number {
-                font-size: 22px;
+            .stat-royal {
+                padding: 0.75rem;
             }
-
-            .input-blue {
-                font-size: 16px;
-                padding: 14px 16px 14px 52px;
-                border-radius: 12px;
-            }
-
-            .input-prefix {
-                font-size: 14px;
-                left: 14px;
-            }
-
-            .btn-attack, .btn-stop {
-                font-size: 12px;
-                padding: 14px;
-                border-radius: 12px;
-            }
-
-            .log-container {
-                height: 120px;
-                font-size: 10px;
-            }
-
-            .glass-dark {
-                border-radius: 16px;
-            }
-
-            .neon-blue {
-                font-size: 16px !important;
-            }
-
-            .stat-card {
-                padding: 10px;
-                border-radius: 10px;
+            .glass-royal {
+                padding: 1rem;
             }
         }
-
-        @media (max-width: 380px) {
-            .stat-number {
-                font-size: 18px;
-            }
-            
-            .input-blue {
-                font-size: 14px;
-                padding: 12px 12px 12px 44px;
-            }
-
-            .input-prefix {
-                font-size: 12px;
-                left: 12px;
-            }
-        }
-
-        /* Grid Layout */
-        .grid-main {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 12px;
-            max-width: 480px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 1;
-        }
-
-        @media (min-width: 481px) {
-            .grid-main {
-                max-width: 600px;
-                gap: 16px;
-            }
-        }
-
-        /* Smooth transitions for mobile */
-        * {
-            transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
+        /* Gold accent line */
+        .gold-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #fbbf24, transparent);
+            opacity: 0.3;
         }
     </style>
 </head>
 <body>
-    <!-- Background Layers -->
-    <div class="glow-bg"></div>
-    <div class="blue-grid"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-
-    <div class="grid-main">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
         <!-- Header -->
-        <div class="glass-dark rounded-2xl p-4 text-center">
-            <div class="flex items-center justify-center gap-3 mb-1">
-                <div class="w-10 h-10 rounded-xl flex items-center justify-center text-2xl"
-                     style="background: linear-gradient(135deg, #0044cc, #0066ff);
-                            box-shadow: 0 0 30px rgba(0, 100, 255, 0.3);">
-                    💥
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-blue-700 to-indigo-600 flex items-center justify-center text-2xl shadow-lg shadow-blue-500/20">
+                    ✉️
                 </div>
-                <h1 class="neon-blue text-2xl font-black tracking-wider">
-                    Samarth
-                </h1>
-            </div>
-            <p class="text-xs text-blue-400/60 font-bold tracking-[0.2em] neon-cyan">
-                ⚡ SMS · CALL · WHATSAPP BOMBER ⚡
-            </p>
-            <div class="flex justify-center mt-3">
-                <div class="status-badge">
-                    <span class="status-dot idle" id="statusDot"></span>
-                    <span id="statusText" class="text-blue-400/70">READY</span>
+                <div>
+                    <h1 class="text-2xl lg:text-4xl font-extrabold tracking-tight">
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400 text-glow-blue">Samarth</span>
+                        <span class="text-gold text-glow-gold">SMS</span>
+                        <span class="text-white">Bomber</span>
+                    </h1>
+                    <p class="text-xs text-gray-400 tracking-widest mt-0.5 flex items-center gap-2">
+                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span>
+                        ROYAL EDITION
+                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span>
+                        PREMIUM SUITE
+                    </p>
                 </div>
             </div>
-        </div>
+            <div class="flex items-center gap-3">
+                <div class="badge-royal">
+                    <span class="dot-royal idle" id="statusDot"></span>
+                    <span id="statusText" class="text-gray-300">SYSTEM READY</span>
+                </div>
+                <div class="hidden sm:block text-xs text-gray-500 font-mono" id="timestamp"></div>
+            </div>
+        </header>
 
-        <!-- Control Panel -->
-        <div class="glass-dark rounded-2xl p-4">
-            <h2 class="text-xs text-blue-400/50 font-bold tracking-widest mb-3 flex items-center gap-2">
-                <span>🎯</span> TARGET
-            </h2>
-            
-            <div class="input-wrapper">
-                <span class="input-prefix">+91</span>
-                <input id="phone" maxlength="10" 
-                       class="input-blue" 
-                       placeholder="ENTER NUMBER"
-                       inputmode="numeric"
-                       pattern="[0-9]*"
-                       oninput="this.value=this.value.replace(/[^0-9]/g,'')">
-            </div>
+        <!-- Gold Divider -->
+        <div class="gold-line w-full mb-8"></div>
 
-            <div class="grid grid-cols-2 gap-3 mt-3">
-                <button onclick="startAttack()" id="startBtn" 
-                        class="btn-attack col-span-2">
-                    🚀 LAUNCH ATTACK
-                </button>
-                <button onclick="stopAttack()" id="stopBtn" 
-                        class="btn-stop col-span-2 hidden">
-                    🛑 TERMINATE
-                </button>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2 mt-3 p-3 bg-black/20 rounded-xl border border-blue-500/5">
-                <div class="text-center">
-                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">APIS</div>
-                    <div class="text-sm font-bold text-blue-400 neon-cyan">9</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">INTERVAL</div>
-                    <div class="text-sm font-bold text-cyan-400 neon-cyan">2s</div>
-                </div>
-                <div class="text-center">
-                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">TARGET</div>
-                    <div class="text-sm font-bold text-blue-400 truncate neon-cyan" id="targetDisplay">—</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Stats -->
-        <div class="glass-dark rounded-2xl p-4">
-            <div class="flex justify-between items-center mb-3">
-                <h2 class="text-xs text-blue-400/50 font-bold tracking-widest flex items-center gap-2">
-                    <span>📊</span> METRICS
+        <!-- Main Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <!-- Control Panel -->
+            <div class="lg:col-span-5 glass-royal rounded-2xl p-6 glow-royal">
+                <h2 class="text-sm font-semibold text-blue-400 tracking-wider flex items-center gap-2 mb-4">
+                    <span>🎯</span> TARGET LOCK
                 </h2>
-                <span class="text-[9px] text-cyan-400/50 font-bold tracking-widest neon-cyan" id="cycleDisplay">CYCLES: 0</span>
-            </div>
-
-            <div class="grid grid-cols-3 gap-2">
-                <div class="stat-card">
-                    <div class="stat-number text-blue-400" style="text-shadow: 0 0 30px rgba(0, 100, 255, 0.3);" id="calls">0</div>
-                    <div class="stat-label">📞 CALLS</div>
-                    <div class="progress-wrap">
-                        <div class="progress-fill" id="callBar" style="width: 0%; color: #4a9eff; background: linear-gradient(90deg, #4a9eff, #0066ff);"></div>
+                <div class="space-y-5">
+                    <div>
+                        <label class="text-xs text-gray-400 font-medium block mb-1.5">MOBILE NUMBER</label>
+                        <div class="relative">
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm">+91</span>
+                            <input id="phone" maxlength="10"
+                                   class="input-royal w-full rounded-xl px-12 py-4 text-lg font-mono outline-none transition-all"
+                                   placeholder="Enter 10-digit number"
+                                   oninput="this.value=this.value.replace(/[^0-9]/g,'')">
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <button onclick="startAttack()" id="startBtn"
+                                class="col-span-2 btn-royal-primary py-4 rounded-xl text-white text-sm flex items-center justify-center gap-2 transition-all">
+                            <span>🚀</span> LAUNCH BOMBARDMENT
+                        </button>
+                        <button onclick="stopAttack()" id="stopBtn"
+                                class="col-span-2 hidden btn-royal-stop py-4 rounded-xl text-gray-300 text-sm flex items-center justify-center gap-2 transition-all">
+                            <span>🛑</span> TERMINATE ATTACK
+                        </button>
+                    </div>
+                    <div class="grid grid-cols-3 gap-2 p-3 bg-black/30 rounded-xl border border-white/5">
+                        <div class="text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">APIs</div>
+                            <div class="text-sm font-bold text-blue-400">9</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">Interval</div>
+                            <div class="text-sm font-bold text-blue-300">2s</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">Target</div>
+                            <div class="text-sm font-bold text-gold truncate" id="targetDisplay">—</div>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number text-cyan-400" style="text-shadow: 0 0 30px rgba(0, 200, 255, 0.3);" id="sms">0</div>
-                    <div class="stat-label">✉️ SMS</div>
-                    <div class="progress-wrap">
-                        <div class="progress-fill" id="smsBar" style="width: 0%; color: #00ccff; background: linear-gradient(90deg, #00ccff, #0099ff);"></div>
+            </div>
+
+            <!-- Stats -->
+            <div class="lg:col-span-7 glass-royal rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-sm font-semibold text-blue-400 tracking-wider flex items-center gap-2">
+                        <span>📊</span> LIVE METRICS
+                    </h2>
+                    <span class="text-xs text-gray-500 font-mono" id="cycleDisplay">CYCLES: 0</span>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="stat-royal rounded-xl p-4 text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-blue-400 number-display" id="calls">0</div>
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">Calls</div>
+                        <div class="progress-royal mt-2">
+                            <div class="progress-royal-fill" id="callBar" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-royal rounded-xl p-4 text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-cyan-400 number-display" id="sms">0</div>
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">SMS</div>
+                        <div class="progress-royal mt-2">
+                            <div class="progress-royal-fill" id="smsBar" style="width:0%"></div>
+                        </div>
+                    </div>
+                    <div class="stat-royal rounded-xl p-4 text-center">
+                        <div class="text-2xl lg:text-3xl font-bold text-purple-400 number-display" id="wa">0</div>
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1">WhatsApp</div>
+                        <div class="progress-royal mt-2">
+                            <div class="progress-royal-fill" id="waBar" style="width:0%"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-number text-purple-400" style="text-shadow: 0 0 30px rgba(150, 0, 255, 0.3);" id="wa">0</div>
-                    <div class="stat-label">💬 WA</div>
-                    <div class="progress-wrap">
-                        <div class="progress-fill" id="waBar" style="width: 0%; color: #9600ff; background: linear-gradient(90deg, #9600ff, #6600cc);"></div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="glass-royal-dark rounded-xl p-3 border border-white/5">
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wider">Total Hits</div>
+                        <div class="text-xl font-bold text-white number-display" id="totalHits">0</div>
+                    </div>
+                    <div class="glass-royal-dark rounded-xl p-3 border border-white/5">
+                        <div class="text-[10px] text-gray-400 uppercase tracking-wider">Success Rate</div>
+                        <div class="text-xl font-bold text-emerald-400" id="successRate">—</div>
                     </div>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-2 mt-3">
-                <div class="stat-card">
-                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">TOTAL HITS</div>
-                    <div class="text-xl font-black text-white font-orbitron" style="font-family: 'Orbitron', monospace;" id="totalHits">0</div>
+            <!-- Logs -->
+            <div class="lg:col-span-12 glass-royal rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-semibold text-blue-400 tracking-wider flex items-center gap-2">
+                        <span>📜</span> EVENT LOG
+                    </h3>
+                    <span class="text-[10px] text-gray-500 font-mono">LIVE</span>
                 </div>
-                <div class="stat-card">
-                    <div class="text-[9px] text-blue-400/40 font-bold tracking-widest">SUCCESS RATE</div>
-                    <div class="text-xl font-black text-emerald-400" style="font-family: 'Orbitron', monospace; text-shadow: 0 0 30px rgba(0, 255, 136, 0.2);" id="successRate">—</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Logs -->
-        <div class="glass-dark rounded-2xl p-4">
-            <div class="flex justify-between items-center mb-2">
-                <h2 class="text-xs text-blue-400/50 font-bold tracking-widest flex items-center gap-2">
-                    <span>📜</span> LOGS
-                </h2>
-                <span class="text-[8px] text-blue-400/30 font-bold tracking-widest">LIVE</span>
-            </div>
-            <div id="logs" class="log-container">
-                <div class="text-blue-400/30 text-center py-4 text-xs tracking-widest">⚡ SYSTEM READY ⚡</div>
+                <div id="logs" class="logs-royal h-56 overflow-y-auto bg-black/20 rounded-xl p-3 space-y-0.5"></div>
             </div>
         </div>
 
         <!-- Footer -->
-        <div class="text-center text-[8px] text-blue-400/20 font-bold tracking-[0.2em] py-2">
-            ⚡ AUTHORIZED TESTING · ALL ENDPOINTS PUBLIC ⚡
-        </div>
+        <footer class="mt-8 pt-4 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] text-gray-500">
+            <span>⚡ Authorized testing only · All endpoints public</span>
+            <div class="flex items-center gap-3">
+                <span>🔒 Encrypted</span>
+                <span>·</span>
+                <span>⚡ 9 APIs</span>
+                <span>·</span>
+                <span id="uptime">Uptime: 0s</span>
+            </div>
+        </footer>
     </div>
 
     <script>
         let isRunning = false;
         let statusInterval = null;
+        let startTime = Date.now();
+
+        function updateTimestamp() {
+            const now = new Date();
+            document.getElementById('timestamp').textContent = now.toLocaleTimeString('en-US', {
+                hour12: false,
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit'
+            });
+        }
+        setInterval(updateTimestamp, 1000);
+        updateTimestamp();
+
+        setInterval(() => {
+            const elapsed = Math.floor((Date.now() - startTime) / 1000);
+            const h = Math.floor(elapsed / 3600);
+            const m = Math.floor((elapsed % 3600) / 60);
+            const s = elapsed % 60;
+            document.getElementById('uptime').textContent = `Uptime: ${h}h ${m}m ${s}s`;
+        }, 1000);
 
         async function startAttack() {
-            const phone = document.getElementById("phone").value.trim();
+            const phone = document.getElementById('phone').value.trim();
             if (phone.length !== 10) {
-                alert("❌ Please enter valid 10-digit number");
-                document.getElementById("phone").style.borderColor = '#ff3355';
-                document.getElementById("phone").style.boxShadow = '0 0 40px rgba(255, 0, 50, 0.3)';
-                setTimeout(() => {
-                    document.getElementById("phone").style.borderColor = '';
-                    document.getElementById("phone").style.boxShadow = '';
-                }, 2000);
+                alert('❌ Please enter a valid 10-digit number');
+                document.getElementById('phone').style.borderColor = '#ef4444';
+                setTimeout(() => document.getElementById('phone').style.borderColor = '', 3000);
                 return;
             }
-            
             try {
-                const res = await fetch("/start", {
-                    method: "POST",
-                    headers: {"Content-Type": "application/json"},
+                const res = await fetch('/start', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({phone})
                 });
                 const data = await res.json();
-                
-                if (data.status === "success") {
+                if (data.status === 'success') {
                     isRunning = true;
-                    document.getElementById("startBtn").classList.add("hidden");
-                    document.getElementById("stopBtn").classList.remove("hidden");
-                    
-                    document.getElementById("statusDot").className = "status-dot active";
-                    document.getElementById("statusText").textContent = "ATTACKING";
-                    document.getElementById("statusText").style.color = '#4a9eff';
-                    
-                    document.getElementById("targetDisplay").textContent = `+91${phone}`;
-                    document.getElementById("targetDisplay").style.color = '#4a9eff';
-                    
+                    document.getElementById('startBtn').classList.add('hidden');
+                    document.getElementById('stopBtn').classList.remove('hidden');
+                    document.getElementById('statusDot').className = 'dot-royal active';
+                    document.getElementById('statusText').textContent = 'ATTACK ACTIVE';
+                    document.getElementById('statusText').style.color = '#ef4444';
+                    document.getElementById('targetDisplay').textContent = `+91${phone}`;
                     if (statusInterval) clearInterval(statusInterval);
                     pollStatus();
                 }
             } catch(e) {
-                alert("❌ Error: " + e.message);
+                alert('❌ Failed: ' + e.message);
             }
         }
 
         async function stopAttack() {
             try {
-                await fetch("/stop", {method: "POST"});
+                await fetch('/stop', {method: 'POST'});
                 isRunning = false;
-                document.getElementById("startBtn").classList.remove("hidden");
-                document.getElementById("stopBtn").classList.add("hidden");
-                
-                document.getElementById("statusDot").className = "status-dot idle";
-                document.getElementById("statusText").textContent = "STOPPED";
-                document.getElementById("statusText").style.color = '#ff8800';
-                
+                document.getElementById('startBtn').classList.remove('hidden');
+                document.getElementById('stopBtn').classList.add('hidden');
+                document.getElementById('statusDot').className = 'dot-royal idle';
+                document.getElementById('statusText').textContent = 'STOPPED';
+                document.getElementById('statusText').style.color = '#fbbf24';
                 if (statusInterval) clearInterval(statusInterval);
             } catch(e) {
-                alert("❌ Error: " + e.message);
+                alert('❌ Failed: ' + e.message);
             }
         }
 
         function pollStatus() {
             if (statusInterval) clearInterval(statusInterval);
-            
             statusInterval = setInterval(async () => {
                 try {
-                    const res = await fetch("/status");
+                    const res = await fetch('/status');
                     const d = await res.json();
-                    
                     const calls = d.stats.Call || 0;
                     const sms = d.stats.SMS || 0;
                     const wa = d.stats.WhatsApp || 0;
                     const total = calls + sms + wa;
-                    
-                    document.getElementById("calls").textContent = calls;
-                    document.getElementById("sms").textContent = sms;
-                    document.getElementById("wa").textContent = wa;
-                    document.getElementById("totalHits").textContent = total;
-                    document.getElementById("cycleDisplay").textContent = `CYCLES: ${d.cycles}`;
-                    
+                    document.getElementById('calls').textContent = calls;
+                    document.getElementById('sms').textContent = sms;
+                    document.getElementById('wa').textContent = wa;
+                    document.getElementById('totalHits').textContent = total;
+                    document.getElementById('cycleDisplay').textContent = `CYCLES: ${d.cycles}`;
                     const maxVal = Math.max(calls, sms, wa, 1);
-                    document.getElementById("callBar").style.width = ((calls / maxVal) * 100) + "%";
-                    document.getElementById("smsBar").style.width = ((sms / maxVal) * 100) + "%";
-                    document.getElementById("waBar").style.width = ((wa / maxVal) * 100) + "%";
-                    
+                    document.getElementById('callBar').style.width = ((calls / maxVal) * 100) + '%';
+                    document.getElementById('smsBar').style.width = ((sms / maxVal) * 100) + '%';
+                    document.getElementById('waBar').style.width = ((wa / maxVal) * 100) + '%';
                     if (total > 0) {
                         const rate = Math.min(85 + Math.random() * 10, 99);
-                        document.getElementById("successRate").textContent = rate.toFixed(1) + '%';
+                        document.getElementById('successRate').textContent = rate.toFixed(1) + '%';
                     }
-                    
-                    const logsDiv = document.getElementById("logs");
-                    if (d.logs && d.logs.length > 0) {
-                        logsDiv.innerHTML = d.logs.map(l => 
-                            `<div class="log-entry">${l}</div>`
+                    const logsDiv = document.getElementById('logs');
+                    if (d.logs && d.logs.length) {
+                        logsDiv.innerHTML = d.logs.map(l =>
+                            `<div class="log-entry text-gray-400 hover:text-gray-200 transition-colors">${l}</div>`
                         ).join('');
                     } else {
-                        logsDiv.innerHTML = '<div class="text-blue-400/30 text-center py-4 text-xs tracking-widest">⏳ AWAITING ATTACK...</div>';
+                        logsDiv.innerHTML = '<div class="text-gray-500 text-center py-6">⏳ Awaiting attack...</div>';
                     }
-                    
                     if (!d.running && isRunning) {
                         isRunning = false;
-                        document.getElementById("startBtn").classList.remove("hidden");
-                        document.getElementById("stopBtn").classList.add("hidden");
-                        document.getElementById("statusDot").className = "status-dot idle";
-                        document.getElementById("statusText").textContent = "ENDED";
-                        document.getElementById("statusText").style.color = '#ff8800';
+                        document.getElementById('startBtn').classList.remove('hidden');
+                        document.getElementById('stopBtn').classList.add('hidden');
+                        document.getElementById('statusDot').className = 'dot-royal idle';
+                        document.getElementById('statusText').textContent = 'ATTACK ENDED';
+                        document.getElementById('statusText').style.color = '#fbbf24';
                     }
                 } catch(e) {
-                    console.error("Poll error:", e);
+                    console.error('Poll error:', e);
                 }
             }, 1200);
         }
 
-        // Initial state
-        document.addEventListener("DOMContentLoaded", () => {
-            document.getElementById("logs").innerHTML = '<div class="text-blue-400/30 text-center py-4 text-xs tracking-widest">⚡ SYSTEM INITIALIZED ⚡</div>';
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('logs').innerHTML = '<div class="text-gray-500 text-center py-6">🟢 System initialized</div>';
         });
     </script>
 </body>
