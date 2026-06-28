@@ -11,7 +11,7 @@ async def index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VOID • Samarth Bomber</title>
+    <title>Samarth Bomber</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -42,9 +42,9 @@ async def index():
     <header class="pt-20 pb-12 border-b border-green-500/20">
         <div class="max-w-5xl mx-auto px-6 text-center">
             <div class="inline-block bg-red-500/10 text-red-400 px-4 py-1 text-sm mb-6 border border-red-500/30">WARNING: HIGH RISK TOOL</div>
-            <h1 class="text-7xl font-bold tracking-widest text-green-400">VOID BOMBER</h1>
-            <div class="text-2xl text-green-500/70 mt-2">SAMARTH EDITION</div>
-            <p class="mt-8 max-w-md mx-auto text-green-500/60">Digital warfare interface. Unlimited reach. No mercy.</p>
+            <h1 class="text-7xl font-bold tracking-widest text-green-400">SAMARTH BOMBER</h1>
+            <div class="text-2xl text-green-500/70 mt-2">UNLIMITED • UNTRACEABLE</div>
+            <p class="mt-8 max-w-md mx-auto text-green-500/60">Professional SMS, Call & WhatsApp bombing platform.</p>
         </div>
     </header>
 
@@ -93,7 +93,7 @@ async def index():
     </div>
 
     <footer class="text-center py-8 text-green-500/30 text-xs border-t border-green-500/10">
-        ROOT ACCESS GRANTED • SAMARTH 2026
+        SAMARTH BOMBER • MADE BY SAMARTH 2026
     </footer>
 
     <audio id="hover" src="https://freesound.org/data/previews/66/66930_931655-lq.mp3" preload="auto"></audio>
@@ -154,7 +154,6 @@ async def index():
             });
         }
 
-        // Hover sound
         document.querySelectorAll('button').forEach(b => b.addEventListener('mouseenter', () => play('hover')));
     </script>
 </body>
